@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>METAMASK CONNECTION</title>
+    <style>
+        body {
+            background-color: rgb(247, 240, 242);
+            font-size: 33px;
+            text-align: center;
+        }
+
+        button {
+            background-color: rgb(211, 241, 231);
+            font-size: 30px;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow', sans-serif;
+        }
+
+        button:hover {
+            background-color: rgb(146, 205, 245);
+        }
+    </style>
+</head>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.2.7-rc.0/web3.min.js"></script>
+
+<body>
+    <br>
+    <button onclick="accessToMetamask()">Connect Metamask</button> <br>
+    <p id="accountArea"></p>
+    <br>
+
+    <button onclick="accessToContract()">Connect to Smart Contract</button> <br>
+    <p id="contractArea"></p>
+    <br>
+
+    <button onclick="readfromContract()">get Data from Contract</button> <br>
+    <p id="ownerProduct"></p>
+
+    <button id="buy" onclick="BuyerBuyProduct()"> BUY Product</button>
+    <br>
+
+    </div>
+    <div id="transactionSection">
+        <label for="Pname">Product name:</label><br>
+        <input type="text" id="Pname" name="Pname"><br>
+        <label for="Pprice">Product price (wei):</label><br>
+        <input type="number" id="Pprice" name="Pprice"> <br>
+        <button id="submit" onclick="setNewProduct()"> Update Product</button>
+    </div>
+
+</body>
+
+</html>
+
+<script>
+
+    //1- connect metamask
+    let account;
+    const accessToMetamask = async () => {
+        if (window.ethereum !== "undefined") {
+            const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+            account = accounts[0];
+            document.getElementById("accountArea").innerHTML = account;
+        }
+    }
+
+    //2- connect to smart contract
+    const accessToContract = async () => {
+        const ABI = [
+            {
+                "inputs": [
+                    {
+                        "internalType": "string",
+                        "name": "inputName",
+                        "type": "string"
+                    }
+                ],
+                "name": "setName",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "stateMutability": "nonpayable",
+                "type": "constructor"
+            },
+            {
+                "inputs": [],
+                "name": "getName",
+                "outputs": [
+                    {
+                        "internalType": "string",
+                        "name": "",
+                        "type": "string"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            }
+        ];
+        const Address = "0x3A9cc86c4e13d69c600b7E1Da054f2eE4A4E324f";
+        window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+        window.contract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
+        document.getElementById("contractArea").innerHTML = "connected to Product smart contract";
+    }
+
+
+    //3-read data from smart contract
+    const readfromContract = async () => {
+
+        
+        const data = await window.contract.methods.getName().call();
+        document.getElementById("ownerProduct").innerHTML = `Name : ${data}`;
+
+    }
+
+
+    //4- buyer buy the product, transfer wei, update the ownership
+    const BuyerBuyProduct = async () => {
+        //need to retrieve product data from the contract
+        const data = await window.contract.methods.getInitialProduct().call();
+        const price = data[1];
+        const ownerAddress = data[2];
+        await window.contract.methods.buyProduct(ownerAddress).send({ from: account, value: price });
+    }
+
+    //5- set new product- product name and price, owner address				
+    const setNewProduct = async () => {
+        const ProductName = document.getElementById("Pname").value;
+        const ProductPrice = document.getElementById("Pprice").value;
+        await window.contract.methods.setProduct(ProductName, ProductPrice).send({ from: account });
+        document.getElementById("Pname").value = "";
+        document.getElementById("Pprice").value = "";
+    }
+
+
+</script>

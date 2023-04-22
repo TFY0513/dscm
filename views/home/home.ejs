@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>Home</title>
+
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
+
+
+    <link href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+
+
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+
+        #on-going {
+            background-color: #ffff99;
+
+        }
+
+
+        #complete {
+            background-color: #99ff99;
+
+        }
+
+        #cancelled {
+
+            background-color: #ff9999;
+        }
+
+        .toastGroup {
+            z-index: 1;
+        }
+
+        .toast {
+
+            position: fixed;
+
+            bottom: 15px;
+            margin-left: 10px;
+
+        }
+
+        .mark-as-read {
+            text-decoration: none;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <%- include('../partials/home_navbar'); %>
+        <%- include('../partials/home_sidebar'); %>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Project Management</h1>
+                </div>
+
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+
+                    <h4 class="h4">Project Dashboard</h4>
+
+                </div>
+
+                <div class="col d-flex justify-content-center">
+                    <div class="card" style="width:100%;">
+                        <div class="card-body">
+
+                            <div id="content-wrapper" class="d-flex flex-column">
+
+                                <!-- Main Content -->
+                                <div id="content">
+
+
+
+                                    <!-- Begin Page Content -->
+                                    <div class="container-fluid">
+
+                                        <!-- Page Heading -->
+
+
+                                        <!-- Content Row -->
+                                        <div class="row">
+
+                                            <!-- Earnings (Monthly) Card Example -->
+                                            <div class="col-xl-3 col-md-6 mb-4">
+                                                <div class="card border-left-primary shadow h-100 py-2">
+                                                    <div class="card-body">
+                                                        <div class="row no-gutters align-items-center">
+                                                            <div class="col mr-2">
+                                                                <div
+                                                                    class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                                    <b>Total Projects (Monthly) </b>
+                                                                </div>
+                                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                                    {{$totalMonthProjCount}} (s)</div>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <img src="{{asset('/component/dashboard/icon/proj_icon.png')}} "
+                                                                    width="50px;">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Earnings (Monthly) Card Example -->
+                                            <div class="col-xl-3 col-md-6 mb-4">
+                                                <div class="card border-left-success shadow h-100 py-2">
+                                                    <div class="card-body">
+                                                        <div class="row no-gutters align-items-center">
+                                                            <div class="col mr-2">
+                                                                <div
+                                                                    class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                                    <b> Total Projects (Annual) </b>
+                                                                </div>
+                                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                                    {{$totalYearProjCount}} (s)</div>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <img src="{{asset('/component/dashboard/icon/proj_icon.png')}} "
+                                                                    width="50px;">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-md-6 mb-4">
+                                                <div class="card border-left-success shadow h-100 py-2">
+                                                    <div class="card-body">
+                                                        <div class="row no-gutters align-items-center">
+                                                            <div class="col mr-2">
+                                                                <div
+                                                                    class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                                    <b> Total Project Budget </b>
+                                                                </div>
+                                                                <div class="h5 mb-0 font-weight-bold text-gray-800">RM
+                                                                    {{$total_project_budget}}</div>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <img src="{{asset('/component/dashboard/icon/cash_icon.png')}} "
+                                                                    width="50px;">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <!-- Pending Requests Card Example -->
+                                            <div class="col-xl-3 col-md-6 mb-4">
+                                                <div class="card border-left-warning shadow h-100 py-2">
+                                                    <div class="card-body">
+                                                        <div class="row no-gutters align-items-center">
+                                                            <div class="col mr-2">
+                                                                <div
+                                                                    class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                                    <b>Total Project Members </b>
+                                                                </div>
+                                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                                    {{$total_project_members}} (s)</div>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <img src="{{asset('/component/dashboard/icon/proj_member_icon.png')}} "
+                                                                    width="65px;">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-md-6 mb-4">
+                                                <div class="card border-left-warning shadow h-100 py-2">
+                                                    <div class="card-body">
+                                                        <div class="row no-gutters align-items-center">
+                                                            <div class="col mr-2">
+                                                                <div
+                                                                    class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                                    <b>Total Project Managers </b>
+                                                                </div>
+                                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                                    {{$total_project_managers}} (s)</div>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <img src="{{asset('/component/dashboard/icon/proj_manager_icon.png')}} "
+                                                                    width="55px;">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Content Row -->
+
+                                        <div class="row">
+
+                                            <!-- Area Chart -->
+                                            <div class="col-xl-8 col-lg-7">
+                                                <div class="card shadow mb-4">
+                                                    <!-- Card Header - Dropdown -->
+                                                    <div
+                                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                                        <h6 class="m-0 font-weight-bold text-primary">Budgeting Overview
+                                                        </h6>
+
+                                                    </div>
+                                                    <!-- Card Body -->
+                                                    <div class="card-body">
+                                                        <div class="chart-area">
+                                                            <canvas id="myAreaChart"></canvas>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Pie Chart -->
+                                            <div class="col-xl-4 col-lg-5">
+                                                <div class="card shadow mb-4">
+                                                    <!-- Card Header - Dropdown -->
+                                                    <div
+                                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                                        <h6 class="m-0 font-weight-bold text-primary">Revenue Sources
+                                                        </h6>
+
+                                                    </div>
+                                                    <!-- Card Body -->
+                                                    <div class="card-body">
+                                                        <div class="chart-pie pt-4 pb-2">
+                                                            <canvas id="myPieChart"></canvas>
+                                                        </div>
+                                                        <div class="mt-4 text-center small">
+                                                            <span class="mr-2">
+                                                                Total Project :<b> {{$project_progress[0]}}</b>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <!-- Content Column -->
+                                            <div class="col-lg-6 mb-4">
+
+                                                <!-- Project Card Example -->
+                                                <div class="card shadow mb-4">
+                                                    <div class="card-header py-3">
+                                                        <h6 class="m-0 font-weight-bold text-primary">Projects Deadline
+                                                        </h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <table id="example" class="table display">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">#</th>
+                                                                    <th scope="col">Project</th>
+                                                                    <th scope="col">Deadline</th>
+                                                                    <th scope="col">Day Left</th>
+
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach($project_array as $key)
+                                                                <tr>
+                                                                    <td scope="col">{{$loop->iteration}}</td>
+
+
+                                                                    @foreach ($key as $item)
+                                                                    <td scope="col"> {{ $item }}</td>
+                                                                    @endforeach
+
+                                                                </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <th scope="col">#</th>
+                                                                    <th scope="col">Project</th>
+                                                                    <th scope="col">Deadline</th>
+                                                                    <th scope="col">Day Left</th>
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Color System -->
+
+
+                                            </div>
+
+
+                                        </div>
+                                        <!-- Content Row -->
+
+
+                                    </div>
+                                    <!-- /.container-fluid -->
+
+                                </div>
+                                <!-- End of Main Content -->
+
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </main> <%- include('../partials/scroll_button'); %>
+
+                <script>
+                   
+
+
+                </script>
+                <!--   
+    <script src=" {{asset('/component/dashboard/vendor/chart.js/Chart.min.js')}}"></script>
+
+    <script src="  {{asset('/component/dashboard/js/sb-admin-2.min.js')}}"></script>
+
+
+    <script src="../bootstrap/assets/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
+        integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
+        integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha"
+        crossorigin="anonymous"></script>
+    <script src="dashboard.js"></script> -->
+</body>
+
+</html>

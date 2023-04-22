@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>Profile</title>
+
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
+
+
+    <style>
+        .profile {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+        }
+
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+
+        .emp-profile {
+            border-style: groove;
+            box-shadow: 5px 5px;
+            padding: 3%;
+            margin-top: 3%;
+            margin-bottom: 3%;
+            border-radius: 0.5rem;
+            background: #fff;
+
+        }
+
+        .profile-img {
+            text-align: center;
+        }
+
+        .profile-img img {
+            width: 50%;
+            height: 100%;
+        }
+
+        .profile-img .file input {
+            position: absolute;
+            opacity: 0;
+            right: 0;
+            top: 0;
+        }
+
+        .profile-head h5 {
+            color: #333;
+        }
+
+        .profile-head h6 {
+            color: #0062cc;
+        }
+
+        .profile-edit-btn {
+            border: none;
+            border-radius: 1.5rem;
+            width: 70%;
+            padding: 2%;
+            font-weight: 600;
+            color: #6c757d;
+            cursor: pointer;
+        }
+
+
+        .profile-head .nav-tabs {
+            margin-bottom: 5%;
+        }
+
+        .profile-head .nav-tabs .nav-link {
+            font-weight: 600;
+            border: none;
+        }
+
+        .profile-head .nav-tabs .nav-link.active {
+            border: none;
+            border-bottom: 2px solid #0062cc;
+        }
+
+        .profile-work {
+            padding: 14%;
+            margin-top: -15%;
+        }
+
+        .profile-work p {
+            font-size: 12px;
+            color: #818182;
+            font-weight: 600;
+            margin-top: 10%;
+        }
+
+        .profile-work a {
+            text-decoration: none;
+            color: #495057;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .profile-work ul {
+            list-style: none;
+        }
+
+        .profile-tab label {
+            font-weight: 600;
+        }
+
+        .profile-tab p {
+            font-weight: 600;
+            color: #0062cc;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+</head>
+
+
+
+<body>
+    <%- include('../partials/home_navbar'); %>
+        <%- include('../partials/home_sidebar'); %>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Settings</h1>
+                </div>
+                <h4 class="h4">Profile </h4>
+                <div class="card" style="width:100%; ">
+                    <div class="card-body" style=" background: -webkit-linear-gradient(left, #3931af, #00c6ff);">
+                        <div class="container emp-profile" style="width:100%; ">
+                            <form method="post">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="profile-img">
+                                            <img class="profile" id="profile2" src="" />
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="profile-head">
+                                            <h2 id="profileName"></h2>
+
+
+                                            <h6 id="profileRole">
+
+                                            </h6><br />
+                                            <!--                                        <p class="proile-rating">RANKINGS : <span>8/10</span></p>-->
+                                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" id="home-tab" data-toggle="tab"
+                                                        href="#home" role="tab" aria-controls="home"
+                                                        aria-selected="true">About</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="profile-tab" data-toggle="tab"
+                                                        href="#profile" role="tab" aria-controls="profile"
+                                                        aria-selected="false">Durians</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="profile-work">
+                                            <center>
+                                                <h5 style="margin-top:15px;">JOINED:</h5>
+                                                <h6 id="dateJoined"></h6>
+                                            </center><br />
+                                            <a href="/editProfile" class="btn btn-outline-secondary">Edit
+                                                Profile</a>
+                                            <a style=" float: right;" href="{{url('user/changePassword')}}"
+                                                class="btn btn-outline-secondary">Change Password</a>
+                                            <!--                                      <h2>{{auth()->user()->age}} age</h2>
+                                                                        <hr class="divider">   <br/>  
+                                                                        <h2>{{auth()->user()->contact_num}}</h2>
+                                                                        <hr class="divider">   <br/>  
+                                                                        <h2>{{auth()->user()->email}}</h2>
+                                                                        <hr class="divider">  <br/>   
+                                                                        <a style="margin-top:100px;" href="{{url('user/editProfile')}}" class="btn btn-outline-secondary" >Edit Profile</a>
+                                                                        <a style="margin-top:100px; float: right;" href="{{url('user/changePassword')}}" class="btn btn-outline-secondary" >Change Password</a>-->
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="tab-content profile-tab" id="myTabContent">
+                                            <div class="tab-pane fade show active" id="home" role="tabpanel"
+                                                aria-labelledby="home-tab">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Username</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p id="profileUsername"> </p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Contact Number</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p id="profileContactNum"></p>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Email</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p id="profileEmail"></p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="tab-pane fade" id="profile" role="tabpanel"
+                                                aria-labelledby="profile-tab">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label>Durian </label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p id="number"></p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+
+            <%- include('../partials/scroll_button'); %>
+
+
+
+
+                <!-- <script src="../bootstrap/assets/dist/js/bootstrap.bundle.min.js"></script>
+
+                <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
+                    integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
+                    crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
+                    integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha"
+                    crossorigin="anonymous"></script> -->
+                <script>
+                    // var user = localStorage.getItem("user");
+
+                    // const userJson = JSON.parse(user);
+
+                    // console.log(userJson);
+                    document.getElementById("profileName").innerHTML = userJson.lastName + " " + userJson.firstName;
+                    document.getElementById("profileRole").innerHTML = userJson.role;
+
+                    const date = new Date(userJson.dateJoined * 1000); // Multiply by 1000 to convert from seconds to milliseconds
+                    const humanReadableTime = date.toLocaleString(); // Convert to local time string
+
+
+
+                    document.getElementById("dateJoined").innerHTML = humanReadableTime;
+                    document.getElementById("profileUsername").innerHTML = userJson.username;
+                    document.getElementById("profileContactNum").innerHTML = userJson.contactNum;
+                    document.getElementById("profileEmail").innerHTML = userJson.email;
+
+
+                    const image = document.getElementById("profile2");
+                    image.src = userJson.profile_pic;
+
+
+                </script>
+</body>
+
+</html>
