@@ -1,4 +1,5 @@
 <%- include('../partials/authentication_header'); %>
+
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js"></script>
@@ -110,7 +111,7 @@
             var lastName = document.getElementById("lastName").value;
             var contactNum = document.getElementById("contactNum").value;
             var location = document.getElementById("homeAddress").value;
-            console.log(location);
+            // console.log(location);
             if (email != "" && username != "" && password != "" && confirmPassword != "" && firstName != "" && lastName != "" && contactNum != "" && location != "") {
                 {
                     if (validate(email, username, password, confirmPassword, firstName, lastName, contactNum)) {
@@ -128,7 +129,6 @@
 
 
                         }
-
                         const ABI = [
                             {
                                 "inputs": [],
@@ -358,14 +358,90 @@
                                 ],
                                 "stateMutability": "view",
                                 "type": "function"
+                            },
+                            {
+                                "inputs": [
+                                    {
+                                        "internalType": "uint256",
+                                        "name": "index",
+                                        "type": "uint256"
+                                    },
+                                    {
+                                        "internalType": "string",
+                                        "name": "inpuUsername",
+                                        "type": "string"
+                                    }
+                                ],
+                                "name": "testUpdateProfile",
+                                "outputs": [],
+                                "stateMutability": "nonpayable",
+                                "type": "function"
+                            },
+                            {
+                                "inputs": [
+                                    {
+                                        "internalType": "uint256",
+                                        "name": "inputUserID",
+                                        "type": "uint256"
+                                    },
+                                    {
+                                        "internalType": "string",
+                                        "name": "inpuUsername",
+                                        "type": "string"
+                                    },
+                                    {
+                                        "internalType": "string",
+                                        "name": "inpuFirstName",
+                                        "type": "string"
+                                    },
+                                    {
+                                        "internalType": "string",
+                                        "name": "inpuLastName",
+                                        "type": "string"
+                                    },
+                                    {
+                                        "internalType": "string",
+                                        "name": "inputContactNum",
+                                        "type": "string"
+                                    },
+                                    {
+                                        "internalType": "string",
+                                        "name": "inputHomeAddress",
+                                        "type": "string"
+                                    }
+                                ],
+                                "name": "updateProfile",
+                                "outputs": [],
+                                "stateMutability": "nonpayable",
+                                "type": "function"
+                            },
+                            {
+                                "inputs": [
+                                    {
+                                        "internalType": "uint256",
+                                        "name": "inputUserID",
+                                        "type": "uint256"
+                                    },
+                                    {
+                                        "internalType": "string",
+                                        "name": "profileName",
+                                        "type": "string"
+                                    }
+                                ],
+                                "name": "updateProfilePicture",
+                                "outputs": [],
+                                "stateMutability": "nonpayable",
+                                "type": "function"
                             }
                         ];
-                        const Address = "0x7c8C335e7e73ae5ab0ea8207235AE7261b505A13";
-                        window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
-                        window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
+                        const Address = "0x07A7dF493a952c225f66D9CD84B68c64b8EC230b";
+                        window.web3 = await new Web3(window.ethereum); //how to access to smart contract
+                        window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address
+
 
                         try {
                             await window.UserContract.methods.register(userID, firstName, lastName, email, username, password, contactNum, "clients", location).send({ from: account });
+
 
                             const data = await window.UserContract.methods.displayProfile(username).call();
 
@@ -377,8 +453,8 @@
 
                             localStorage.setItem("user", personJsonFormat);
 
-                            console.log("locate storage data: " + localStorage.getItem("user"));
-                            console.log("json data: " + personJson);
+                            //  console.log("locate storage data: " + localStorage.getItem("user"));
+                            //   console.log("json data: " + personJson);
 
                             var x = document.getElementById("message");
                             x.style.display = "none";

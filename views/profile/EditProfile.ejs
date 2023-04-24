@@ -10,7 +10,7 @@
     <title>Edit Profile</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
     <!-- Bootstrap core CSS -->
@@ -36,134 +36,573 @@
     <!-- Custom styles for this template -->
     <!--        <link href="bootstrap/dashboard/dashboard.css" rel="stylesheet">-->
 </head>
+<link href="style.css" rel="stylesheet">
+<div id="snackbar"></div>
+<script>
+
+
+    function myFunction(message) {
+        document.getElementById("snackbar").innerHTML = message;
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function () {
+            x.className = x.className.replace("show", "");
+        }, 2500);
+    }
+
+
+    // myFunction();
 
 
 
-<body>
-    <%- include('../partials/home_navbar'); %>
-        <%- include('../partials/home_sidebar'); %>
-
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">User Profile</h1>
-                </div>
-                <div class="col d-flex justify-content-center">
-                    <div class="card" style="width:50%;">
-                        <div class="card-body">
-
-                            <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-                            <form target="dummyframe">
 
 
-                                <div class="row g-3">
+</script>
+<%- include('../authentication/authorized'); %>
+
+    <body>
+        <%- include('../partials/home_navbar'); %>
+            <%- include('../partials/home_sidebar'); %>
+
+                <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                    <div
+                        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">User Profile</h1>
+
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <div class="card" style="width:50%;">
+                            <div class="card-body">
+
+                                <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                <form target="dummyframe">
 
 
-                                    <div class="col-12">
-                                        <h4 class="mb-3">Username</h4>
-                                        <div class="input-group has-validation">
+                                    <div class="row g-3">
 
 
-                                            <input type="text" class="form-control" id="formUsername" name="username"
-                                                value="" maxlength="20" required="required" autofocus>
+                                        <div class="col-12">
+                                            <h4 class="mb-3">Username</h4>
+                                            <div class="input-group has-validation">
+
+
+                                                <input type="text" class="form-control" id="formUsername"
+                                                    name="username" value="" maxlength="20" required="required"
+                                                    autofocus>
+
+
+                                            </div>
+
+
+                                            <span id="usernameErr" class="text-danger text-left"></span>
+
+
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <h4 class="mb-3">Firstname</h4>
+
+                                            <input type="text" class="form-control" id="formfirstName" name="firstName"
+                                                value="" maxlength="30" value="" required>
+
+
+
+                                            <span id="firstNameErr" class="text-danger text-left"></span>
+
+
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <h4 class="mb-3">Lastname</h4>
+
+                                            <input type="text" class="form-control" id="formlastName" name="lastName"
+                                                value="" maxlength="30" value="" required>
+
+
+
+
+                                            <span id="lastNameErr" class="text-danger text-left"></span>
 
 
                                         </div>
 
 
-                                        <span class="text-danger text-left"></span>
 
+                                        <div class="col-12">
+                                            <h4 class="mb-3">Contact Number</h4>
 
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <h4 class="mb-3">Firstname</h4>
-
-                                        <input type="text" class="form-control" id="formfirstName" name="firstName" value=""
-                                            maxlength="30" value="" required>
+                                            <input type="text" class="form-control" id="formcontactNum"
+                                                name="contactNum" value="" maxlength="20" placeholder="" required>
 
 
 
-                                        <span class="text-danger text-left"></span>
+                                            <span id="contactNumErr" class="text-danger text-left"></span>
+
+                                        </div>
+                                        <div class="col-12">
+                                            <h4 class="mb-3">Home Address</h4>
+                                            <textarea id="formhomeAddress" class="form-control" name="homeAddress"
+                                                rows="4" maxlength="200" required="required" placeholder="Home address"
+                                                cols="50"></textarea>
+                                        </div>
 
 
-                                    </div>
-
-                                    <div class="col-sm-6">
-                                        <h4 class="mb-3">Lastname</h4>
-
-                                        <input type="text" class="form-control" id="formlastName" name="lastName" value=""
-                                            maxlength="30" value="" required>
-
-
-
-
-                                        <span class="text-danger text-left"></span>
-
-
-                                    </div>
-
-
-
-                                    <div class="col-12">
-                                        <h4 class="mb-3">Contact Number</h4>
-
-                                        <input type="text" class="form-control" id="formcontactNum" name="contactNum"
-                                            value="" maxlength="20" placeholder="" required>
-
-
-
-                                        <span class="text-danger text-left"></span>
-
-                                    </div>
-                                    <div class="col-12">
-                                        <h4 class="mb-3">Home Address</h4>
-
-
-                                        <textarea id="formhomeAddress" class="form-control" name="homeAddress" rows="4"
-                                            maxlength="200" required="required" placeholder="Home address"
-                                            cols="50"></textarea>
-
-
-
-                                        <span class="text-danger text-left"></span>
-
-                                    </div>
-
-
-
+                                        <!-- 
                                     <div class="col-12">
                                         <h4 class="mb-3">Profile Image</h4>
                                         <input type="file" class="form-control" id="profile" placeholder=""
                                             name="profilePic">
 
-                                        <span class="text-danger text-left"></span>
+                                        <span id="pictureErr" class="text-danger text-left"></span>
 
-                                    </div>
+                                    </div> -->
+                                        <a href="/imageUpload">Upload Profile Image</a>
+                                    </div><br />
+                                    <button onclick="editProfile()" class=" btn btn-outline-secondary  btn-lg"
+                                        type="submit">Update Profile</button>
 
-                                </div><br />
-                                <button class=" btn btn-outline-secondary  btn-lg" type="submit">Update Profile</button>
 
 
-
-                                <a style=" float: right;" href="/profile"
-                                    class=" btn btn-outline-secondary btn-lg">Back</a>
-                            </form>
+                                    <a style=" float: right;" href="/profile"
+                                        class=" btn btn-outline-secondary btn-lg">Back</a>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </main> <%- include('../partials/scroll_button'); %>
+                </main> <%- include('../partials/scroll_button'); %>
 
-                <script>
+                    <script>
+                        console.log(userJson.userID);
 
-               
-                    document.getElementById("formUsername").value = userJson.username;
-                    document.getElementById("formfirstName").value = userJson.firstName ;
-                    document.getElementById("formlastName").value = userJson.lastName;
+                        document.getElementById("formUsername").value = userJson.username;
+                        document.getElementById("formfirstName").value = userJson.firstName;
+                        document.getElementById("formlastName").value = userJson.lastName;
 
-                    document.getElementById("formcontactNum").value = userJson.contactNum;
-                    document.getElementById("formhomeAddress").value = userJson.email;
-                </script>
-                <!-- <script src="../bootstrap/assets/dist/js/bootstrap.bundle.min.js"></script>
+                        document.getElementById("formcontactNum").value = userJson.contactNum;
+                        document.getElementById("formhomeAddress").value = userJson.email;
+
+
+                        const editProfile = async () => {
+
+                            var username = document.getElementById("formUsername").value;
+                            var firstname = document.getElementById("formfirstName").value;
+                            var lastname = document.getElementById("formlastName").value;
+                            var contactNum = document.getElementById("formcontactNum").value;
+                            var homeAdd = document.getElementById("formhomeAddress").value;
+                            if (username != "" && firstname != "" && lastname != "" && contactNum != "" && homeAdd != "") {
+                                {
+                                    if (validate(username, firstname, lastname, contactNum)) {
+
+                                        if (window.ethereum !== "undefined") {
+                                            const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+                                            account = accounts[0];
+
+
+                                        }
+
+                                        const ABI = [
+                                            {
+                                                "inputs": [],
+                                                "stateMutability": "nonpayable",
+                                                "type": "constructor"
+                                            },
+                                            {
+                                                "inputs": [],
+                                                "name": "deletePerson",
+                                                "outputs": [],
+                                                "stateMutability": "nonpayable",
+                                                "type": "function"
+                                            },
+                                            {
+                                                "inputs": [
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "username",
+                                                        "type": "string"
+                                                    }
+                                                ],
+                                                "name": "displayProfile",
+                                                "outputs": [
+                                                    {
+                                                        "internalType": "uint256",
+                                                        "name": "",
+                                                        "type": "uint256"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "",
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "",
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "",
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "",
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "",
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "",
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "internalType": "uint256",
+                                                        "name": "",
+                                                        "type": "uint256"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "",
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "",
+                                                        "type": "string"
+                                                    }
+                                                ],
+                                                "stateMutability": "view",
+                                                "type": "function"
+                                            },
+                                            {
+                                                "inputs": [
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "inputUsername",
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "inputPassword",
+                                                        "type": "string"
+                                                    }
+                                                ],
+                                                "name": "login",
+                                                "outputs": [
+                                                    {
+                                                        "internalType": "bool",
+                                                        "name": "",
+                                                        "type": "bool"
+                                                    }
+                                                ],
+                                                "stateMutability": "view",
+                                                "type": "function"
+                                            },
+                                            {
+                                                "inputs": [
+                                                    {
+                                                        "internalType": "uint256",
+                                                        "name": "userID",
+                                                        "type": "uint256"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "firstName",
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "lastName",
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "email",
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "username",
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "password",
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "contactNum",
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "role",
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "homeAddress",
+                                                        "type": "string"
+                                                    }
+                                                ],
+                                                "name": "register",
+                                                "outputs": [],
+                                                "stateMutability": "nonpayable",
+                                                "type": "function"
+                                            },
+                                            {
+                                                "inputs": [
+                                                    {
+                                                        "internalType": "uint256",
+                                                        "name": "index",
+                                                        "type": "uint256"
+                                                    }
+                                                ],
+                                                "name": "showProfile",
+                                                "outputs": [
+                                                    {
+                                                        "components": [
+                                                            {
+                                                                "internalType": "uint256",
+                                                                "name": "userID",
+                                                                "type": "uint256"
+                                                            },
+                                                            {
+                                                                "internalType": "string",
+                                                                "name": "firstName",
+                                                                "type": "string"
+                                                            },
+                                                            {
+                                                                "internalType": "string",
+                                                                "name": "lastName",
+                                                                "type": "string"
+                                                            },
+                                                            {
+                                                                "internalType": "string",
+                                                                "name": "email",
+                                                                "type": "string"
+                                                            },
+                                                            {
+                                                                "internalType": "string",
+                                                                "name": "username",
+                                                                "type": "string"
+                                                            },
+                                                            {
+                                                                "internalType": "string",
+                                                                "name": "password",
+                                                                "type": "string"
+                                                            },
+                                                            {
+                                                                "internalType": "string",
+                                                                "name": "contactNum",
+                                                                "type": "string"
+                                                            },
+                                                            {
+                                                                "internalType": "string",
+                                                                "name": "role",
+                                                                "type": "string"
+                                                            },
+                                                            {
+                                                                "internalType": "uint256",
+                                                                "name": "dateJoined",
+                                                                "type": "uint256"
+                                                            },
+                                                            {
+                                                                "internalType": "string",
+                                                                "name": "homeAddress",
+                                                                "type": "string"
+                                                            },
+                                                            {
+                                                                "internalType": "string",
+                                                                "name": "profile_pic",
+                                                                "type": "string"
+                                                            }
+                                                        ],
+                                                        "internalType": "struct User.Users",
+                                                        "name": "",
+                                                        "type": "tuple"
+                                                    }
+                                                ],
+                                                "stateMutability": "view",
+                                                "type": "function"
+                                            },
+                                            {
+                                                "inputs": [
+                                                    {
+                                                        "internalType": "uint256",
+                                                        "name": "index",
+                                                        "type": "uint256"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "inpuUsername",
+                                                        "type": "string"
+                                                    }
+                                                ],
+                                                "name": "testUpdateProfile",
+                                                "outputs": [],
+                                                "stateMutability": "nonpayable",
+                                                "type": "function"
+                                            },
+                                            {
+                                                "inputs": [
+                                                    {
+                                                        "internalType": "uint256",
+                                                        "name": "inputUserID",
+                                                        "type": "uint256"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "inpuUsername",
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "inpuFirstName",
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "inpuLastName",
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "inputContactNum",
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "inputHomeAddress",
+                                                        "type": "string"
+                                                    }
+                                                ],
+                                                "name": "updateProfile",
+                                                "outputs": [],
+                                                "stateMutability": "nonpayable",
+                                                "type": "function"
+                                            },
+                                            {
+                                                "inputs": [
+                                                    {
+                                                        "internalType": "uint256",
+                                                        "name": "inputUserID",
+                                                        "type": "uint256"
+                                                    },
+                                                    {
+                                                        "internalType": "string",
+                                                        "name": "profileName",
+                                                        "type": "string"
+                                                    }
+                                                ],
+                                                "name": "updateProfilePicture",
+                                                "outputs": [],
+                                                "stateMutability": "nonpayable",
+                                                "type": "function"
+                                            }
+                                        ];
+
+                                        console.log(username);
+                                        console.log(userJson.userID);
+                                        const Address = "0x07A7dF493a952c225f66D9CD84B68c64b8EC230b";
+                                        window.web3 = await new Web3(window.ethereum); //how to access to smart contract
+                                        window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address
+                                        try {
+                                            await window.UserContract.methods.updateProfile(userJson.userID, username, firstname, lastname, contactNum, homeAdd).send({ from: account });
+
+                                            const data = await window.UserContract.methods.displayProfile(username).call();
+
+                                            const person = {
+                                                userID: data[0], firstName: data[1], lastName: data[2], email: data[3], username: data[4],
+                                                contactNum: data[5], role: data[6], dateJoined: data[7], homeAddress: data[8], profile_pic: data[9]
+                                            };
+                                            const personJsonFormat = JSON.stringify(person);
+
+                                            localStorage.setItem("user", personJsonFormat);
+
+                                            Swal.fire({
+                                                title: 'Profile Update Succesful',
+                                                text: 'Profile update successfully',
+                                                icon: 'success',
+                                                confirmButtonText: 'OK'
+                                            }).then(function () {
+                                                window.location.href = '/profile';
+                                            });
+                                        } catch (error) {
+                                            // registration failed, render error message
+                                            console.log("Erorr:<br/>" + error.message);
+
+                                            var message = "The username already exist.";
+                                            myFunction(message);
+
+
+                                            // document.getElementById("contentErr").innerHTML = "The username already exist.";
+                                            //  res.render('register', { error: error.message });
+                                        }
+
+
+                                        // userJson.userID
+                                    }
+                                }
+
+
+                            }
+
+                            function validate(username, firstName, lastName, contactNum) {
+                                var valid = true;
+
+
+
+                                const regexUsername = /^[a-zA-Z0-9]+$/;
+                                const regexFirstLastName = /^[a-zA-Z ]+$/;
+                                const regexContact = /^(\+?6?01)[0-46-9]-*[0-9]{7,8}$/u;
+
+
+                                if (!regexUsername.test(username)) {
+                                    document.getElementById("usernameErr").innerHTML = "Invalid username";
+                                    valid = false;
+                                }
+                                else {
+                                    document.getElementById("usernameErr").innerHTML = "";
+                                    valid = true;
+                                }
+
+
+                                if (!regexFirstLastName.test(firstName)) {
+                                    document.getElementById("firstNameErr").innerHTML = "Invalid firstname";
+                                    valid = false;
+                                }
+                                else {
+                                    document.getElementById("firstNameErr").innerHTML = "";
+                                    valid = true;
+                                }
+
+                                if (!regexFirstLastName.test(lastName)) {
+                                    document.getElementById("lastNameErr").innerHTML = "Invalid lastname";
+                                    valid = false;
+                                }
+                                else {
+                                    document.getElementById("lastNameErr").innerHTML = "";
+                                    valid = true;
+                                }
+
+
+                                if (!regexContact.test(contactNum)) {
+                                    document.getElementById("contactNumErr").innerHTML = "Invalid contact number";
+                                    valid = false;
+                                }
+                                else {
+                                    document.getElementById("contactNumErr").innerHTML = "";
+                                    valid = true;
+                                }
+                                return valid;
+                            }
+                        }
+                    </script>
+                    <!-- <script src="../bootstrap/assets/dist/js/bootstrap.bundle.min.js"></script>
 
                 <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
                     integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
@@ -172,6 +611,6 @@
                     integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha"
                     crossorigin="anonymous"></script>
                 <script src="dashboard.js"></script> -->
-</body>
+    </body>
 
 </html>

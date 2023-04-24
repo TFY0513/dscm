@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>Upload Image</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" defer></script>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <!-- Bootstrap core CSS -->
+    <!--        <link href="bootstrap/assets/dist/css/bootstrap.min.css" rel="stylesheet">-->
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <!--        <link href="bootstrap/dashboard/dashboard.css" rel="stylesheet">-->
+</head>
+<link href="style.css" rel="stylesheet">
+<div id="snackbar"></div>
+<script>
+
+
+    function myFunction(message) {
+        document.getElementById("snackbar").innerHTML = message;
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function () {
+            x.className = x.className.replace("show", "");
+        }, 2500);
+    }
+
+
+    // myFunction();
+
+
+
+
+
+</script>
+<%- include('../authentication/authorized'); %>
+
+
+    <body>
+        <%- include('../partials/home_navbar'); %>
+            <%- include('../partials/home_sidebar'); %>
+
+
+                <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                    <div
+                        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">User Profile</h1>
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <div class="card" style="width:50%;">
+                            <div class="card-body">
+
+                                <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                <!-- target="dummyframe" -->
+                                <!-- <form id="upload-form" action="/upload" method="POST" enctype="multipart/form-data"> -->
+
+                                <form target="dummyframe" enctype="multipart/form-data">
+                                    <div class="row g-3">
+
+
+                                        <div class="col-12">
+
+                                            <h4 class="mb-3">Profile Image</h4>
+                                            <input type="file" class="form-control" id="image" placeholder=""
+                                                name="image" required>
+
+                                            <span id="pictureErr" class="text-danger text-left"></span>
+                                        </div>
+                                    </div><br />
+                                    <button class=" btn btn-outline-secondary  btn-lg" id="uploadBtn"
+                                        onclick="editProfilePic()" type="submit">Update
+                                        Profile</button>
+                                    <!-- onclick="editProfilePic()" -->
+                                    <a style=" float: right;" href="/profile"
+                                        class=" btn btn-outline-secondary btn-lg">Back</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </main> <%- include('../partials/scroll_button'); %>
+
+                    <script>
+
+                        //    $(document).ready(function () {
+                        //        $('#upload-form').submit(function (event) {
+
+                        //         event.preventDefault();
+                        //             const fileInput = document.getElementById('image');
+                        //             const file = fileInput.files[0];
+                        //             const maxSize = 10 * 1024 * 1024; // 100MB in bytes
+                        //             //console.log(file.name);
+                        //             const regesAllowedExt = /(\.jpg|\.jpeg|\.png)$/i;
+                        //             if (!regesAllowedExt.exec(file.name)) {
+                        //                 document.getElementById('pictureErr').innerHTML = 'Invalid file type. Only JPG, JPEG, and PNG files are allowed.';
+                        //                 return;
+                        //             }
+                        //             else if (file.size > maxSize) {
+                        //                 document.getElementById('pictureErr').innerHTML = 'File size too large. Please upload a file smaller than 100MB.';
+
+                        //                 return;
+                        //             }
+                        //             else {
+                        //                 var formData = new FormData();
+                        //                 formData.append('image', $('#image')[0].files[0]);
+                        //                 const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+
+
+                        //                 const ext = file.name.split('.').pop();
+                        //                 const filenamenew = 'Image-' + uniqueSuffix + "." + ext;
+
+                        //                 // console.log(filenamenew + "." + ext);
+                        //                 //  console.log(filenamenew);
+                        //                 $.ajax({
+                        //                     url: '/upload/' + filenamenew,
+                        //                     type: 'POST',
+                        //                     data: formData, //formData
+                        //                     processData: false,
+                        //                     contentType: false,
+                        //                     success: function (data) {
+                        //                         Swal.fire({
+                        //                             title: 'Profile Picture Update Succesful',
+                        //                             text: 'Profile picture update successfully',
+                        //                             icon: 'success',
+                        //                             confirmButtonText: 'OK'
+                        //                         });
+
+
+                        //                     },
+                        //                     error: function (xhr, status, error) {
+                        //                         // An error occurred when uploading the file
+                        //                         alert('Error: ' + error);
+                        //                     }
+                        //                 });
+                        //             }
+
+
+                        //        });
+                        //    });
+
+
+                        // function updateProfileContract() {
+
+
+                        //     // if (typeof filename !== 'undefined') { }
+
+                        // }
+                        // $('#uploadBtn').click(function () {
+
+
+                        // });
+
+                        const editProfilePic = async () => {
+                            if (window.ethereum !== "undefined") {
+                                const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+                                account = accounts[0];
+
+
+                            }
+                            const ABI = [
+                                {
+                                    "inputs": [],
+                                    "stateMutability": "nonpayable",
+                                    "type": "constructor"
+                                },
+                                {
+                                    "inputs": [],
+                                    "name": "deletePerson",
+                                    "outputs": [],
+                                    "stateMutability": "nonpayable",
+                                    "type": "function"
+                                },
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "string",
+                                            "name": "username",
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "name": "displayProfile",
+                                    "outputs": [
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "",
+                                            "type": "uint256"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "",
+                                            "type": "uint256"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "",
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "stateMutability": "view",
+                                    "type": "function"
+                                },
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "string",
+                                            "name": "inputUsername",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "inputPassword",
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "name": "login",
+                                    "outputs": [
+                                        {
+                                            "internalType": "bool",
+                                            "name": "",
+                                            "type": "bool"
+                                        }
+                                    ],
+                                    "stateMutability": "view",
+                                    "type": "function"
+                                },
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "userID",
+                                            "type": "uint256"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "firstName",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "lastName",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "email",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "username",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "password",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "contactNum",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "role",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "homeAddress",
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "name": "register",
+                                    "outputs": [],
+                                    "stateMutability": "nonpayable",
+                                    "type": "function"
+                                },
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "index",
+                                            "type": "uint256"
+                                        }
+                                    ],
+                                    "name": "showProfile",
+                                    "outputs": [
+                                        {
+                                            "components": [
+                                                {
+                                                    "internalType": "uint256",
+                                                    "name": "userID",
+                                                    "type": "uint256"
+                                                },
+                                                {
+                                                    "internalType": "string",
+                                                    "name": "firstName",
+                                                    "type": "string"
+                                                },
+                                                {
+                                                    "internalType": "string",
+                                                    "name": "lastName",
+                                                    "type": "string"
+                                                },
+                                                {
+                                                    "internalType": "string",
+                                                    "name": "email",
+                                                    "type": "string"
+                                                },
+                                                {
+                                                    "internalType": "string",
+                                                    "name": "username",
+                                                    "type": "string"
+                                                },
+                                                {
+                                                    "internalType": "string",
+                                                    "name": "password",
+                                                    "type": "string"
+                                                },
+                                                {
+                                                    "internalType": "string",
+                                                    "name": "contactNum",
+                                                    "type": "string"
+                                                },
+                                                {
+                                                    "internalType": "string",
+                                                    "name": "role",
+                                                    "type": "string"
+                                                },
+                                                {
+                                                    "internalType": "uint256",
+                                                    "name": "dateJoined",
+                                                    "type": "uint256"
+                                                },
+                                                {
+                                                    "internalType": "string",
+                                                    "name": "homeAddress",
+                                                    "type": "string"
+                                                },
+                                                {
+                                                    "internalType": "string",
+                                                    "name": "profile_pic",
+                                                    "type": "string"
+                                                }
+                                            ],
+                                            "internalType": "struct User.Users",
+                                            "name": "",
+                                            "type": "tuple"
+                                        }
+                                    ],
+                                    "stateMutability": "view",
+                                    "type": "function"
+                                },
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "index",
+                                            "type": "uint256"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "inpuUsername",
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "name": "testUpdateProfile",
+                                    "outputs": [],
+                                    "stateMutability": "nonpayable",
+                                    "type": "function"
+                                },
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "inputUserID",
+                                            "type": "uint256"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "inpuUsername",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "inpuFirstName",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "inpuLastName",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "inputContactNum",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "inputHomeAddress",
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "name": "updateProfile",
+                                    "outputs": [],
+                                    "stateMutability": "nonpayable",
+                                    "type": "function"
+                                },
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "inputUserID",
+                                            "type": "uint256"
+                                        },
+                                        {
+                                            "internalType": "string",
+                                            "name": "profileName",
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "name": "updateProfilePicture",
+                                    "outputs": [],
+                                    "stateMutability": "nonpayable",
+                                    "type": "function"
+                                }
+                            ];
+                            const Address = "0x07A7dF493a952c225f66D9CD84B68c64b8EC230b";
+                            window.web3 = await new Web3(window.ethereum); //how to access to smart contract
+                            window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address
+                            console.log(userJson.userID);
+
+
+
+                            const fileInput = document.getElementById('image');
+                            const file = fileInput.files[0];
+                            const maxSize = 10 * 1024 * 1024; // 100MB in bytes
+                            //console.log(file.name);
+                            const regesAllowedExt = /(\.jpg|\.jpeg|\.png)$/i;
+
+                            var formData = new FormData();
+                            formData.append('image', $('#image')[0].files[0]);
+                            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+
+
+                            const ext = file.name.split('.').pop();
+                            const filenamenew = 'Image-' + uniqueSuffix + "." + ext;
+
+                            try {
+                                await window.UserContract.methods.updateProfilePicture(userJson.userID, filenamenew).send({ from: account });
+
+                                if (!regesAllowedExt.exec(file.name)) {
+                                    document.getElementById('pictureErr').innerHTML = 'Invalid file type. Only JPG, JPEG, and PNG files are allowed.';
+                                    return;
+                                }
+                                else if (file.size > maxSize) {
+                                    document.getElementById('pictureErr').innerHTML = 'File size too large. Please upload a file smaller than 100MB.';
+
+                                    return;
+                                }
+                                else {
+
+
+                                    // console.log(filenamenew + "." + ext);
+                                    //  console.log(filenamenew);
+                                    $.ajax({
+                                        url: '/upload/' + filenamenew,
+                                        type: 'POST',
+                                        data: formData, //formData
+                                        processData: false,
+                                        contentType: false,
+                                        success: function (data) {
+                                            Swal.fire({
+                                                title: 'Profile Picture Update Succesful',
+                                                text: 'Profile picture update successfully',
+                                                icon: 'success',
+                                                confirmButtonText: 'OK'
+                                            }).then(function () {
+                                                updateContract();
+                                            });
+
+
+                                        },
+                                        error: function (xhr, status, error) {
+                                            // An error occurred when uploading the file
+                                            alert('Error: ' + error);
+                                        }
+                                    });
+                                }
+
+
+
+                            } catch (error) {
+                                // registration failed, render error message
+                                console.log("Erorr:<br/>" + error.message);
+
+
+                            }
+
+                        }
+                        const updateContract = async () => {
+
+
+                            const data = await window.UserContract.methods.displayProfile(userJson.username).call();
+
+                            const person = {
+                                userID: data[0], firstName: data[1], lastName: data[2], email: data[3], username: data[4],
+                                contactNum: data[5], role: data[6], dateJoined: data[7], homeAddress: data[8], profile_pic: data[9]
+                            };
+                            const personJsonFormat = JSON.stringify(person);
+
+                            // console.log(personJsonFormat);
+                            localStorage.setItem("user", personJsonFormat);
+                            window.location.href = '/profile';
+                        }
+                    </script>
+                    <!-- <script src="../bootstrap/assets/dist/js/bootstrap.bundle.min.js"></script>
+
+                <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
+                    integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
+                    crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
+                    integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha"
+                    crossorigin="anonymous"></script>
+                <script src="dashboard.js"></script> -->
+    </body>
+
+</html>

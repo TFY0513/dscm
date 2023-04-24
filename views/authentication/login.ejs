@@ -1,10 +1,10 @@
 <%- include('../partials/authentication_header'); %>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js"></script>
-    <!-- <link href="style.css" rel="stylesheet"> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js"></script>
+	<!-- <link href="style.css" rel="stylesheet"> -->
 
-    <!-- 
+	<!-- 
     <div id="snackbar"></div>
 
 
@@ -35,373 +35,446 @@
 
     </script> -->
 
-    <body class="text-center">
+	<body class="text-center">
 
-        <main class="form-signin">
+		<main class="form-signin">
 
-            <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-            <form target="dummyframe">
+			<iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+			<form target="dummyframe">
 
-                <img class="mb-4" src="logo-transparent.png" alt="logo" width="200">
+				<img class="mb-4" src="logo-transparent.png" alt="logo" width="200">
 
-                <h1 class="h3 mb-3 fw-normal">Login</h1>
-                <div class="alert alert-warning" id="message" role="alert" style="display: none;">
-                    <ul class="list-unstyled mb-0">
+				<h1 class="h3 mb-3 fw-normal">Login</h1>
+				<div class="alert alert-warning" id="message" role="alert" style="display: none;">
+					<ul class="list-unstyled mb-0">
 
-                        <li id="contentErr"></li>
+						<li id="contentErr"></li>
 
-                    </ul>
-                </div>
+					</ul>
+				</div>
 
 
-                <div class="form-group form-floating mb-3">
-                    <input type="text" class="form-control" id="username" name="username" value=""
-                        placeholder="Username" required="required" autofocus>
-                    <label for="floatingName">Username</label>
+				<div class="form-group form-floating mb-3">
+					<input type="text" class="form-control" id="username" name="username" value=""
+						placeholder="Username" required="required" autofocus>
+					<label for="floatingName">Username</label>
 
-                    <span class="text-danger text-left"></span>
+					<span class="text-danger text-left"></span>
 
-                </div>
+				</div>
 
-                <div class="form-group form-floating mb-3">
-                    <input type="password" class="form-control" id="password" name="password" value=""
-                        placeholder="Password" required="required">
-                    <label for="floatingPassword">Password</label>
+				<div class="form-group form-floating mb-3">
+					<input type="password" class="form-control" id="password" name="password" value=""
+						placeholder="Password" required="required">
+					<label for="floatingPassword">Password</label>
 
-                    <span class="text-danger text-left"></span>
+					<span class="text-danger text-left"></span>
 
-                </div>
+				</div>
 
-                <div class="form-group mb-3">
-                    <!-- <label for="remember">Remember me</label>
+				<div class="form-group mb-3">
+					<!-- <label for="remember">Remember me</label>
                         <input type="checkbox" name="remember" value="1"><br /> -->
-                    <a style=" text-decoration: none;" href='/register'>Register</a><br />
-                    <!-- <a href='{{route(' verify.showVerifyForm')}}'>Forget Password</a> -->
-                </div>
+					<a style=" text-decoration: none;" href='/register'>Register</a><br />
+					<!-- <a href='{{route(' verify.showVerifyForm')}}'>Forget Password</a> -->
+				</div>
 
-                <button class="w-100 btn btn-lg btn-primary" type="submit" onclick="login()">Login</button>
-                <br /><br />
+				<button class="w-100 btn btn-lg btn-primary" type="submit" onclick="login()">Login</button>
+				<br /><br />
 
-                <br />
+				<br />
 
-                <%- include('../partials/authentication_footer'); %>
+				<%- include('../partials/authentication_footer'); %>
 
-                    <form>
+					<form>
 
-        </main>
-
-
-    </body>
-
-    <script>
+		</main>
 
 
+	</body>
 
-        const login = async () => {
-
-            var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
+	<script>
 
 
-            if (username != "" && password != "") {
-                var hashObj = new jsSHA("SHA-512", "TEXT", { numRounds: 1 });
-                hashObj.update(password);
-                var hash = hashObj.getHash("HEX");
-                password = hash;
+		const login = async () => {
+
+			var username = document.getElementById("username").value;
+			var password = document.getElementById("password").value;
 
 
-                if (window.ethereum !== "undefined") {
-                    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-                    account = accounts[0];
-
-                }
-
-                const ABI = [
-                    {
-                        "inputs": [],
-                        "stateMutability": "nonpayable",
-                        "type": "constructor"
-                    },
-                    {
-                        "inputs": [],
-                        "name": "deletePerson",
-                        "outputs": [],
-                        "stateMutability": "nonpayable",
-                        "type": "function"
-                    },
-                    {
-                        "inputs": [
-                            {
-                                "internalType": "string",
-                                "name": "username",
-                                "type": "string"
-                            }
-                        ],
-                        "name": "displayProfile",
-                        "outputs": [
-                            {
-                                "internalType": "uint256",
-                                "name": "",
-                                "type": "uint256"
-                            },
-                            {
-                                "internalType": "string",
-                                "name": "",
-                                "type": "string"
-                            },
-                            {
-                                "internalType": "string",
-                                "name": "",
-                                "type": "string"
-                            },
-                            {
-                                "internalType": "string",
-                                "name": "",
-                                "type": "string"
-                            },
-                            {
-                                "internalType": "string",
-                                "name": "",
-                                "type": "string"
-                            },
-                            {
-                                "internalType": "string",
-                                "name": "",
-                                "type": "string"
-                            },
-                            {
-                                "internalType": "string",
-                                "name": "",
-                                "type": "string"
-                            },
-                            {
-                                "internalType": "uint256",
-                                "name": "",
-                                "type": "uint256"
-                            },
-                            {
-                                "internalType": "string",
-                                "name": "",
-                                "type": "string"
-                            },
-                            {
-                                "internalType": "string",
-                                "name": "",
-                                "type": "string"
-                            }
-                        ],
-                        "stateMutability": "view",
-                        "type": "function"
-                    },
-                    {
-                        "inputs": [
-                            {
-                                "internalType": "string",
-                                "name": "inputUsername",
-                                "type": "string"
-                            },
-                            {
-                                "internalType": "string",
-                                "name": "inputPassword",
-                                "type": "string"
-                            }
-                        ],
-                        "name": "login",
-                        "outputs": [
-                            {
-                                "internalType": "bool",
-                                "name": "",
-                                "type": "bool"
-                            }
-                        ],
-                        "stateMutability": "view",
-                        "type": "function"
-                    },
-                    {
-                        "inputs": [
-                            {
-                                "internalType": "uint256",
-                                "name": "userID",
-                                "type": "uint256"
-                            },
-                            {
-                                "internalType": "string",
-                                "name": "firstName",
-                                "type": "string"
-                            },
-                            {
-                                "internalType": "string",
-                                "name": "lastName",
-                                "type": "string"
-                            },
-                            {
-                                "internalType": "string",
-                                "name": "email",
-                                "type": "string"
-                            },
-                            {
-                                "internalType": "string",
-                                "name": "username",
-                                "type": "string"
-                            },
-                            {
-                                "internalType": "string",
-                                "name": "password",
-                                "type": "string"
-                            },
-                            {
-                                "internalType": "string",
-                                "name": "contactNum",
-                                "type": "string"
-                            },
-                            {
-                                "internalType": "string",
-                                "name": "role",
-                                "type": "string"
-                            },
-                            {
-                                "internalType": "string",
-                                "name": "homeAddress",
-                                "type": "string"
-                            }
-                        ],
-                        "name": "register",
-                        "outputs": [],
-                        "stateMutability": "nonpayable",
-                        "type": "function"
-                    },
-                    {
-                        "inputs": [
-                            {
-                                "internalType": "uint256",
-                                "name": "index",
-                                "type": "uint256"
-                            }
-                        ],
-                        "name": "showProfile",
-                        "outputs": [
-                            {
-                                "components": [
-                                    {
-                                        "internalType": "uint256",
-                                        "name": "userID",
-                                        "type": "uint256"
-                                    },
-                                    {
-                                        "internalType": "string",
-                                        "name": "firstName",
-                                        "type": "string"
-                                    },
-                                    {
-                                        "internalType": "string",
-                                        "name": "lastName",
-                                        "type": "string"
-                                    },
-                                    {
-                                        "internalType": "string",
-                                        "name": "email",
-                                        "type": "string"
-                                    },
-                                    {
-                                        "internalType": "string",
-                                        "name": "username",
-                                        "type": "string"
-                                    },
-                                    {
-                                        "internalType": "string",
-                                        "name": "password",
-                                        "type": "string"
-                                    },
-                                    {
-                                        "internalType": "string",
-                                        "name": "contactNum",
-                                        "type": "string"
-                                    },
-                                    {
-                                        "internalType": "string",
-                                        "name": "role",
-                                        "type": "string"
-                                    },
-                                    {
-                                        "internalType": "uint256",
-                                        "name": "dateJoined",
-                                        "type": "uint256"
-                                    },
-                                    {
-                                        "internalType": "string",
-                                        "name": "homeAddress",
-                                        "type": "string"
-                                    },
-                                    {
-                                        "internalType": "string",
-                                        "name": "profile_pic",
-                                        "type": "string"
-                                    }
-                                ],
-                                "internalType": "struct User.Users",
-                                "name": "",
-                                "type": "tuple"
-                            }
-                        ],
-                        "stateMutability": "view",
-                        "type": "function"
-                    }
-                ];
-                const Address = "0x7c8C335e7e73ae5ab0ea8207235AE7261b505A13";
-                window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
-                window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
+			if (username != "" && password != "") {
+				var hashObj = new jsSHA("SHA-512", "TEXT", { numRounds: 1 });
+				hashObj.update(password);
+				var hash = hashObj.getHash("HEX");
+				password = hash;
 
 
-                if (await window.UserContract.methods.login(username, password).call()) {
-                    //console.log(role);
-                    //  localStorage.setItem("username", username);
-                    //  localStorage.setItem("role", role);
+				if (window.ethereum !== "undefined") {
+					const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+					account = accounts[0];
 
-                    const data = await window.UserContract.methods.displayProfile(username).call();
+				}
 
-                    const person = {
-                        userID: data[0], firstName: data[1], lastName: data[2], email: data[3], username: data[4],
-                        contactNum: data[5], role: data[6], dateJoined: data[7], homeAddress: data[8], profile_pic: data[9]
-                    };
-                    const personJsonFormat = JSON.stringify(person);
+				const ABI = [
+					{
+						"inputs": [],
+						"stateMutability": "nonpayable",
+						"type": "constructor"
+					},
+					{
+						"inputs": [],
+						"name": "deletePerson",
+						"outputs": [],
+						"stateMutability": "nonpayable",
+						"type": "function"
+					},
+					{
+						"inputs": [
+							{
+								"internalType": "string",
+								"name": "username",
+								"type": "string"
+							}
+						],
+						"name": "displayProfile",
+						"outputs": [
+							{
+								"internalType": "uint256",
+								"name": "",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "",
+								"type": "string"
+							}
+						],
+						"stateMutability": "view",
+						"type": "function"
+					},
+					{
+						"inputs": [
+							{
+								"internalType": "string",
+								"name": "inputUsername",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "inputPassword",
+								"type": "string"
+							}
+						],
+						"name": "login",
+						"outputs": [
+							{
+								"internalType": "bool",
+								"name": "",
+								"type": "bool"
+							}
+						],
+						"stateMutability": "view",
+						"type": "function"
+					},
+					{
+						"inputs": [
+							{
+								"internalType": "uint256",
+								"name": "userID",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "firstName",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "lastName",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "email",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "username",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "password",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "contactNum",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "role",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "homeAddress",
+								"type": "string"
+							}
+						],
+						"name": "register",
+						"outputs": [],
+						"stateMutability": "nonpayable",
+						"type": "function"
+					},
+					{
+						"inputs": [
+							{
+								"internalType": "uint256",
+								"name": "index",
+								"type": "uint256"
+							}
+						],
+						"name": "showProfile",
+						"outputs": [
+							{
+								"components": [
+									{
+										"internalType": "uint256",
+										"name": "userID",
+										"type": "uint256"
+									},
+									{
+										"internalType": "string",
+										"name": "firstName",
+										"type": "string"
+									},
+									{
+										"internalType": "string",
+										"name": "lastName",
+										"type": "string"
+									},
+									{
+										"internalType": "string",
+										"name": "email",
+										"type": "string"
+									},
+									{
+										"internalType": "string",
+										"name": "username",
+										"type": "string"
+									},
+									{
+										"internalType": "string",
+										"name": "password",
+										"type": "string"
+									},
+									{
+										"internalType": "string",
+										"name": "contactNum",
+										"type": "string"
+									},
+									{
+										"internalType": "string",
+										"name": "role",
+										"type": "string"
+									},
+									{
+										"internalType": "uint256",
+										"name": "dateJoined",
+										"type": "uint256"
+									},
+									{
+										"internalType": "string",
+										"name": "homeAddress",
+										"type": "string"
+									},
+									{
+										"internalType": "string",
+										"name": "profile_pic",
+										"type": "string"
+									}
+								],
+								"internalType": "struct User.Users",
+								"name": "",
+								"type": "tuple"
+							}
+						],
+						"stateMutability": "view",
+						"type": "function"
+					},
+					{
+						"inputs": [
+							{
+								"internalType": "uint256",
+								"name": "index",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "inpuUsername",
+								"type": "string"
+							}
+						],
+						"name": "testUpdateProfile",
+						"outputs": [],
+						"stateMutability": "nonpayable",
+						"type": "function"
+					},
+					{
+						"inputs": [
+							{
+								"internalType": "uint256",
+								"name": "inputUserID",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "inpuUsername",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "inpuFirstName",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "inpuLastName",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "inputContactNum",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "inputHomeAddress",
+								"type": "string"
+							}
+						],
+						"name": "updateProfile",
+						"outputs": [],
+						"stateMutability": "nonpayable",
+						"type": "function"
+					},
+					{
+						"inputs": [
+							{
+								"internalType": "uint256",
+								"name": "inputUserID",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "profileName",
+								"type": "string"
+							}
+						],
+						"name": "updateProfilePicture",
+						"outputs": [],
+						"stateMutability": "nonpayable",
+						"type": "function"
+					}
+				];
+				const Address = "0x07A7dF493a952c225f66D9CD84B68c64b8EC230b";
+				window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+				window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
 
-                    localStorage.setItem("user", personJsonFormat);
-                    window.location.href = '/home';
-                    // var x = document.getElementById("message");
-                    // console.log(x.style.display);
 
-                    // if (x.style.display == "block") {
-                    //     x.style.display = "none";
-                    // }
+				if (await window.UserContract.methods.login(username, password).call()) {
+					//console.log(role);
+					//  localStorage.setItem("username", username);
+					//  localStorage.setItem("role", role);
 
+					const data = await window.UserContract.methods.displayProfile(username).call();
 
-                    // window.location = "/home";
-                }
-                else {
-                    console.log("error");
+					const person = {
+						userID: data[0], firstName: data[1], lastName: data[2], email: data[3], username: data[4],
+						contactNum: data[5], role: data[6], dateJoined: data[7], homeAddress: data[8], profile_pic: data[9]
+					};
+					const personJsonFormat = JSON.stringify(person);
 
-                    // localStorage.setItem("message", "Invalid credentials");
-                    var x = document.getElementById("message");
-                    x.style.display = "block";
+					localStorage.setItem("user", personJsonFormat);
+					window.location.href = '/home';
+					// var x = document.getElementById("message");
+					// console.log(x.style.display);
 
-
-                    document.getElementById("contentErr").innerHTML = "Invalid Credentials. Please try again";
-                }
-            }
-            else {
-                console.log("null");
-            }
+					// if (x.style.display == "block") {
+					//     x.style.display = "none";
+					// }
 
 
+					// window.location = "/home";
+				}
+				else {
+					console.log("error");
+
+					// localStorage.setItem("message", "Invalid credentials");
+					var x = document.getElementById("message");
+					x.style.display = "block";
+
+
+					document.getElementById("contentErr").innerHTML = "Invalid Credentials. Please try again";
+				}
+			}
+			else {
+				console.log("null");
+			}
 
 
 
 
 
 
-        }
 
 
-    </script>
+		}
 
-    </html>
+
+	</script>
+
+	</html>
