@@ -6,15 +6,7 @@
 
 	<!-- 
     <div id="snackbar"></div>
-
-
-
-
-
-
-
     <script>
-
         if (localStorage.getItem("message") !== null) {
             function myFunction() {
                 var x = document.getElementById("snackbar");
@@ -24,15 +16,9 @@
                 }, 2500);
             }
             document.getElementById("snackbar").innerHTML = localStorage.getItem("message");
-
             myFunction();
-
             localStorage.removeItem("message");
         }
-
-
-
-
     </script> -->
 
 	<body class="text-center">
@@ -94,27 +80,18 @@
 	</body>
 
 	<script>
-
-
 		const login = async () => {
-
 			var username = document.getElementById("username").value;
 			var password = document.getElementById("password").value;
-
-
 			if (username != "" && password != "") {
 				var hashObj = new jsSHA("SHA-512", "TEXT", { numRounds: 1 });
 				hashObj.update(password);
 				var hash = hashObj.getHash("HEX");
 				password = hash;
-
-
 				if (window.ethereum !== "undefined") {
 					const accounts = await ethereum.request({ method: "eth_requestAccounts" });
 					account = accounts[0];
-
 				}
-
 				const ABI = [
 					{
 						"inputs": [],
@@ -420,61 +397,40 @@
 						"type": "function"
 					}
 				];
-				const Address = "0x64dfC879c4f2C8B7c9827FC422564e5E8FB7f73F";
+				const Address = "0x863AB62B3225C5Ca21b736f3f3167AB0353Ffb6B";
 				window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
 				window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
-
-
 				if (await window.UserContract.methods.login(username, password).call()) {
 					//console.log(role);
 					//  localStorage.setItem("username", username);
 					//  localStorage.setItem("role", role);
-
 					const data = await window.UserContract.methods.displayProfile(username).call();
-
 					const person = {
 						userID: data[0], firstName: data[1], lastName: data[2], email: data[3], username: data[4],
 						contactNum: data[5], role: data[6], dateJoined: data[7], homeAddress: data[8], profile_pic: data[9]
 					};
 					const personJsonFormat = JSON.stringify(person);
-
 					localStorage.setItem("user", personJsonFormat);
 					window.location.href = '/home';
 					// var x = document.getElementById("message");
 					// console.log(x.style.display);
-
 					// if (x.style.display == "block") {
 					//     x.style.display = "none";
 					// }
-
-
 					// window.location = "/home";
 				}
 				else {
 					console.log("error");
-
 					// localStorage.setItem("message", "Invalid credentials");
 					var x = document.getElementById("message");
 					x.style.display = "block";
-
-
 					document.getElementById("contentErr").innerHTML = "Invalid Credentials. Please try again";
 				}
 			}
 			else {
 				console.log("null");
 			}
-
-
-
-
-
-
-
-
 		}
-
-
 	</script>
 
 	</html>
