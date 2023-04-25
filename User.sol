@@ -29,7 +29,7 @@ contract User {
                 "tEE",
                 "shink828@gmail.com",
                 "tfy",
-                "123",
+                "3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2",
                 "012-222222",
                 "Retailer",
                 block.timestamp,
@@ -57,6 +57,32 @@ contract User {
             }
         }
         require(!exists, "The email or username already exist.");
+        _;
+    }
+
+    modifier duplicateUsername(
+       uint256 inputUserID,
+        string memory username
+    ) {
+        //chcek if email or usernamexistt
+        bool exists = false;
+        if (user.length > 0) {
+            for (uint256 i = 0; i < user.length; i++) {
+                if (
+                    keccak256(abi.encodePacked(user[i].userID)) !=
+                    keccak256(abi.encodePacked(inputUserID))
+                ) {
+                    if (
+                        keccak256(abi.encodePacked(user[i].username)) ==
+                        keccak256(abi.encodePacked(username))
+                    ) {
+                        exists = true;
+                        break;
+                    }
+                }
+            }
+        }
+        require(!exists, "The username already exist.");
         _;
     }
 
@@ -89,6 +115,57 @@ contract User {
         totalUser++;
     }
 
+    function updateProfile(
+        uint256 inputUserID,
+        string memory inpuUsername,
+        string memory inpuFirstName,
+        string memory inpuLastName,
+        string memory inputContactNum,
+        string memory inputHomeAddress
+    ) public duplicateUsername(inputUserID, inpuUsername) {
+        if (user.length > 0) {
+            for (uint256 i = 0; i < user.length; i++) {
+                if (
+                    keccak256(abi.encodePacked(user[i].userID)) ==
+                    keccak256(abi.encodePacked(inputUserID))
+                ) {
+                    user[i].username = inpuUsername;
+                    user[i].firstName = inpuFirstName;
+                    user[i].lastName = inpuLastName;
+                    user[i].contactNum = inputContactNum;
+                    user[i].homeAddress = inputHomeAddress;
+                    break;
+                }
+            }
+        }
+
+    }
+
+    function updateProfilePicture(
+        uint256 inputUserID, string memory profileName
+    ) public {
+        if (user.length > 0) {
+            for (uint256 i = 0; i < user.length; i++) {
+                if (
+                    keccak256(abi.encodePacked(user[i].userID)) ==
+                    keccak256(abi.encodePacked(inputUserID))
+                ) {
+                    user[i].profile_pic = profileName;
+                    break;
+                }
+            }
+        }
+
+    }
+   
+
+    function testUpdateProfile(uint256 index, string memory inpuUsername)
+        public
+    {
+        
+        user[index].username = inpuUsername;
+    }
+
     function showProfile(uint256 index) public view returns (Users memory) {
         Users storage userSelected = user[index];
         return userSelected;
@@ -110,7 +187,6 @@ contract User {
             string memory
         )
     {
-
         Users storage userSelected = user[0];
         if (user.length > 0) {
             for (uint256 i = 0; i < user.length; i++) {

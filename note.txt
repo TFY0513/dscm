@@ -3,3 +3,4 @@ File need to use USer contract:
 - login
 - EditProfile
 - imageUpload
+- ChangePassword
