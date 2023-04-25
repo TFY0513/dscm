@@ -200,314 +200,236 @@
                                         }
 
                                         const ABI = [
-                                            {
-                                                "inputs": [],
-                                                "name": "deletePerson",
-                                                "outputs": [],
-                                                "stateMutability": "nonpayable",
-                                                "type": "function"
-                                            },
-                                            {
-                                                "inputs": [
-                                                    {
-                                                        "internalType": "uint256",
-                                                        "name": "userID",
-                                                        "type": "uint256"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "firstName",
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "lastName",
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "email",
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "username",
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "password",
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "contactNum",
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "role",
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "homeAddress",
-                                                        "type": "string"
-                                                    }
-                                                ],
-                                                "name": "register",
-                                                "outputs": [],
-                                                "stateMutability": "nonpayable",
-                                                "type": "function"
-                                            },
-                                            {
-                                                "inputs": [
-                                                    {
-                                                        "internalType": "uint256",
-                                                        "name": "index",
-                                                        "type": "uint256"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "inpuUsername",
-                                                        "type": "string"
-                                                    }
-                                                ],
-                                                "name": "testUpdateProfile",
-                                                "outputs": [],
-                                                "stateMutability": "nonpayable",
-                                                "type": "function"
-                                            },
-                                            {
-                                                "inputs": [],
-                                                "stateMutability": "nonpayable",
-                                                "type": "constructor"
-                                            },
-                                            {
-                                                "inputs": [
-                                                    {
-                                                        "internalType": "uint256",
-                                                        "name": "inputUserID",
-                                                        "type": "uint256"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "inpuUsername",
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "inpuFirstName",
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "inpuLastName",
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "inputContactNum",
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "inputHomeAddress",
-                                                        "type": "string"
-                                                    }
-                                                ],
-                                                "name": "updateProfile",
-                                                "outputs": [],
-                                                "stateMutability": "nonpayable",
-                                                "type": "function"
-                                            },
-                                            {
-                                                "inputs": [
-                                                    {
-                                                        "internalType": "uint256",
-                                                        "name": "inputUserID",
-                                                        "type": "uint256"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "profileName",
-                                                        "type": "string"
-                                                    }
-                                                ],
-                                                "name": "updateProfilePicture",
-                                                "outputs": [],
-                                                "stateMutability": "nonpayable",
-                                                "type": "function"
-                                            },
-                                            {
-                                                "inputs": [
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "username",
-                                                        "type": "string"
-                                                    }
-                                                ],
-                                                "name": "displayProfile",
-                                                "outputs": [
-                                                    {
-                                                        "internalType": "uint256",
-                                                        "name": "",
-                                                        "type": "uint256"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "",
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "",
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "",
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "",
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "",
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "",
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "internalType": "uint256",
-                                                        "name": "",
-                                                        "type": "uint256"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "",
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "",
-                                                        "type": "string"
-                                                    }
-                                                ],
-                                                "stateMutability": "view",
-                                                "type": "function"
-                                            },
-                                            {
-                                                "inputs": [
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "inputUsername",
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "internalType": "string",
-                                                        "name": "inputPassword",
-                                                        "type": "string"
-                                                    }
-                                                ],
-                                                "name": "login",
-                                                "outputs": [
-                                                    {
-                                                        "internalType": "bool",
-                                                        "name": "",
-                                                        "type": "bool"
-                                                    }
-                                                ],
-                                                "stateMutability": "view",
-                                                "type": "function"
-                                            },
-                                            {
-                                                "inputs": [
-                                                    {
-                                                        "internalType": "uint256",
-                                                        "name": "index",
-                                                        "type": "uint256"
-                                                    }
-                                                ],
-                                                "name": "showProfile",
-                                                "outputs": [
-                                                    {
-                                                        "components": [
-                                                            {
-                                                                "internalType": "uint256",
-                                                                "name": "userID",
-                                                                "type": "uint256"
-                                                            },
-                                                            {
-                                                                "internalType": "string",
-                                                                "name": "firstName",
-                                                                "type": "string"
-                                                            },
-                                                            {
-                                                                "internalType": "string",
-                                                                "name": "lastName",
-                                                                "type": "string"
-                                                            },
-                                                            {
-                                                                "internalType": "string",
-                                                                "name": "email",
-                                                                "type": "string"
-                                                            },
-                                                            {
-                                                                "internalType": "string",
-                                                                "name": "username",
-                                                                "type": "string"
-                                                            },
-                                                            {
-                                                                "internalType": "string",
-                                                                "name": "password",
-                                                                "type": "string"
-                                                            },
-                                                            {
-                                                                "internalType": "string",
-                                                                "name": "contactNum",
-                                                                "type": "string"
-                                                            },
-                                                            {
-                                                                "internalType": "string",
-                                                                "name": "role",
-                                                                "type": "string"
-                                                            },
-                                                            {
-                                                                "internalType": "uint256",
-                                                                "name": "dateJoined",
-                                                                "type": "uint256"
-                                                            },
-                                                            {
-                                                                "internalType": "string",
-                                                                "name": "homeAddress",
-                                                                "type": "string"
-                                                            },
-                                                            {
-                                                                "internalType": "string",
-                                                                "name": "profile_pic",
-                                                                "type": "string"
-                                                            }
-                                                        ],
-                                                        "internalType": "struct User.Users",
-                                                        "name": "",
-                                                        "type": "tuple"
-                                                    }
-                                                ],
-                                                "stateMutability": "view",
-                                                "type": "function"
-                                            }
-                                        ];
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "username",
+				"type": "string"
+			}
+		],
+		"name": "displayProfile",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "inputUsername",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "inputPassword",
+				"type": "string"
+			}
+		],
+		"name": "login",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "userID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "firstName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "lastName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "email",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "username",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "password",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "contactNum",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "role",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "homeAddress",
+				"type": "string"
+			}
+		],
+		"name": "register",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "inputUserID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "oldPassword",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "newPassword",
+				"type": "string"
+			}
+		],
+		"name": "updatePassword",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "inputUserID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "inpuUsername",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "inpuFirstName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "inpuLastName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "inputContactNum",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "inputHomeAddress",
+				"type": "string"
+			}
+		],
+		"name": "updateProfile",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "inputUserID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "profileName",
+				"type": "string"
+			}
+		],
+		"name": "updateProfilePicture",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+];
 
                                         console.log(username);
                                         console.log(userJson.userID);
-                                        const Address = "0x863AB62B3225C5Ca21b736f3f3167AB0353Ffb6B";
+                                        const Address = "0xc6832BBf204a4B1bFDF58e0301657bc415257401";
                                         window.web3 = await new Web3(window.ethereum); //how to access to smart contract
                                         window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address
                                         try {

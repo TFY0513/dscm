@@ -1,273 +1,139 @@
 <%- include('../partials/authentication_header'); %>
 
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-    <body class="text-center">
-        <main class="form-signin">
-            <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-            <form target="dummyframe">
-
-                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                <img class="mb-4" src="logo-transparent.png" alt="" width="200">
-
-                <h1 class="h3 mb-3 fw-normal">Register</h1>
-                <div class="alert alert-warning" id="message" role="alert" style="display: none;">
-                    <ul class="list-unstyled mb-0">
-
-                        <li id="contentErr"></li>
-
-                    </ul>
-                </div>
-
-                <div class="form-group form-floating mb-3">
-                    <input type="email" class="form-control" id="email" name="email" value="" maxlength="30"
-                        placeholder="name@example.com" required="required" autofocus>
-                    <label for="floatingEmail">Email address</label>
-
-                    <span class="text-danger text-left"></span>
-
-                </div>
-
-                <div class="form-group form-floating mb-3">
-                    <input type="text" class="form-control" id="username" name="username" value="" maxlength="20"
-                        placeholder="Username" required="required" autofocus>
-                    <label for="floatingName">Username</label>
-                    <span id="usernameErr" class="text-danger text-left"></span>
-                </div>
-
-                <div class="form-group form-floating mb-3">
-                    <input type="password" class="form-control" id="password" name="password" value=""
-                        placeholder="Password" maxlength="50" required="required">
-                    <label for="floatingPassword">Password</label>
-                    <small>Minimum length is 6 and must contain atleast 1 uppercase, lowercase, special character
-                        and
-                        numeric number </small><br />
-                    <span id="passwordErr" class="text-danger text-left"></span>
-                </div>
-
-                <div class="form-group form-floating mb-3">
-                    <input type="password" class="form-control" id="confirm_password" name="password_confirmation"
-                        value="" maxlength="50" placeholder="Confirm Password" required="required">
-                    <label for="floatingConfirmPassword">Confirm Password</label>
-                    <span id="conPassErr" class="text-danger text-left"></span>
-                </div>
-
-                <div class="form-group form-floating mb-3">
-                    <input type="text" class="form-control" id="firstName" name="firstName" value=""
-                        placeholder="First Name" maxlength="30" required="required">
-                    <label for="floatingPassword">First Name</label>
-                    <span id="firstNameErr" class="text-danger text-left"></span>
-                </div>
-
-                <div class="form-group form-floating mb-3">
-                    <input type="text" class="form-control" id="lastName" name="lastName" value=""
-                        placeholder="Last Name" maxlength="30" required="required">
-                    <label for="floatingPassword">Last Name</label>
-                    <span id="lastNameErr" class="text-danger text-left"></span>
-                </div>
-
-                <div class="form-group form-floating mb-3">
-                    <input type="text" class="form-control" id="contactNum" name="contactNum" value=""
-                        placeholder="Contact Number" maxlength="20" required="required">
-                    <label for="floatingPassword">Contact Number</label>
-                    <span id="contactNumErr" class="text-danger text-left"></span>
-                </div>
-
-                <div class="form-group form-floating mb-3">
-                    <textarea id="homeAddress" class="form-control" name="homeAddress" rows="4" maxlength="200"
-                        required="required" placeholder="Home address" cols="50"></textarea>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
-                    <label for="floatingPassword">Address</label>
+	<body class="text-center">
+		<main class="form-signin">
+			<iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+			<form target="dummyframe">
 
-                    <span id="contactNumErr" class="text-danger text-left"></span>
+				<input type="hidden" name="_token" value="{{ csrf_token() }}" />
+				<img class="mb-4" src="logo-transparent.png" alt="" width="200">
 
-                </div>
+				<h1 class="h3 mb-3 fw-normal">Register</h1>
+				<div class="alert alert-warning" id="message" role="alert" style="display: none;">
+					<ul class="list-unstyled mb-0">
 
-                <a href="/">Login</a><br /><br />
-                <button class="w-100 btn btn-lg btn-primary" type="submit" onclick="register()">Register</button>
+						<li id="contentErr"></li>
 
-                <%- include('../partials/authentication_footer'); %>
-            </form>
-        </main>
+					</ul>
+				</div>
 
-    </body>
+				<div class="form-group form-floating mb-3">
+					<input type="email" class="form-control" id="email" name="email" value="" maxlength="30"
+						placeholder="name@example.com" required="required" autofocus>
+					<label for="floatingEmail">Email address</label>
 
-    <script>
+					<span class="text-danger text-left"></span>
+
+				</div>
+
+				<div class="form-group form-floating mb-3">
+					<input type="text" class="form-control" id="username" name="username" value="" maxlength="20"
+						placeholder="Username" required="required" autofocus>
+					<label for="floatingName">Username</label>
+					<span id="usernameErr" class="text-danger text-left"></span>
+				</div>
+
+				<div class="form-group form-floating mb-3">
+					<input type="password" class="form-control" id="password" name="password" value=""
+						placeholder="Password" maxlength="50" required="required">
+					<label for="floatingPassword">Password</label>
+					<small>Minimum length is 6 and must contain atleast 1 uppercase, lowercase, special character
+						and
+						numeric number </small><br />
+					<span id="passwordErr" class="text-danger text-left"></span>
+				</div>
+
+				<div class="form-group form-floating mb-3">
+					<input type="password" class="form-control" id="confirm_password" name="password_confirmation"
+						value="" maxlength="50" placeholder="Confirm Password" required="required">
+					<label for="floatingConfirmPassword">Confirm Password</label>
+					<span id="conPassErr" class="text-danger text-left"></span>
+				</div>
+
+				<div class="form-group form-floating mb-3">
+					<input type="text" class="form-control" id="firstName" name="firstName" value=""
+						placeholder="First Name" maxlength="30" required="required">
+					<label for="floatingPassword">First Name</label>
+					<span id="firstNameErr" class="text-danger text-left"></span>
+				</div>
+
+				<div class="form-group form-floating mb-3">
+					<input type="text" class="form-control" id="lastName" name="lastName" value=""
+						placeholder="Last Name" maxlength="30" required="required">
+					<label for="floatingPassword">Last Name</label>
+					<span id="lastNameErr" class="text-danger text-left"></span>
+				</div>
+
+				<div class="form-group form-floating mb-3">
+					<input type="text" class="form-control" id="contactNum" name="contactNum" value=""
+						placeholder="Contact Number" maxlength="20" required="required">
+					<label for="floatingPassword">Contact Number</label>
+					<span id="contactNumErr" class="text-danger text-left"></span>
+				</div>
+
+				<div class="form-group form-floating mb-3">
+					<textarea id="homeAddress" class="form-control" name="homeAddress" rows="4" maxlength="200"
+						required="required" placeholder="Home address" cols="50"></textarea>
+
+
+					<label for="floatingPassword">Address</label>
+
+					<span id="contactNumErr" class="text-danger text-left"></span>
+
+				</div>
+
+				<a href="/">Login</a><br /><br />
+				<button class="w-100 btn btn-lg btn-primary" type="submit" onclick="register()">Register</button>
+
+				<%- include('../partials/authentication_footer'); %>
+			</form>
+		</main>
+
+	</body>
+
+	<script>
 
 
 
-        const register = async () => {
+		const register = async () => {
 
-            var email = document.getElementById("email").value;
-            var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
-            var confirmPassword = document.getElementById("confirm_password").value;
-            var firstName = document.getElementById("firstName").value;
-            var lastName = document.getElementById("lastName").value;
-            var contactNum = document.getElementById("contactNum").value;
-            var location = document.getElementById("homeAddress").value;
-            // console.log(location);
-            if (email != "" && username != "" && password != "" && confirmPassword != "" && firstName != "" && lastName != "" && contactNum != "" && location != "") {
-                {
-                    if (validate(email, username, password, confirmPassword, firstName, lastName, contactNum)) {
-                        var hashObj = new jsSHA("SHA-512", "TEXT", { numRounds: 1 });
-                        hashObj.update(password);
-                        var hash = hashObj.getHash("HEX");
-                        password = hash;
+			var email = document.getElementById("email").value;
+			var username = document.getElementById("username").value;
+			var password = document.getElementById("password").value;
+			var confirmPassword = document.getElementById("confirm_password").value;
+			var firstName = document.getElementById("firstName").value;
+			var lastName = document.getElementById("lastName").value;
+			var contactNum = document.getElementById("contactNum").value;
+			var location = document.getElementById("homeAddress").value;
+			// console.log(location);
+			if (email != "" && username != "" && password != "" && confirmPassword != "" && firstName != "" && lastName != "" && contactNum != "" && location != "") {
+				{
+					if (validate(email, username, password, confirmPassword, firstName, lastName, contactNum)) {
+						var hashObj = new jsSHA("SHA-512", "TEXT", { numRounds: 1 });
+						hashObj.update(password);
+						var hash = hashObj.getHash("HEX");
+						password = hash;
 
-                        let userID = Math.floor((Math.random() * 10000000) + 1);
-
-
-                        if (window.ethereum !== "undefined") {
-                            const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-                            account = accounts[0];
+						let userID = Math.floor((Math.random() * 10000000) + 1);
 
 
-                        }
-                        const ABI =[
-	{
-		"inputs": [],
-		"name": "deletePerson",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "userID",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "firstName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "lastName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "email",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "username",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "password",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "contactNum",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "role",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "homeAddress",
-				"type": "string"
-			}
-		],
-		"name": "register",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "index",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "inpuUsername",
-				"type": "string"
-			}
-		],
-		"name": "testUpdateProfile",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
+						if (window.ethereum !== "undefined") {
+							const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+							account = accounts[0];
+
+
+						}
+						const ABI = [
 	{
 		"inputs": [],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "inputUserID",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "inpuUsername",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "inpuFirstName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "inpuLastName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "inputContactNum",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "inputHomeAddress",
-				"type": "string"
-			}
-		],
-		"name": "updateProfile",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "inputUserID",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "profileName",
-				"type": "string"
-			}
-		],
-		"name": "updateProfilePicture",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
 	},
 	{
 		"inputs": [
@@ -361,209 +227,265 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "index",
+				"name": "userID",
 				"type": "uint256"
-			}
-		],
-		"name": "showProfile",
-		"outputs": [
+			},
 			{
-				"components": [
-					{
-						"internalType": "uint256",
-						"name": "userID",
-						"type": "uint256"
-					},
-					{
-						"internalType": "string",
-						"name": "firstName",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "lastName",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "email",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "username",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "password",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "contactNum",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "role",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "dateJoined",
-						"type": "uint256"
-					},
-					{
-						"internalType": "string",
-						"name": "homeAddress",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "profile_pic",
-						"type": "string"
-					}
-				],
-				"internalType": "struct User.Users",
-				"name": "",
-				"type": "tuple"
+				"internalType": "string",
+				"name": "firstName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "lastName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "email",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "username",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "password",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "contactNum",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "role",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "homeAddress",
+				"type": "string"
 			}
 		],
-		"stateMutability": "view",
+		"name": "register",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "inputUserID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "oldPassword",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "newPassword",
+				"type": "string"
+			}
+		],
+		"name": "updatePassword",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "inputUserID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "inpuUsername",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "inpuFirstName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "inpuLastName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "inputContactNum",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "inputHomeAddress",
+				"type": "string"
+			}
+		],
+		"name": "updateProfile",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "inputUserID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "profileName",
+				"type": "string"
+			}
+		],
+		"name": "updateProfilePicture",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ];
-                        const Address = "0x863AB62B3225C5Ca21b736f3f3167AB0353Ffb6B";
-                        window.web3 = await new Web3(window.ethereum); //how to access to smart contract
-                        window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address
+						const Address = "0xc6832BBf204a4B1bFDF58e0301657bc415257401	";
+						window.web3 = await new Web3(window.ethereum); //how to access to smart contract
+						window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address
 
 
-                        try {
-                            await window.UserContract.methods.register(userID, firstName, lastName, email, username, password, contactNum, "clients", location).send({ from: account });
+						try {
+							await window.UserContract.methods.register(userID, firstName, lastName, email, username, password, contactNum, "clients", location).send({ from: account });
 
 
-                            const data = await window.UserContract.methods.displayProfile(username).call();
+							const data = await window.UserContract.methods.displayProfile(username).call();
 
-                            const person = {
-                                userID: data[0], firstName: data[1], lastName: data[2], email: data[3], username: data[4],
-                                contactNum: data[5], role: data[6], dateJoined: data[7], homeAddress: data[8], profile_pic: data[9]
-                            };
-                            const personJsonFormat = JSON.stringify(person);
+							const person = {
+								userID: data[0], firstName: data[1], lastName: data[2], email: data[3], username: data[4],
+								contactNum: data[5], role: data[6], dateJoined: data[7], homeAddress: data[8], profile_pic: data[9]
+							};
+							const personJsonFormat = JSON.stringify(person);
 
-                            localStorage.setItem("user", personJsonFormat);
+							localStorage.setItem("user", personJsonFormat);
 
-                            //  console.log("locate storage data: " + localStorage.getItem("user"));
-                            //   console.log("json data: " + personJson);
+							//  console.log("locate storage data: " + localStorage.getItem("user"));
+							//   console.log("json data: " + personJson);
 
-                            var x = document.getElementById("message");
-                            x.style.display = "none";
-                            Swal.fire({
-                                title: 'Registration Succesful',
-                                text: 'Your account has been registered successfully, you will automatically login',
-                                icon: 'success',
-                                confirmButtonText: 'OK'
-                            }).then(function () {
-                                window.location.href = '/home';
-                            });
-                        } catch (error) {
-                            // registration failed, render error message
-                            console.log("Erorr:<br/>" + error.message);
+							var x = document.getElementById("message");
+							x.style.display = "none";
+							Swal.fire({
+								title: 'Registration Succesful',
+								text: 'Your account has been registered successfully, you will automatically login',
+								icon: 'success',
+								confirmButtonText: 'OK'
+							}).then(function () {
+								window.location.href = '/home';
+							});
+						} catch (error) {
+							// registration failed, render error message
+							console.log("Erorr:<br/>" + error.message);
 
-                            var x = document.getElementById("message");
-                            x.style.display = "block";
-
-
-                            document.getElementById("contentErr").innerHTML = "The email or username already exist.";
-                            //  res.render('register', { error: error.message });
-                        }
+							var x = document.getElementById("message");
+							x.style.display = "block";
 
 
-
-
-
-
-                    }
-                }
+							document.getElementById("contentErr").innerHTML = "The email or username already exist.";
+							//  res.render('register', { error: error.message });
+						}
 
 
 
 
 
 
-
-            }
-
-            function validate(email, username, password, confirmPassword, firstName, lastName, contactNum) {
-                var valid = true;
+					}
+				}
 
 
 
-                const regexUsername = /^[a-zA-Z0-9]+$/;
-                const regexPass = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/;
-                const regexFirstLastName = /^[a-zA-Z ]+$/;
-                const regexContact = /^(\+?6?01)[0-46-9]-*[0-9]{7,8}$/u;
 
 
-                if (!regexUsername.test(username)) {
-                    document.getElementById("usernameErr").innerHTML = "Invalid username";
-                    valid = false;
-                }
-                else {
-                    document.getElementById("usernameErr").innerHTML = "";
-                    valid = true;
-                }
 
 
-                // if (!regexPass.test(password)) {
-                //     document.getElementById("passwordErr").innerHTML = "Invalid password";
-                //     valid = false;
-                // }
-                // else {
-                //     document.getElementById("passwordErr").innerHTML = "";
-                //     valid = true;
-                // }
+			}
 
-                if (password != confirmPassword) {
-                    document.getElementById("conPassErr").innerHTML = "Password not match with confirm password";
-                    valid = false;
-                }
-                else {
-                    document.getElementById("conPassErr").innerHTML = "";
-                    valid = true;
-                }
+			function validate(email, username, password, confirmPassword, firstName, lastName, contactNum) {
+				var valid = true;
 
 
-                if (!regexFirstLastName.test(firstName)) {
-                    document.getElementById("firstNameErr").innerHTML = "Invalid firstname";
-                    valid = false;
-                }
-                else {
-                    document.getElementById("firstNameErr").innerHTML = "";
-                    valid = true;
-                }
 
-                if (!regexFirstLastName.test(lastName)) {
-                    document.getElementById("lastNameErr").innerHTML = "Invalid lastname";
-                    valid = false;
-                }
-                else {
-                    document.getElementById("lastNameErr").innerHTML = "";
-                    valid = true;
-                }
+				const regexUsername = /^[a-zA-Z0-9]+$/;
+				const regexPass = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/;
+				const regexFirstLastName = /^[a-zA-Z ]+$/;
+				const regexContact = /^(\+?6?01)[0-46-9]-*[0-9]{7,8}$/u;
 
 
-                if (!regexContact.test(contactNum)) {
-                    document.getElementById("contactNumErr").innerHTML = "Invalid contact number";
-                    valid = false;
-                }
-                else {
-                    document.getElementById("contactNumErr").innerHTML = "";
-                    valid = true;
-                }
-                return valid;
-            }
-        }
-    </script>
+				if (!regexUsername.test(username)) {
+					document.getElementById("usernameErr").innerHTML = "Invalid username";
+					valid = false;
+				}
+				else {
+					document.getElementById("usernameErr").innerHTML = "";
+					valid = true;
+				}
 
-    </html>
+
+				// if (!regexPass.test(password)) {
+				//     document.getElementById("passwordErr").innerHTML = "Invalid password";
+				//     valid = false;
+				// }
+				// else {
+				//     document.getElementById("passwordErr").innerHTML = "";
+				//     valid = true;
+				// }
+
+				if (password != confirmPassword) {
+					document.getElementById("conPassErr").innerHTML = "Password not match with confirm password";
+					valid = false;
+				}
+				else {
+					document.getElementById("conPassErr").innerHTML = "";
+					valid = true;
+				}
+
+
+				if (!regexFirstLastName.test(firstName)) {
+					document.getElementById("firstNameErr").innerHTML = "Invalid firstname";
+					valid = false;
+				}
+				else {
+					document.getElementById("firstNameErr").innerHTML = "";
+					valid = true;
+				}
+
+				if (!regexFirstLastName.test(lastName)) {
+					document.getElementById("lastNameErr").innerHTML = "Invalid lastname";
+					valid = false;
+				}
+				else {
+					document.getElementById("lastNameErr").innerHTML = "";
+					valid = true;
+				}
+
+
+				if (!regexContact.test(contactNum)) {
+					document.getElementById("contactNumErr").innerHTML = "Invalid contact number";
+					valid = false;
+				}
+				else {
+					document.getElementById("contactNumErr").innerHTML = "";
+					valid = true;
+				}
+				return valid;
+			}
+		}
+	</script>
+
+	</html>
