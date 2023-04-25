@@ -40,6 +40,26 @@ contract User {
         totalUser++;
     }
 
+    modifier checkUser(uint256 inputUserID, string memory oldPassword) {
+        //chcek if email or usernamexistt
+        bool exists = false;
+        if (user.length > 0) {
+            for (uint256 i = 0; i < user.length; i++) {
+                if (
+                    keccak256(abi.encodePacked(user[i].userID)) ==
+                    keccak256(abi.encodePacked(inputUserID)) &&
+                    keccak256(abi.encodePacked(user[i].password)) !=
+                    keccak256(abi.encodePacked(oldPassword))
+                ) {
+                    exists = true;
+                    break;
+                }
+            }
+        }
+        require(!exists, "Invalid old password.");
+        _;
+    }
+
     modifier duplicateUser(string memory email, string memory username) {
         //chcek if email or usernamexistt
         bool exists = false;
@@ -60,10 +80,7 @@ contract User {
         _;
     }
 
-    modifier duplicateUsername(
-       uint256 inputUserID,
-        string memory username
-    ) {
+    modifier duplicateUsername(uint256 inputUserID, string memory username) {
         //chcek if email or usernamexistt
         bool exists = false;
         if (user.length > 0) {
@@ -138,11 +155,11 @@ contract User {
                 }
             }
         }
-
     }
 
     function updateProfilePicture(
-        uint256 inputUserID, string memory profileName
+        uint256 inputUserID,
+        string memory profileName
     ) public {
         if (user.length > 0) {
             for (uint256 i = 0; i < user.length; i++) {
@@ -155,20 +172,24 @@ contract User {
                 }
             }
         }
-
-    }
-   
-
-    function testUpdateProfile(uint256 index, string memory inpuUsername)
-        public
-    {
-        
-        user[index].username = inpuUsername;
     }
 
-    function showProfile(uint256 index) public view returns (Users memory) {
-        Users storage userSelected = user[index];
-        return userSelected;
+    function updatePassword(
+        uint256 inputUserID,
+        string memory oldPassword,
+        string memory newPassword
+    ) public checkUser(inputUserID, oldPassword) {
+        if (user.length > 0) {
+            for (uint256 i = 0; i < user.length; i++) {
+                if (
+                    keccak256(abi.encodePacked(user[i].userID)) ==
+                    keccak256(abi.encodePacked(inputUserID))
+                ) {
+                    user[i].password = newPassword;
+                    break;
+                }
+            }
+        }
     }
 
     function displayProfile(string memory username)
@@ -213,11 +234,6 @@ contract User {
         );
     }
 
-    function deletePerson() public {
-        user.pop();
-        totalUser--;
-    }
-
     function login(string memory inputUsername, string memory inputPassword)
         public
         view
@@ -237,23 +253,4 @@ contract User {
 
         return exist;
     }
-
-    // function updateProfile(
-    //     uint256 _index,
-    //     string memory _fristName,
-    //     string memory _lastName
-    // ) public {
-    //     Person storage ppl = people[_index];
-    //     ppl._fristName = _fristName;
-    //     ppl._lastName = _lastName;
-    // }
-
-    // function deletePerson() public {
-    //     people.pop();
-    //     peopleCount--;
-    // }
-
-    // function getTotalIndex() public view returns (uint256) {
-    //     return peopleCount;
-    // }
 }
