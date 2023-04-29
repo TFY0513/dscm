@@ -201,9 +201,141 @@
 
                                         const ABI = [
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "userID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "firstName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "lastName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "email",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "username",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "password",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "contactNum",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "role",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "homeAddress",
+				"type": "string"
+			}
+		],
+		"name": "register",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "inputUserID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "oldPassword",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "newPassword",
+				"type": "string"
+			}
+		],
+		"name": "updatePassword",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "inputUserID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "inpuUsername",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "inpuFirstName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "inpuLastName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "inputContactNum",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "inputHomeAddress",
+				"type": "string"
+			}
+		],
+		"name": "updateProfile",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "inputUserID",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "profileName",
+				"type": "string"
+			}
+		],
+		"name": "updateProfilePicture",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	},
 	{
 		"inputs": [
@@ -292,144 +424,12 @@
 		],
 		"stateMutability": "view",
 		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "userID",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "firstName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "lastName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "email",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "username",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "password",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "contactNum",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "role",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "homeAddress",
-				"type": "string"
-			}
-		],
-		"name": "register",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "inputUserID",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "oldPassword",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "newPassword",
-				"type": "string"
-			}
-		],
-		"name": "updatePassword",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "inputUserID",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "inpuUsername",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "inpuFirstName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "inpuLastName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "inputContactNum",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "inputHomeAddress",
-				"type": "string"
-			}
-		],
-		"name": "updateProfile",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "inputUserID",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "profileName",
-				"type": "string"
-			}
-		],
-		"name": "updateProfilePicture",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
 	}
 ];
 
                                         console.log(username);
                                         console.log(userJson.userID);
-                                        const Address = "0xc6832BBf204a4B1bFDF58e0301657bc415257401";
+                                        const Address = "0x7AAEdba22E3f7F10bab0ec84196E7602AdDc6Ed3";
                                         window.web3 = await new Web3(window.ethereum); //how to access to smart contract
                                         window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address
                                         try {

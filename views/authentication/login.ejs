@@ -68,18 +68,37 @@
 				<button class="w-100 btn btn-lg btn-primary" type="submit" onclick="login()">Login</button>
 				<br /><br />
 
-				<br />
 
 				<%- include('../partials/authentication_footer'); %>
+					<button class=" btn btn-primary" type="submit" onclick="farmer()">Deploy Farmer</button>
+					<button class=" btn  btn-primary" type="submit" onclick="retailer()">Deploy
+						Retailer</button><br /><br />
+					<button class=" btn  btn-primary" type="submit" onclick="distributor()">Deploy Distributor</button>
 
 					<form>
 
 		</main>
 
 
+
 	</body>
 
 	<script>
+		const ABI = JSON.parse(localStorage.getItem("UserABI"));
+		const Address = localStorage.getItem("UserAddress")
+		
+
+		const farmer = async () => {
+			const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+			account = accounts[0];
+
+			// const Address =
+			window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+			window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
+			// console.log(window.UserContract.methods.displayProfile("tfy").call());
+
+		}
+
 		const login = async () => {
 			var username = document.getElementById("username").value;
 			var password = document.getElementById("password").value;
@@ -92,234 +111,7 @@
 					const accounts = await ethereum.request({ method: "eth_requestAccounts" });
 					account = accounts[0];
 				}
-				const ABI = [
-	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "username",
-				"type": "string"
-			}
-		],
-		"name": "displayProfile",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "inputUsername",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "inputPassword",
-				"type": "string"
-			}
-		],
-		"name": "login",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "userID",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "firstName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "lastName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "email",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "username",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "password",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "contactNum",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "role",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "homeAddress",
-				"type": "string"
-			}
-		],
-		"name": "register",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "inputUserID",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "oldPassword",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "newPassword",
-				"type": "string"
-			}
-		],
-		"name": "updatePassword",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "inputUserID",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "inpuUsername",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "inpuFirstName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "inpuLastName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "inputContactNum",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "inputHomeAddress",
-				"type": "string"
-			}
-		],
-		"name": "updateProfile",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "inputUserID",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "profileName",
-				"type": "string"
-			}
-		],
-		"name": "updateProfilePicture",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	}
-];
-				const Address = "0xc6832BBf204a4B1bFDF58e0301657bc415257401";
+				
 				window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
 				window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
 				if (await window.UserContract.methods.login(username, password).call()) {
@@ -329,17 +121,12 @@
 					const data = await window.UserContract.methods.displayProfile(username).call();
 					const person = {
 						userID: data[0], firstName: data[1], lastName: data[2], email: data[3], username: data[4],
-						contactNum: data[5], role: data[6], dateJoined: data[7], homeAddress: data[8], profile_pic: data[9]
+						contactNum: data[5], role: data[6], dateJoined: data[7], profile_pic: data[8]
 					};
 					const personJsonFormat = JSON.stringify(person);
 					localStorage.setItem("user", personJsonFormat);
 					window.location.href = '/home';
-					// var x = document.getElementById("message");
-					// console.log(x.style.display);
-					// if (x.style.display == "block") {
-					//     x.style.display = "none";
-					// }
-					// window.location = "/home";
+				
 				}
 				else {
 					console.log("error");

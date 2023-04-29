@@ -1,0 +1,272 @@
+<script>
+
+const UserABI = [
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "userID",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "firstName",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "lastName",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "email",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "username",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "password",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "contactNum",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "role",
+                "type": "string"
+            }
+        ],
+        "name": "register",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "clientsAddress",
+                "type": "address"
+            }
+        ],
+        "name": "registerClients",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "distributorAddress",
+                "type": "address"
+            }
+        ],
+        "name": "registerDistributor",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "farmerAddress",
+                "type": "address"
+            }
+        ],
+        "name": "registerFarmer",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "retailerAddress",
+                "type": "address"
+            }
+        ],
+        "name": "registerRetailers",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "inputUserID",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "oldPassword",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "newPassword",
+                "type": "string"
+            }
+        ],
+        "name": "updatePassword",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "inputUserID",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "inpuUsername",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "inpuFirstName",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "inpuLastName",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "inputContactNum",
+                "type": "string"
+            }
+        ],
+        "name": "updateProfile",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "inputUserID",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "profileName",
+                "type": "string"
+            }
+        ],
+        "name": "updateProfilePicture",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "username",
+                "type": "string"
+            }
+        ],
+        "name": "displayProfile",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "inputUsername",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "inputPassword",
+                "type": "string"
+            }
+        ],
+        "name": "login",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
+]
+const UserABIJSON = JSON.stringify(UserABI);
+localStorage.setItem("UserABI", UserABIJSON);
+localStorage.setItem("UserAddress", "0xAe627cF8F2cd7c5605445E58fB4269321847958D");
+
+window.location.href="/login";
+</script>

@@ -13,32 +13,126 @@ contract User {
         string contactNum;
         string role;
         uint256 dateJoined;
-        string homeAddress;
         string profile_pic;
+        address payable wallet;
+    }
+
+    struct Clients {
+        string location;
+    }
+
+    struct Farmers {
+        string farmName;
+        string location;
+    }
+
+    struct Retailers {
+        string location;
+        string shopName;
+    }
+
+    struct Distributors {
+        string distributorName;
     }
 
     // An array of 'Todo' structs
     Users[] user;
     uint256 totalUser = 0;
 
-    constructor() {
-        user.push(
-            Users(
-                1,
-                "Fnag yEE",
-                "tEE",
-                "shink828@gmail.com",
-                "tfy",
-                "3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2",
-                "012-222222",
-                "Retailer",
-                block.timestamp,
-                "6, jlnm bukit pemrjia, taman nbulti, 56100 kl",
-                "profile_4.png"
-            )
+    mapping(address => Farmers) farmers;
+
+    mapping(address => Clients) clients;
+
+    mapping(address => Retailers) retailers;
+
+    mapping(address => Distributors) distributors;
+
+    // constructor() {
+    //     user.push(
+    //         Users(
+    //             1234567,
+    //             "Fnag yEE",
+    //             "tEE",
+    //             "shink828@gmail.com",
+    //             "tfy",
+    //             "3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2", //123
+    //             "012-222222",
+    //             "Clients",
+    //             block.timestamp,
+    //             "profile_4.png",
+    //             payable(msg.sender)
+    //         )
+    //     );
+    //     totalUser++;
+    // }
+
+    function registerFarmer(address farmerAddress) public {
+        register(
+            7592712,
+            "choon pin",
+            "Wee",
+            "shink34@gmail.com",
+            "wcp",
+            "3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2", //123
+            "012-1234567",
+            "Farmers"
         );
-        totalUser++;
+
+        farmers[farmerAddress].farmName = "HappyFarmABC";
+        farmers[farmerAddress]
+            .location = "Durian Farm (Appontment), Lebuhraya Kuala Lumpur - Gua Musang, 27600 Raub District, Pahang";
     }
+
+    function registerClients(address clientsAddress) public {
+        register(
+            8192713,
+            "chong min",
+            "yeapo",
+            "ycm@gmail.com",
+            "ycm",
+            "3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2", //123
+            "019-81234213",
+            "Clients"
+        );
+
+        clients[clientsAddress]
+            .location = "Jalan Sekilau, Taman Ikhsan, 56000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur";
+    }
+
+    function registerRetailers(address retailerAddress) public {
+        register(
+            1234567,
+            "fang yee",
+            "Tee",
+            "shink828@gmail.com",
+            "tfy",
+            "3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2", //123
+            "011-1234213",
+            "Retailers"
+        );
+
+        retailers[retailerAddress].shopName = "Super Lariz Durian";
+        retailers[retailerAddress]
+            .location = "Jalan Sekilau, Taman Ikhsan, 56000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur";
+    }
+
+    function registerDistributor(address distributorAddress) public {
+        register(
+            5981723,
+            "Zongg Hao",
+            "Ng",
+            "shink@gmail.com",
+            "ncp",
+            "3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2", //123
+            "016-8572213",
+            "Distributors"
+        );
+
+        distributors[distributorAddress]
+            .distributorName = "MusangKingDistributor (MSK)";
+    }
+
+    
 
     modifier checkUser(uint256 inputUserID, string memory oldPassword) {
         //chcek if email or usernamexistt
@@ -111,8 +205,7 @@ contract User {
         string memory username,
         string memory password,
         string memory contactNum,
-        string memory role,
-        string memory homeAddress
+        string memory role
     ) public duplicateUser(email, username) {
         user.push(
             Users(
@@ -125,8 +218,8 @@ contract User {
                 contactNum,
                 role,
                 block.timestamp,
-                homeAddress,
-                "profile_4.png"
+                "profile_4.png",
+                payable(msg.sender)
             )
         );
         totalUser++;
@@ -137,8 +230,7 @@ contract User {
         string memory inpuUsername,
         string memory inpuFirstName,
         string memory inpuLastName,
-        string memory inputContactNum,
-        string memory inputHomeAddress
+        string memory inputContactNum
     ) public duplicateUsername(inputUserID, inpuUsername) {
         if (user.length > 0) {
             for (uint256 i = 0; i < user.length; i++) {
@@ -150,7 +242,7 @@ contract User {
                     user[i].firstName = inpuFirstName;
                     user[i].lastName = inpuLastName;
                     user[i].contactNum = inputContactNum;
-                    user[i].homeAddress = inputHomeAddress;
+
                     break;
                 }
             }
@@ -192,7 +284,7 @@ contract User {
         }
     }
 
-    function displayProfile(string memory username)
+    function retrieveProfile(string memory username)
         public
         view
         returns (
@@ -204,7 +296,6 @@ contract User {
             string memory,
             string memory,
             uint256,
-            string memory,
             string memory
         )
     {
@@ -229,7 +320,6 @@ contract User {
             userSelected.contactNum,
             userSelected.role,
             userSelected.dateJoined,
-            userSelected.homeAddress,
             userSelected.profile_pic
         );
     }

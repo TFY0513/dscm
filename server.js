@@ -19,7 +19,7 @@ app.use(express.static('public/bootstrap/assets/dist/css'));
 app.use(express.static('public/bootstrap/template'));
 app.use(express.static('public/bootstrap/assets/dist/js'));
 app.use(express.static('public/component/profile_sample'));
-
+app.use(express.static('public/contract'));
 app.set('view engine', 'ejs');
 
 app.engine('.ejs', require('ejs').__express);
@@ -34,11 +34,11 @@ const storage = multer.diskStorage({
   filename: function (req, file, cb) {
     const filename = req.params.fileName;
     cb(null, filename);
-    
+
     // const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
     //cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-    
-    
+
+
   }
 });
 
@@ -64,6 +64,13 @@ const upload = multer({
 
 app.get("/", (req, res) => {//"/" is route name
   // res.sendFile(path.join(__dirname + "/views/authentication/login.html"));
+  res.render('home/Setting');
+  // res.render('authentication/login');
+});
+
+app.get("/login", (req, res) => {//"/" is route name
+  // res.sendFile(path.join(__dirname + "/views/authentication/login.html"));
+
   res.render('authentication/login');
 });
 
@@ -84,7 +91,7 @@ app.get('/profile', (req, res, next) => {//"/hello" is route name
 });
 
 app.get('/editProfile', (req, res, next) => {//"/hello" is route name
-  
+
   res.render('profile/EditProfile');;
 });
 
@@ -99,7 +106,7 @@ app.get('/changePassword', (req, res, next) => {//"/hello" is route name
 
 
 app.post('/upload/:fileName', upload.single('image'), (req, res) => {
- // console.log(req.file.filename);
+  // console.log(req.file.filename);
   //res.locals.filename = req.file.filename;
   res.render('profile/profile');
 });
