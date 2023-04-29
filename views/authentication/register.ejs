@@ -1,5 +1,6 @@
 <%- include('../partials/authentication_header'); %>
 
+<%- include('../authentication/guest'); %>
 	<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js"></script>
@@ -88,6 +89,8 @@
 
 				</div>
 
+
+
 				<a href="/login">Login</a><br /><br />
 				<button class="w-100 btn btn-lg btn-primary" type="submit" onclick="register()">Register</button>
 
@@ -98,7 +101,8 @@
 	</body>
 
 	<script>
-
+		const ABI = JSON.parse(localStorage.getItem("UserABI"));
+		const Address = localStorage.getItem("UserAddress")
 
 		const register = async () => {
 
@@ -122,255 +126,20 @@
 						let userID = Math.floor((Math.random() * 10000000) + 1);
 
 
-						let account;
-
-						if (window.ethereum !== "undefined") {
-							const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-							account = accounts[0];
-							console.log(account);
-						}
-
-						const ABI = [
-							{
-								"inputs": [
-									{
-										"internalType": "uint256",
-										"name": "userID",
-										"type": "uint256"
-									},
-									{
-										"internalType": "string",
-										"name": "firstName",
-										"type": "string"
-									},
-									{
-										"internalType": "string",
-										"name": "lastName",
-										"type": "string"
-									},
-									{
-										"internalType": "string",
-										"name": "email",
-										"type": "string"
-									},
-									{
-										"internalType": "string",
-										"name": "username",
-										"type": "string"
-									},
-									{
-										"internalType": "string",
-										"name": "password",
-										"type": "string"
-									},
-									{
-										"internalType": "string",
-										"name": "contactNum",
-										"type": "string"
-									},
-									{
-										"internalType": "string",
-										"name": "role",
-										"type": "string"
-									},
-									{
-										"internalType": "string",
-										"name": "homeAddress",
-										"type": "string"
-									}
-								],
-								"name": "register",
-								"outputs": [],
-								"stateMutability": "nonpayable",
-								"type": "function"
-							},
-							{
-								"inputs": [],
-								"stateMutability": "nonpayable",
-								"type": "constructor"
-							},
-							{
-								"inputs": [
-									{
-										"internalType": "uint256",
-										"name": "inputUserID",
-										"type": "uint256"
-									},
-									{
-										"internalType": "string",
-										"name": "oldPassword",
-										"type": "string"
-									},
-									{
-										"internalType": "string",
-										"name": "newPassword",
-										"type": "string"
-									}
-								],
-								"name": "updatePassword",
-								"outputs": [],
-								"stateMutability": "nonpayable",
-								"type": "function"
-							},
-							{
-								"inputs": [
-									{
-										"internalType": "uint256",
-										"name": "inputUserID",
-										"type": "uint256"
-									},
-									{
-										"internalType": "string",
-										"name": "inpuUsername",
-										"type": "string"
-									},
-									{
-										"internalType": "string",
-										"name": "inpuFirstName",
-										"type": "string"
-									},
-									{
-										"internalType": "string",
-										"name": "inpuLastName",
-										"type": "string"
-									},
-									{
-										"internalType": "string",
-										"name": "inputContactNum",
-										"type": "string"
-									},
-									{
-										"internalType": "string",
-										"name": "inputHomeAddress",
-										"type": "string"
-									}
-								],
-								"name": "updateProfile",
-								"outputs": [],
-								"stateMutability": "nonpayable",
-								"type": "function"
-							},
-							{
-								"inputs": [
-									{
-										"internalType": "uint256",
-										"name": "inputUserID",
-										"type": "uint256"
-									},
-									{
-										"internalType": "string",
-										"name": "profileName",
-										"type": "string"
-									}
-								],
-								"name": "updateProfilePicture",
-								"outputs": [],
-								"stateMutability": "nonpayable",
-								"type": "function"
-							},
-							{
-								"inputs": [
-									{
-										"internalType": "string",
-										"name": "username",
-										"type": "string"
-									}
-								],
-								"name": "displayProfile",
-								"outputs": [
-									{
-										"internalType": "uint256",
-										"name": "",
-										"type": "uint256"
-									},
-									{
-										"internalType": "string",
-										"name": "",
-										"type": "string"
-									},
-									{
-										"internalType": "string",
-										"name": "",
-										"type": "string"
-									},
-									{
-										"internalType": "string",
-										"name": "",
-										"type": "string"
-									},
-									{
-										"internalType": "string",
-										"name": "",
-										"type": "string"
-									},
-									{
-										"internalType": "string",
-										"name": "",
-										"type": "string"
-									},
-									{
-										"internalType": "string",
-										"name": "",
-										"type": "string"
-									},
-									{
-										"internalType": "uint256",
-										"name": "",
-										"type": "uint256"
-									},
-									{
-										"internalType": "string",
-										"name": "",
-										"type": "string"
-									},
-									{
-										"internalType": "string",
-										"name": "",
-										"type": "string"
-									}
-								],
-								"stateMutability": "view",
-								"type": "function"
-							},
-							{
-								"inputs": [
-									{
-										"internalType": "string",
-										"name": "inputUsername",
-										"type": "string"
-									},
-									{
-										"internalType": "string",
-										"name": "inputPassword",
-										"type": "string"
-									}
-								],
-								"name": "login",
-								"outputs": [
-									{
-										"internalType": "bool",
-										"name": "",
-										"type": "bool"
-									}
-								],
-								"stateMutability": "view",
-								"type": "function"
-							}
-						];
-						const Address = "0x7AAEdba22E3f7F10bab0ec84196E7602AdDc6Ed3	";
-						window.web3 = await new Web3(window.ethereum); //how to access to smart contract
-						window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address
-
+						const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+						account = accounts[0];
+						window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+						window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address 
 
 						try {
-							await window.UserContract.methods.register(userID, firstName, lastName, email, username, password, contactNum, "clients", location).send({ from: account });
+							await window.UserContract.methods.register(userID, firstName, lastName, email, username, password, contactNum, "Clients", location).send({ from: account });
 
 
-							const data = await window.UserContract.methods.displayProfile(username).call();
+							const data = await window.UserContract.methods.retrieveProfile(username).call();
 
 							const person = {
 								userID: data[0], firstName: data[1], lastName: data[2], email: data[3], username: data[4],
-								contactNum: data[5], role: data[6], dateJoined: data[7], homeAddress: data[8], profile_pic: data[9]
+								contactNum: data[5], role: data[6], dateJoined: data[7], profile_pic: data[8], wallet: data[9]
 							};
 							const personJsonFormat = JSON.stringify(person);
 
@@ -391,18 +160,36 @@
 							});
 						} catch (error) {
 							// registration failed, render error message
+
 							console.log("Erorr:<br/>" + error.message);
 
-							var x = document.getElementById("message");
-							x.style.display = "block";
+							if (error.message.includes("revert")) {
+								Swal.fire({
+									title: 'Registration Failed',
+									text: 'The email or username or wallet already exist.',
+									icon: 'error',
+									confirmButtonText: 'OK'
+								});
+
+							}
+							else {
+								Swal.fire({
+									title: 'Registration Failed',
+									text: 'Unknown Error',
+									icon: 'error',
+									confirmButtonText: 'OK'
+								});
+							}
+							// var x = document.getElementById("message");
+							// x.style.display = "block";
 
 
-							document.getElementById("contentErr").innerHTML = "The email or username already exist.";
+
+							// document.getElementById("contentErr").innerHTML = "The email or username or wallet already exist.";
 							//  res.render('register', { error: error.message });
 						}
 
-
-
+				
 
 
 

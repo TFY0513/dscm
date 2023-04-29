@@ -141,14 +141,14 @@
             <%- include('../partials/home_sidebar'); %>
 
 
-            
+
 
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                     <div
                         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h1 class="h2">Settings</h1>
 
-              
+
                     </div>
                     <h4 class="h4">Profile </h4>
                     <div class="card" style="width:100%; ">
@@ -167,6 +167,7 @@
                                             <div class="profile-head">
                                                 <h2 id="profileName"></h2>
                                                 <h3 id="userID"></h3>
+                                                <h5 id="address"></h5>
                                                 <h6 id="profileRole">
 
                                                 </h6><br />
@@ -238,6 +239,23 @@
                                                         </div>
                                                     </div>
 
+                                                    <div id="locationDiv" class="row">
+                                                        <div class="col-md-6">
+                                                            <label id="location"></label>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <p id="userLocation"></p>
+                                                        </div>
+                                                    </div>
+                                                    <div id="NameDiv" class="row">
+                                                        <div class="col-md-6">
+                                                            <label id="naming"></label>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <p id="userShopName"></p>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                                 <div class="tab-pane fade" id="profile" role="tabpanel"
                                                     aria-labelledby="profile-tab">
@@ -275,14 +293,11 @@
                     integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha"
                     crossorigin="anonymous"></script> -->
                     <script>
-                        // var user = localStorage.getItem("user");
 
-                        // const userJson = JSON.parse(user);
-
-                        // console.log(userJson);
                         document.getElementById("profileName").innerHTML = userJson.lastName + " " + userJson.firstName;
                         document.getElementById("profileRole").innerHTML = userJson.role;
                         document.getElementById("userID").innerHTML = "#" + userJson.userID;
+                        document.getElementById("address").innerHTML = "" + userJson.wallet;
 
                         const date = new Date(userJson.dateJoined * 1000); // Multiply by 1000 to convert from seconds to milliseconds
                         const humanReadableTime = date.toLocaleString(); // Convert to local time string
@@ -297,6 +312,76 @@
 
                         const image = document.getElementById("profile2");
                         image.src = userJson.profile_pic;
+
+
+                        const ABI = JSON.parse(localStorage.getItem("UserABI"));
+                        const Address = localStorage.getItem("UserAddress")
+
+
+                        const getExtraDetail = async () => {
+
+                            const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+                            account = accounts[0];
+                            window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+                            window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address 
+
+                            switch (userJson.role) {
+                                case "Farmers":
+
+
+                                    const farmerData = await window.UserContract.methods.displayFarmerDetail(userJson.wallet).call();
+
+                                    document.getElementById("naming").innerHTML = "Farm Name";
+
+                                    document.getElementById("userShopName").innerHTML = farmerData[0];
+
+                                    document.getElementById("location").innerHTML = "Farm Location";
+
+                                    document.getElementById("userLocation").innerHTML = farmerData[1];
+                                    break;
+                                case "Clients":
+
+                                    const clientData = await window.UserContract.methods.displayClientsDetail(userJson.wallet).call();
+
+                                    document.getElementById("location").innerHTML = "Home Address";
+
+                                    document.getElementById("userLocation").innerHTML = clientData;
+
+                                    document.getElementById("NameDiv").innerHTML.style.display = "none";
+
+                                    break;
+                                case "Retailers":
+                                    const retailerData = await window.UserContract.methods.displayRetailerDetail(userJson.wallet).call();
+
+                                    document.getElementById("naming").innerHTML = "Retail Shop Name";
+
+                                    document.getElementById("userShopName").innerHTML = retailerData[0];
+
+                                    document.getElementById("location").innerHTML = "Retail Shop Location";
+
+                                    document.getElementById("userLocation").innerHTML = retailerData[1];
+
+                                   
+
+                                    
+
+                                    break;
+                                default:
+                                    const distributorData = await window.UserContract.methods.displayDistributorDetail(userJson.wallet).call();
+
+                                    document.getElementById("naming").innerHTML = "Distributor Name";
+
+                                    document.getElementById("userShopName").innerHTML = distributorData;
+
+                                    document.getElementById("NameDiv").innerHTML.style.display = "none";
+
+                                    document.getElementById("locationDiv").innerHTML.style.display = "none";
+                                    break;
+                            }
+
+
+                        }
+                        getExtraDetail();
 
 
                     </script>

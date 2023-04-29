@@ -1,6 +1,6 @@
 <%- include('../partials/authentication_header'); %>
 
-
+<%- include('../authentication/guest'); %>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js"></script>
 	<!-- <link href="style.css" rel="stylesheet"> -->
 
@@ -70,11 +70,11 @@
 
 
 				<%- include('../partials/authentication_footer'); %>
-					<button class=" btn btn-primary" type="submit" onclick="farmer()">Deploy Farmer</button>
-					<button class=" btn  btn-primary" type="submit" onclick="retailer()">Deploy
+					<button class=" btn btn-primary" type="submit" onclick="deployFarmer()">Deploy Farmer</button>
+					<button class=" btn  btn-primary" type="submit" onclick="deployRetailers()">Deploy
 						Retailer</button><br /><br />
-					<button class=" btn  btn-primary" type="submit" onclick="distributor()">Deploy Distributor</button>
-
+					<button class=" btn  btn-primary" type="submit" onclick="deployDistributor()">Deploy Distributor</button>
+					<button class=" btn  btn-primary" type="submit" onclick="deployClients()">Deploy Clients</button>
 					<form>
 
 		</main>
@@ -86,16 +86,79 @@
 	<script>
 		const ABI = JSON.parse(localStorage.getItem("UserABI"));
 		const Address = localStorage.getItem("UserAddress")
-		
 
-		const farmer = async () => {
+
+	
+
+		const deployClients = async () => {
+
+			const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+			account = accounts[0];
+			window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+			window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address 
+
+			try {
+				await window.UserContract.methods.deployClients(account).send({ from: account });
+
+			} catch (error) {
+				console.log("Erorr:<br/>" + error.message);
+
+			}
+
+
+		}
+
+		const deployFarmer = async () => {
+
+			const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+			account = accounts[0];
+			window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+			window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address 
+
+			try {
+				await window.UserContract.methods.deployFarmer(account).send({ from: account });
+
+			} catch (error) {
+				console.log("Erorr:<br/>" + error.message);
+
+			}
+
+
+		}
+
+		const deployRetailers = async () => {
 			const accounts = await ethereum.request({ method: "eth_requestAccounts" });
 			account = accounts[0];
 
-			// const Address =
 			window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
-			window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
-			// console.log(window.UserContract.methods.displayProfile("tfy").call());
+			window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address 
+
+			try {
+				await window.UserContract.methods.deployRetailers(account).send({ from: account });
+
+			} catch (error) {
+				console.log("Erorr:<br/>" + error.message);
+
+			}
+
+
+		}
+
+		const deployDistributor = async () => {
+			const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+			account = accounts[0];
+
+			window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+			window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address 
+
+			try {
+				await window.UserContract.methods.deployDistributor(account).send({ from: account });
+
+			} catch (error) {
+				console.log("Erorr:<br/>" + error.message);
+
+			}
+
 
 		}
 
@@ -111,22 +174,22 @@
 					const accounts = await ethereum.request({ method: "eth_requestAccounts" });
 					account = accounts[0];
 				}
-				
+
 				window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
 				window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
 				if (await window.UserContract.methods.login(username, password).call()) {
 					//console.log(role);
 					//  localStorage.setItem("username", username);
 					//  localStorage.setItem("role", role);
-					const data = await window.UserContract.methods.displayProfile(username).call();
+					const data = await window.UserContract.methods.retrieveProfile(username).call();
 					const person = {
 						userID: data[0], firstName: data[1], lastName: data[2], email: data[3], username: data[4],
-						contactNum: data[5], role: data[6], dateJoined: data[7], profile_pic: data[8]
+						contactNum: data[5], role: data[6], dateJoined: data[7], profile_pic: data[8], wallet: data[9]
 					};
 					const personJsonFormat = JSON.stringify(person);
 					localStorage.setItem("user", personJsonFormat);
 					window.location.href = '/home';
-				
+
 				}
 				else {
 					console.log("error");

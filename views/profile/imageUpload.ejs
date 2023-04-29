@@ -105,7 +105,8 @@
 				</main> <%- include('../partials/scroll_button'); %>
 
 					<script>
-
+						const ABI = JSON.parse(localStorage.getItem("UserABI"));
+						const Address = localStorage.getItem("UserAddress")
 						//    $(document).ready(function () {
 						//        $('#upload-form').submit(function (event) {
 
@@ -201,247 +202,13 @@
 								return;
 							}
 							else {
-								if (window.ethereum !== "undefined") {
-									const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-									account = accounts[0];
+								const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+								account = accounts[0];
+								window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+								window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address 
 
-
-								}
-								const ABI = [
-									{
-										"inputs": [
-											{
-												"internalType": "uint256",
-												"name": "userID",
-												"type": "uint256"
-											},
-											{
-												"internalType": "string",
-												"name": "firstName",
-												"type": "string"
-											},
-											{
-												"internalType": "string",
-												"name": "lastName",
-												"type": "string"
-											},
-											{
-												"internalType": "string",
-												"name": "email",
-												"type": "string"
-											},
-											{
-												"internalType": "string",
-												"name": "username",
-												"type": "string"
-											},
-											{
-												"internalType": "string",
-												"name": "password",
-												"type": "string"
-											},
-											{
-												"internalType": "string",
-												"name": "contactNum",
-												"type": "string"
-											},
-											{
-												"internalType": "string",
-												"name": "role",
-												"type": "string"
-											},
-											{
-												"internalType": "string",
-												"name": "homeAddress",
-												"type": "string"
-											}
-										],
-										"name": "register",
-										"outputs": [],
-										"stateMutability": "nonpayable",
-										"type": "function"
-									},
-									{
-										"inputs": [],
-										"stateMutability": "nonpayable",
-										"type": "constructor"
-									},
-									{
-										"inputs": [
-											{
-												"internalType": "uint256",
-												"name": "inputUserID",
-												"type": "uint256"
-											},
-											{
-												"internalType": "string",
-												"name": "oldPassword",
-												"type": "string"
-											},
-											{
-												"internalType": "string",
-												"name": "newPassword",
-												"type": "string"
-											}
-										],
-										"name": "updatePassword",
-										"outputs": [],
-										"stateMutability": "nonpayable",
-										"type": "function"
-									},
-									{
-										"inputs": [
-											{
-												"internalType": "uint256",
-												"name": "inputUserID",
-												"type": "uint256"
-											},
-											{
-												"internalType": "string",
-												"name": "inpuUsername",
-												"type": "string"
-											},
-											{
-												"internalType": "string",
-												"name": "inpuFirstName",
-												"type": "string"
-											},
-											{
-												"internalType": "string",
-												"name": "inpuLastName",
-												"type": "string"
-											},
-											{
-												"internalType": "string",
-												"name": "inputContactNum",
-												"type": "string"
-											},
-											{
-												"internalType": "string",
-												"name": "inputHomeAddress",
-												"type": "string"
-											}
-										],
-										"name": "updateProfile",
-										"outputs": [],
-										"stateMutability": "nonpayable",
-										"type": "function"
-									},
-									{
-										"inputs": [
-											{
-												"internalType": "uint256",
-												"name": "inputUserID",
-												"type": "uint256"
-											},
-											{
-												"internalType": "string",
-												"name": "profileName",
-												"type": "string"
-											}
-										],
-										"name": "updateProfilePicture",
-										"outputs": [],
-										"stateMutability": "nonpayable",
-										"type": "function"
-									},
-									{
-										"inputs": [
-											{
-												"internalType": "string",
-												"name": "username",
-												"type": "string"
-											}
-										],
-										"name": "displayProfile",
-										"outputs": [
-											{
-												"internalType": "uint256",
-												"name": "",
-												"type": "uint256"
-											},
-											{
-												"internalType": "string",
-												"name": "",
-												"type": "string"
-											},
-											{
-												"internalType": "string",
-												"name": "",
-												"type": "string"
-											},
-											{
-												"internalType": "string",
-												"name": "",
-												"type": "string"
-											},
-											{
-												"internalType": "string",
-												"name": "",
-												"type": "string"
-											},
-											{
-												"internalType": "string",
-												"name": "",
-												"type": "string"
-											},
-											{
-												"internalType": "string",
-												"name": "",
-												"type": "string"
-											},
-											{
-												"internalType": "uint256",
-												"name": "",
-												"type": "uint256"
-											},
-											{
-												"internalType": "string",
-												"name": "",
-												"type": "string"
-											},
-											{
-												"internalType": "string",
-												"name": "",
-												"type": "string"
-											}
-										],
-										"stateMutability": "view",
-										"type": "function"
-									},
-									{
-										"inputs": [
-											{
-												"internalType": "string",
-												"name": "inputUsername",
-												"type": "string"
-											},
-											{
-												"internalType": "string",
-												"name": "inputPassword",
-												"type": "string"
-											}
-										],
-										"name": "login",
-										"outputs": [
-											{
-												"internalType": "bool",
-												"name": "",
-												"type": "bool"
-											}
-										],
-										"stateMutability": "view",
-										"type": "function"
-									}
-								];
-								const Address = "0x7AAEdba22E3f7F10bab0ec84196E7602AdDc6Ed3";
-								window.web3 = await new Web3(window.ethereum); //how to access to smart contract
-								window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address
-								console.log(userJson.userID);
 								try {
 									await window.UserContract.methods.updateProfilePicture(userJson.userID, filenamenew).send({ from: account });
-
-
 
 
 									// console.log(filenamenew + "." + ext);
@@ -473,8 +240,15 @@
 
 
 								} catch (error) {
-									// registration failed, render error message
-									console.log("Erorr:<br/>" + error.message);
+
+
+									Swal.fire({
+										title: 'Update Profile Image Failed',
+										text: 'Unknown Error',
+										icon: 'error',
+										confirmButtonText: 'OK'
+									});
+
 
 
 								}
@@ -493,11 +267,11 @@
 						const updateContract = async () => {
 
 
-							const data = await window.UserContract.methods.displayProfile(userJson.username).call();
+							const data = await window.UserContract.methods.retrieveProfile(userJson.username).call();
 
 							const person = {
 								userID: data[0], firstName: data[1], lastName: data[2], email: data[3], username: data[4],
-								contactNum: data[5], role: data[6], dateJoined: data[7], homeAddress: data[8], profile_pic: data[9]
+								contactNum: data[5], role: data[6], dateJoined: data[7], profile_pic: data[8], wallet: data[9]
 							};
 							const personJsonFormat = JSON.stringify(person);
 
