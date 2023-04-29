@@ -47,92 +47,94 @@ contract User {
 
     mapping(address => Distributors) distributors;
 
-    // constructor() {
-    //     user.push(
-    //         Users(
-    //             1234567,
-    //             "Fnag yEE",
-    //             "tEE",
-    //             "shink828@gmail.com",
-    //             "tfy",
-    //             "3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2", //123
-    //             "012-222222",
-    //             "Clients",
-    //             block.timestamp,
-    //             "profile_4.png",
-    //             payable(msg.sender)
-    //         )
-    //     );
-    //     totalUser++;
-    // }
-
-    function registerFarmer(address farmerAddress) public {
-        register(
-            7592712,
-            "choon pin",
-            "Wee",
-            "shink34@gmail.com",
-            "wcp",
-            "3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2", //123
-            "012-1234567",
-            "Farmers"
+    function deployFarmer(address farmerAddress) public {
+        user.push(
+            Users(
+                7592712,
+                "choon pin",
+                "Wee",
+                "shink34@gmail.com",
+                "wcp",
+                "3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2", //123
+                "012-1234567",
+                "Farmers",
+                block.timestamp,
+                "profile_4.png",
+                payable(msg.sender)
+            )
         );
+        totalUser++;
 
         farmers[farmerAddress].farmName = "HappyFarmABC";
         farmers[farmerAddress]
             .location = "Durian Farm (Appontment), Lebuhraya Kuala Lumpur - Gua Musang, 27600 Raub District, Pahang";
     }
 
-    function registerClients(address clientsAddress) public {
-        register(
-            8192713,
-            "chong min",
-            "yeapo",
-            "ycm@gmail.com",
-            "ycm",
-            "3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2", //123
-            "019-81234213",
-            "Clients"
+    function deployClients(address clientsAddress) public {
+        user.push(
+            Users(
+                8192713,
+                "chong min",
+                "yeapo",
+                "ycm@gmail.com",
+                "ycm",
+                "3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2", //123
+                "019-81234213",
+                "Clients",
+                block.timestamp,
+                "profile_4.png",
+                payable(msg.sender)
+            )
         );
+        totalUser++;
 
         clients[clientsAddress]
             .location = "Jalan Sekilau, Taman Ikhsan, 56000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur";
     }
 
-    function registerRetailers(address retailerAddress) public {
-        register(
-            1234567,
-            "fang yee",
-            "Tee",
-            "shink828@gmail.com",
-            "tfy",
-            "3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2", //123
-            "011-1234213",
-            "Retailers"
+    function deployRetailers(address retailerAddress) public {
+        user.push(
+            Users(
+                1234567,
+                "fang yee",
+                "Tee",
+                "shink828@gmail.com",
+                "tfy",
+                "3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2", //123
+                "011-1234213",
+                "Retailers",
+                block.timestamp,
+                "profile_4.png",
+                payable(msg.sender)
+            )
         );
+        totalUser++;
 
         retailers[retailerAddress].shopName = "Super Lariz Durian";
         retailers[retailerAddress]
             .location = "Jalan Sekilau, Taman Ikhsan, 56000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur";
     }
 
-    function registerDistributor(address distributorAddress) public {
-        register(
-            5981723,
-            "Zongg Hao",
-            "Ng",
-            "shink@gmail.com",
-            "ncp",
-            "3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2", //123
-            "016-8572213",
-            "Distributors"
+    function deployDistributor(address distributorAddress) public {
+        user.push(
+            Users(
+                5981723,
+                "Zongg Hao",
+                "Ng",
+                "shink@gmail.com",
+                "nzh",
+                "3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2", //123
+                "016-8572213",
+                "Distributors",
+                block.timestamp,
+                "profile_4.png",
+                payable(msg.sender)
+            )
         );
-
+        totalUser++;
         distributors[distributorAddress]
             .distributorName = "MusangKingDistributor (MSK)";
     }
-
-    
 
     modifier checkUser(uint256 inputUserID, string memory oldPassword) {
         //chcek if email or usernamexistt
@@ -154,7 +156,11 @@ contract User {
         _;
     }
 
-    modifier duplicateUser(string memory email, string memory username) {
+    modifier duplicateUser(
+        string memory email,
+        string memory username,
+        address userAddress
+    ) {
         //chcek if email or usernamexistt
         bool exists = false;
         if (user.length > 0) {
@@ -163,14 +169,16 @@ contract User {
                     keccak256(abi.encodePacked(user[i].email)) ==
                     keccak256(abi.encodePacked(email)) ||
                     keccak256(abi.encodePacked(user[i].username)) ==
-                    keccak256(abi.encodePacked(username))
+                    keccak256(abi.encodePacked(username)) ||
+                    keccak256(abi.encodePacked(user[i].wallet)) ==
+                    keccak256(abi.encodePacked(userAddress))
                 ) {
                     exists = true;
                     break;
                 }
             }
         }
-        require(!exists, "The email or username already exist.");
+        require(!exists, "The email or username or wallet already exist.");
         _;
     }
 
@@ -205,8 +213,9 @@ contract User {
         string memory username,
         string memory password,
         string memory contactNum,
-        string memory role
-    ) public duplicateUser(email, username) {
+        string memory role,
+        string memory location
+    ) public duplicateUser(email, username, msg.sender) {
         user.push(
             Users(
                 userID,
@@ -223,6 +232,7 @@ contract User {
             )
         );
         totalUser++;
+        clients[payable(msg.sender)].location = location;
     }
 
     function updateProfile(
@@ -230,7 +240,10 @@ contract User {
         string memory inpuUsername,
         string memory inpuFirstName,
         string memory inpuLastName,
-        string memory inputContactNum
+        string memory inputContactNum,
+        address clientsAddress,
+        string memory location,
+        string memory role
     ) public duplicateUsername(inputUserID, inpuUsername) {
         if (user.length > 0) {
             for (uint256 i = 0; i < user.length; i++) {
@@ -242,6 +255,9 @@ contract User {
                     user[i].firstName = inpuFirstName;
                     user[i].lastName = inpuLastName;
                     user[i].contactNum = inputContactNum;
+                    if (keccak256(abi.encodePacked(role)) == keccak256(abi.encodePacked("Clients"))) {
+                        clients[clientsAddress].location = location;
+                    }
 
                     break;
                 }
@@ -296,7 +312,8 @@ contract User {
             string memory,
             string memory,
             uint256,
-            string memory
+            string memory,
+            address
         )
     {
         Users storage userSelected = user[0];
@@ -320,7 +337,8 @@ contract User {
             userSelected.contactNum,
             userSelected.role,
             userSelected.dateJoined,
-            userSelected.profile_pic
+            userSelected.profile_pic,
+            userSelected.wallet
         );
     }
 
@@ -342,5 +360,47 @@ contract User {
         }
 
         return exist;
+    }
+
+    function displayTotalUser() public view returns (uint256) {
+        return totalUser;
+    }
+
+    function displayFarmerDetail(address farmerAddress)
+        public
+        view
+        returns (string memory farmName, string memory location)
+    {
+        return (
+            farmers[farmerAddress].farmName,
+            farmers[farmerAddress].location
+        );
+    }
+
+    function displayClientsDetail(address clientsAddress)
+        public
+        view
+        returns (string memory location)
+    {
+        return clients[clientsAddress].location;
+    }
+
+    function displayRetailerDetail(address retailersAddress)
+        public
+        view
+        returns (string memory shopName, string memory location)
+    {
+        return (
+            retailers[retailersAddress].shopName,
+            retailers[retailersAddress].location
+        );
+    }
+
+    function displayDistributorDetail(address distributorsAddress)
+        public
+        view
+        returns (string memory distributorName)
+    {
+        return distributors[distributorsAddress].distributorName;
     }
 }
