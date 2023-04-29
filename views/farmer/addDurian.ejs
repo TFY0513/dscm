@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>Add Durian</title>
+
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <link href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+
+
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+
+        #on-going {
+            background-color: #ffff99;
+
+        }
+
+
+        #complete {
+            background-color: #99ff99;
+
+        }
+
+        #cancelled {
+
+            background-color: #ff9999;
+        }
+
+        .toastGroup {
+            z-index: 1;
+        }
+
+        .toast {
+
+            position: fixed;
+
+            bottom: 15px;
+            margin-left: 10px;
+
+        }
+
+        .mark-as-read {
+            text-decoration: none;
+        }
+    </style>
+
+
+</head>
+<%- include('../authentication/authorized'); %>
+<%- include('../authentication/farmerRole'); %>
+    <body>
+        <%- include('../partials/home_navbar'); %>
+            <%- include('../partials/home_sidebar'); %>
+
+                <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                    <div
+                        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">Dashboard</h1>
+                    </div>
+
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+
+                        <h4 class="h4">Overview</h4>
+
+                    </div>
+
+                    <div class="col d-flex justify-content-center">
+                        <div class="card" style="width:100%;">
+                            <div class="card-body">
+
+                                <div id="content-wrapper" class="d-flex flex-column">
+
+                                    <!-- Main Content -->
+                                    <div id="content">
+
+
+
+                                        <!-- Begin Page Content -->
+                                        <div class="container-fluid">
+
+                                            <!-- Page Heading -->
+
+
+                                            <!-- Content Row -->
+                                            <div class="row">
+
+
+
+                                                <!-- Content Row -->
+
+                                                <div class="row">
+
+
+                                                    <center>
+                                                        <!-- Pie Chart -->
+                                                        <div class="col-xl-7 col-lg-5">
+                                                            <div class="card shadow ">
+                                                                <!-- Card Header - Dropdown -->
+                                                                <div
+                                                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                                                    <h6 class="m-0 font-weight-bold text-primary">Total
+                                                                        User Joined
+                                                                    </h6>
+
+                                                                </div>
+                                                                <!-- Card Body -->
+                                                                <div class="card-body">
+
+                                                                    <div id="piechart"
+                                                                        style="width: 500px; height: 500px;">
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </center>
+                                                </div>
+
+                                                <!-- Content Row -->
+
+
+                                            </div>
+                                            <!-- /.container-fluid -->
+
+                                        </div>
+                                        <!-- End of Main Content -->
+
+
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                </main> <%- include('../partials/scroll_button'); %>
+
+                    <script>
+                        const ABI = JSON.parse(localStorage.getItem("UserABI"));
+                        const Address = localStorage.getItem("UserAddress")
+
+                     
+
+
+                        const chart = async () => {
+
+                            var number;
+                            const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+                            account = accounts[0];
+                            window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+                            window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address 
+
+                            number = await window.UserContract.methods.displayTotalUser().call();
+
+                            google.charts.load('current', { 'packages': ['corechart'] });
+                            google.charts.setOnLoadCallback(drawChart);
+
+                            function drawChart() {
+
+                                var data = google.visualization.arrayToDataTable([
+                                    ['Users', 'Numbers'],
+                                    ['Clients', number]
+                                ]);
+
+                                var options = {
+                                    title: 'Number of Users Joined',
+                                    is3D: true,
+                                };
+
+
+                                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+                                chart.draw(data, options);
+                            }
+
+                        }
+                        chart();
+                    </script>
+                    <!--   
+    <script src=" {{asset('/component/dashboard/vendor/chart.js/Chart.min.js')}}"></script>
+
+    <script src="  {{asset('/component/dashboard/js/sb-admin-2.min.js')}}"></script>
+
+
+    <script src="../bootstrap/assets/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
+        integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
+        integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha"
+        crossorigin="anonymous"></script>
+    <script src="dashboard.js"></script> -->
+    </body>
+
+</html>

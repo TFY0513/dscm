@@ -103,6 +103,10 @@ app.get('/changePassword', (req, res, next) => {//"/hello" is route name
   res.render('profile/ChangePassword');;
 });
 
+app.get('/farmerAddDurian', (req, res, next) => {//"/hello" is route name
+  res.render('farmer/addDurian');;
+});
+
 
 
 app.post('/upload/:fileName', upload.single('image'), (req, res) => {

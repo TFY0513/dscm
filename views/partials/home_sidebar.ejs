@@ -146,13 +146,13 @@
 
 
                                 <li style="margin-left:10px;" class="nav-item">
-                                    <a class="nav-link" href="{{route('approval-dashboard')}}">
+                                    <a class="nav-link" href="">
                                         <span data-feather="file"></span>
                                         Views
                                     </a>
                                 </li>
                                 <li style="margin-left:10px;" class="nav-item">
-                                    <a class="nav-link" href="{{route('document-list')}}">
+                                    <a class="nav-link" id="manageLink">
                                         <span data-feather="file"></span>
                                         Manage Durians
                                     </a>
@@ -200,13 +200,33 @@
         const img = document.getElementById("profileSidebar");
         img.src = userJson.profile_pic;
 
-        // console.log(userID); // prints "1685723"
+        console.log(userJson.role); // prints "1685723"
 
+        switch (userJson.role) {
+            case "Farmers":
+                233
+
+
+                document.getElementById('manageLink').href = "/farmerAddDurian";
+
+                break;
+            case "Clients":
+                //  document.getElementById("manageLink").link.setAttribute("href", "/farmerAddDurian");
+
+                break;
+            case "Retailers":
+                //document.getElementById("manageLink").link.setAttribute("href", "/farmerAddDurian");
+                break;
+            default:
+                // document.getElementById("manageLink").link.setAttribute("href", "/farmerAddDurian");
+
+                break;
+        }
 
         document.getElementById("username").innerHTML = userJson.username;
         document.getElementById("role").innerHTML = "(" + userJson.role + ")";
 
-        if (localStorage.getItem("role") != "clients") {
+        if (localStorage.getItem("role") != "Clients") {
 
             var x = document.getElementById("exclusive");
             x.style.display = "block";

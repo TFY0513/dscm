@@ -1,0 +1,20 @@
+<script>
+
+
+
+    function farmerAuthorized() {
+        const user = localStorage.getItem("user");
+
+        const userJson = JSON.parse(user);
+
+        if (userJson.role != "Farmers") {
+            window.location.href = '/home';
+        }
+
+
+    }
+
+    farmerAuthorized();
+
+
+</script>
