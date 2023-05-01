@@ -208,10 +208,10 @@
 								window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address 
 
 								try {
-									await window.UserContract.methods.updateProfilePicture(userJson.userID, filenamenew).send({ from: account });
+									await window.UserContract.methods.updateProfilePicture(filenamenew, userJson.wallet).send({ from: account });
 
 
-									// console.log(filenamenew + "." + ext);
+									// console.log(filenamenew + "." + ext);	
 									//  console.log(filenamenew);
 									$.ajax({
 										url: '/upload/' + filenamenew,
@@ -240,14 +240,26 @@
 
 
 								} catch (error) {
+									if (error.message.includes("revert")) {
+										Swal.fire({
+											title: 'Update Profile Image Failed',
+											text: 'The wallet address is not associated with this account',
+											icon: 'error',
+											confirmButtonText: 'OK'
+										});
+
+									}
+									else {
+										Swal.fire({
+											title: 'Update Profile Image Failed',
+											text: 'Unknown Error',
+											icon: 'error',
+											confirmButtonText: 'OK'
+										});
+									}
 
 
-									Swal.fire({
-										title: 'Update Profile Image Failed',
-										text: 'Unknown Error',
-										icon: 'error',
-										confirmButtonText: 'OK'
-									});
+
 
 
 
@@ -266,12 +278,13 @@
 						}
 						const updateContract = async () => {
 
-
-							const data = await window.UserContract.methods.retrieveProfile(userJson.username).call();
+							const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+							account = accounts[0];
+							const data = await window.UserContract.methods.retrieveProfile(account).call();
 
 							const person = {
 								userID: data[0], firstName: data[1], lastName: data[2], email: data[3], username: data[4],
-								contactNum: data[5], role: data[6], dateJoined: data[7], profile_pic: data[8], wallet: data[9]
+								contactNum: data[6], role: data[7], dateJoined: data[8], profile_pic: data[9], wallet: data[10]
 							};
 							const personJsonFormat = JSON.stringify(person);
 

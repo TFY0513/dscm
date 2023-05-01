@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>View Durian</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
+
+
+
+    <link href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" rel="stylesheet">
+
+    <!-- CSS -->
+
+
+    <!-- JavaScript -->
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+
+
+</head>
+<%- include('../authentication/authorized'); %>
+    <%- include('../authentication/distributerRole'); %>
+
+        <body>
+            <%- include('../partials/home_navbar'); %>
+                <%- include('../partials/home_sidebar'); %>
+                    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+                    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <script type="text/javascript"
+                        src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+                    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                        <div
+                            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                            <h1 class="h2">Durian Management</h1>
+                        </div>
+                        <h4 class="h4">View Durian </h4>
+                        <div class="col d-flex justify-content-center">
+                            <div class="card" style="width:100%; ">
+                                <div class="card-body">
+
+                                  
+                                    <table id="table" class="table ">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Durian ID</th>
+                                                <th scope="col">Durian Type</th>
+                                                <th scope="col">Durian Tree ID</th>
+                                                <th scope="col">Durian Weight(KG)</th>
+                                                <th scope="col">Process</th>
+                                                <th scope="col">Distribution</th>
+                                        
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr id="">
+                                                <td scope="col" id="durianID">13221323</td>
+                                                <td id="durianType">HHHH</td>
+                                                <td id="durianTreeID">eqqwewqweweq</td>
+                                                <td id="durianWeight">100.00</td>
+                                                <td id="process">Harvested</td>
+                                              
+                                                <td scope="col"> <button class=" btn btn-outline-secondary "
+                                                        data-toggle="modal" data-target="#deliveredDurianModal">Delivered
+                                                    </button>
+                                                </td>
+                                            </tr>
+
+
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th scope="col">Durian ID</th>
+                                                <th scope="col">Durian Type</th>
+                                                <th scope="col">Durian Tree ID</th>
+                                                <th scope="col">Durian Weight(KG)</th>
+                                                <th scope="col">Process</th>
+                                                <th scope="col">Distribution</th>
+
+                                                </button></th>
+
+
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+
+                    <div class="modal fade" id="deliveredDurianModal" tabindex="-1" role="dialog"
+                        aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="myModalLabel">Dsitribute Durian Modal</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <h5>Are you sure want to complete the durian distribution? The process cannot be undo</h5>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary"
+                                        id="distributeDurianBtn">Distribute</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <%- include('../partials/scroll_button'); %>
+
+
+                        <script>
+                            const ABI = JSON.parse(localStorage.getItem("UserABI"));
+                            const Address = localStorage.getItem("UserAddress")
+
+
+
+
+                            document.getElementById('distributeDurianBtn').addEventListener('click', function (e) {
+                                e.preventDefault();
+
+                           
+                                    deliveredDurian();
+
+                            });
+
+
+                            const deliveredDurian = async () => {
+                                const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+                                account = accounts[0];
+                                window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+                                window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
+
+                                try {
+                                    // await window.UserContract.methods.updateProfile(username, firstname, lastname, contactNum, userJson.wallet, location).send({ from: account });
+
+                                    Swal.fire({
+                                        title: 'Durian Delivered Succesful',
+                                        text: 'You may view the durian',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    }).then(function () {
+                                        window.location.href = '/distributerViewDurian';
+                                    });
+                                } catch (error) {
+                                    if (error.message.includes("revert")) {
+                                        Swal.fire({
+                                            title: 'Durian Delivered Failed',
+                                            text: 'The wallet address is not associated with this account',
+                                            icon: 'error',
+                                            confirmButtonText: 'OK'
+                                        });
+
+                                    }
+                                    else {
+                                        Swal.fire({
+                                            title: 'Durian Added Failed',
+                                            text: 'Unknown Error',
+                                            icon: 'error',
+                                            confirmButtonText: 'OK'
+                                        });
+                                    }
+
+                                }
+                            }
+
+
+
+
+                            $(document).ready(function () {
+                                $('#table').DataTable();
+                            });
+
+
+                        </script>

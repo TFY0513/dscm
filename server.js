@@ -3,7 +3,6 @@ const path = require("path");
 const multer = require('multer');
 const app = express();
 
-
 const fs = require('fs');
 const directoryPath = path.join(__dirname, 'public', 'component', 'profile_sample');
 
@@ -19,6 +18,7 @@ app.use(express.static('public/bootstrap/assets/dist/css'));
 app.use(express.static('public/bootstrap/template'));
 app.use(express.static('public/bootstrap/assets/dist/js'));
 app.use(express.static('public/component/profile_sample'));
+app.use(express.static('public/component/durianimg'));
 app.use(express.static('public/contract'));
 app.set('view engine', 'ejs');
 
@@ -103,11 +103,28 @@ app.get('/changePassword', (req, res, next) => {//"/hello" is route name
   res.render('profile/ChangePassword');;
 });
 
-app.get('/farmerAddDurian', (req, res, next) => {//"/hello" is route name
-  res.render('farmer/addDurian');;
+
+
+app.get('/farmerViewDurian', (req, res, next) => {//"/hello" is route name
+  res.render('farmer/viewDurian');;
 });
 
 
+app.get('/distributerViewDurian', (req, res, next) => {//"/hello" is route name
+  res.render('distributer/viewDurian');;
+});
+
+app.get('/retailerViewDurian', (req, res, next) => {//"/hello" is route name
+  res.render('retailer/viewDurian');;
+});
+
+app.get('/clientViewDurian', (req, res, next) => {//"/hello" is route name
+  res.render('clients/viewDurian');;
+});
+app.get('/history', (req, res, next) => {//"/hello" is route name
+  res.render('clients/history');;
+});
+``
 
 app.post('/upload/:fileName', upload.single('image'), (req, res) => {
   // console.log(req.file.filename);
@@ -122,7 +139,6 @@ app.post('/upload/:fileName', upload.single('image'), (req, res) => {
 app.get('/signout', (req, res, next) => {//"/hello" is route name
   res.render('authentication/signout');;
 });
-
 
 // app.get('/hello', (req, res, next) => {//"/hello" is route name
 //     res.send('Hello Express!');

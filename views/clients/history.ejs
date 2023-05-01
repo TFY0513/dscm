@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>View Durian</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
+
+    <link href="rating.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" rel="stylesheet">
+
+    <!-- CSS -->
+
+
+    <!-- JavaScript -->
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+
+
+</head>
+<%- include('../authentication/authorized'); %>
+    <%- include('../authentication/clientRole'); %>
+
+        <body>
+            <%- include('../partials/home_navbar'); %>
+                <%- include('../partials/home_sidebar'); %>
+                    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+                    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <script type="text/javascript"
+                        src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+                    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                        <div
+                            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                            <h1 class="h2">Order History</h1>
+                        </div>
+                        <h4 class="h4">Durian Purchase Transaction Overview</h4>
+                        <div class="col d-flex justify-content-center">
+                            <div class="card" style="width:100%; ">
+                                <div class="card-body">
+
+
+                                    <table id="table" class="table ">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Order ID</th>
+                                                <th scope="col">Durian ID</th>
+                                                <th scope="col">Grand Total Price (RM)</th>
+                                                <th scope="col">Purchased Date</th>
+                                                <th scope="col">View</th>
+                                                <th scope="col">Rate</th>
+
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td scope="col" id="durianID">13221323</td>
+                                                <td id="durianType">HHHH</td>
+                                                <td id="durianTreeID">eqqwewqweweq</td>
+                                                <td id="durianWeight">100.00</td>
+                                                <td id="process"><button class=" btn btn-outline-secondary "
+                                                        data-toggle="modal" data-target="#viewOrderModal">View
+                                                    </button>
+                                                </td>
+                                                </td>
+
+                                                <td scope="col"> <button class=" btn btn-outline-secondary "
+                                                        data-toggle="modal" data-target="#rateDurianModal">Rate
+                                                    </button>
+                                                </td>
+                                            </tr>
+
+
+                                        </tbody>
+                                        <tfoot>
+                                            <th scope="col">Order ID</th>
+                                            <th scope="col">Durian ID</th>
+                                            <th scope="col">Grand Total Price (RM)</th>
+                                            <th scope="col">Purchased Date</th>
+                                            <th scope="col">View</th>
+                                            <th scope="col">Rate</th>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+
+                    <div class="modal fade" id="viewOrderModal" tabindex="-1" role="dialog"
+                        aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document" style="  max-width: 1000px;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="myModalLabel">View Order Detail</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                    <form target="dummyframe">
+
+
+                                        <div class="row g-3" id="newOrderData">
+
+
+                                            <div style="padding-left:20px; padding-right:20px;" class="col-3">
+                                                <h4 class="mb-3">Durian ID</h4>
+                                                <input type="input" class="form-control" id="durianType" maxlength="15"
+                                                    placeholder="XXXXXXXX" disabled>
+
+                                            </div>
+                                            <div style="padding-left:20px; padding-right:20px;" class="col-3">
+                                                <h4 class="mb-3">Durian Type</h4>
+                                                <input type="input" class="form-control" id="durianType" maxlength="15"
+                                                    placeholder="XXXXXXXX" disabled>
+
+                                            </div>
+
+                                            <div style="padding-left:20px; padding-right:20px;" class="col-3">
+                                                <h4 class="mb-3">Qty </h4>
+                                                <input type="input" class="form-control" id="qty" maxlength="15"
+                                                    placeholder="XXXXXXXX" disabled>
+
+                                            </div>
+
+                                            <div style="padding-left:20px; padding-right:20px;" class="col-3">
+                                                <h4 class="mb-3">Total Price</h4>
+                                                <input type="input" class="form-control" id="price" maxlength="10"
+                                                    placeholder="XX.XX" disabled>
+
+
+                                            </div>
+
+
+
+
+
+                                        </div><br />
+
+
+
+
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="rateDurianModal" tabindex="-1" role="dialog"
+                        aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document" style="  max-width: 1000px;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="myModalLabel">Rating</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+
+                                    <div class="row">
+
+                                        <div class="col-2">
+
+
+                                            <img id="userPro" src="" width="70" class="rounded-circle mt-2">
+
+
+                                        </div>
+
+                                        <div class="col-10">
+
+                                            <div class="comment-box ml-2">
+
+                                                <h4>Rate the durian </h4>
+
+                                                <div class="rating">
+                                                    <input type="radio" name="rating" value="5" id="5"><label
+                                                        for="5">☆</label>
+                                                    <input type="radio" name="rating" value="4" id="4"><label
+                                                        for="4">☆</label>
+                                                    <input type="radio" name="rating" value="3" id="3"><label
+                                                        for="3">☆</label>
+                                                    <input type="radio" name="rating" value="2" id="2"><label
+                                                        for="2">☆</label>
+                                                    <input type="radio" name="rating" value="1" id="1"><label
+                                                        for="1">☆</label>
+                                                </div><br />
+                                                <div class="" id="">
+                                                    <select class="form-select" name="ratingType" id="ratingType">
+                                                        <option value="Flavor">Flavor
+                                                        </option>
+                                                        <option value="Appearance">Appearance
+                                                        </option>
+                                                        <option value="Fragrance">Fragrance
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <br />
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" id="rateBtn">Rate</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <%- include('../partials/scroll_button'); %>
+
+
+                        <script>
+                            const ABI = JSON.parse(localStorage.getItem("UserABI"));
+                            const Address = localStorage.getItem("UserAddress")
+                            const image = document.getElementById("userPro");
+                            image.src = userJson.profile_pic;
+
+                            // var newInput = document.createElement("input");
+
+                            // // Set the type attribute of the new input element
+                            // newInput.setAttribute("type", "text");
+
+                            // // Get the div element where you want to add the new input element
+                            // var myDiv = document.getElementById("newOrderData");
+
+                            // // Add the new input element to the div element
+                            // myDiv.appendChild(newInput);
+
+
+                            document.getElementById('rateBtn').addEventListener('click', function (e) {
+                                e.preventDefault();
+
+                                // get all the radio buttons with the name "rating"
+                                const ratingInputs = document.getElementsByName("rating");
+                                var rating =  0;
+                                // loop through the radio buttons to find the checked one
+                                for (let i = 0; i < ratingInputs.length; i++) {
+                                    if (ratingInputs[i].checked) {
+                                         rating = ratingInputs[i].value;
+                                        console.log(`Selected rating: ${rating}`);
+                                        break;
+                                    }
+                                }
+                                const rateType = document.getElementById("ratingType").value;
+                                rateDurian();
+
+                            });
+
+
+                            const rateDurian = async () => {
+                                const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+                                account = accounts[0];
+                                window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+                                window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
+
+                                try {
+                                    // await window.UserContract.methods.updateProfile(username, firstname, lastname, contactNum, userJson.wallet, location).send({ from: account });
+
+                                    Swal.fire({
+                                        title: 'Durian Rating Succesful',
+                                        text: 'You may view the rating',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    }).then(function () {
+                                        window.location.href = '/history';
+                                    });
+                                } catch (error) {
+                                    if (error.message.includes("revert")) {
+                                        Swal.fire({
+                                            title: 'Durian Rating Failed',
+                                            text: 'The wallet address is not associated with this account',
+                                            icon: 'error',
+                                            confirmButtonText: 'OK'
+                                        });
+
+                                    }
+                                    else {
+                                        Swal.fire({
+                                            title: 'Durian Rating Failed',
+                                            text: 'Unknown Error',
+                                            icon: 'error',
+                                            confirmButtonText: 'OK'
+                                        });
+                                    }
+
+                                }
+                            }
+
+
+
+                            $(document).ready(function () {
+                                $('#table').DataTable();
+                            });
+
+
+                        </script>

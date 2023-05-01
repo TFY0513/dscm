@@ -129,13 +129,13 @@
                         <div class="nav-sub-functional">
                             <div id="normal">
                                 <li style="margin-left:10px;" class="nav-item">
-                                    <a class="nav-link" href="{{route('approval-dashboard')}}">
+                                    <a class="nav-link" href="/clientViewDurian">
                                         <span data-feather="file"></span>
-                                        Views
+                                        Views Durians
                                     </a>
                                 </li>
                                 <li style="margin-left:10px;" class="nav-item">
-                                    <a class="nav-link" href="{{route('document-list')}}">
+                                    <a class="nav-link" href="/history">
                                         <span data-feather="file"></span>
                                         Purchase History
                                     </a>
@@ -145,16 +145,11 @@
 
 
 
-                                <li style="margin-left:10px;" class="nav-item">
-                                    <a class="nav-link" href="">
-                                        <span data-feather="file"></span>
-                                        Views
-                                    </a>
-                                </li>
+                            
                                 <li style="margin-left:10px;" class="nav-item">
                                     <a class="nav-link" id="manageLink">
                                         <span data-feather="file"></span>
-                                        Manage Durians
+                                        Durians Management
                                     </a>
                                 </li>
                             </div>
@@ -201,45 +196,48 @@
         img.src = userJson.profile_pic;
 
         console.log(userJson.role); // prints "1685723"
-
         switch (userJson.role) {
-            case "Farmers":
-                233
+            case "0":
 
-
-                document.getElementById('manageLink').href = "/farmerAddDurian";
-
+                var x = document.getElementById("exclusive");
+                x.style.display = "block";
+                var x = document.getElementById("normal");
+                x.style.display = "none";
+                document.getElementById('manageLink').href = "/farmerViewDurian";
+                document.getElementById("role").innerHTML = "(Farmers)";
                 break;
-            case "Clients":
+            case "1":
+                var x = document.getElementById("exclusive");
+                x.style.display = "block";
+                var x = document.getElementById("normal");
+                x.style.display = "none";
+                document.getElementById('manageLink').href = "/distributerViewDurian";
+                document.getElementById("role").innerHTML = "(Distributers)"        ;
                 //  document.getElementById("manageLink").link.setAttribute("href", "/farmerAddDurian");
 
                 break;
-            case "Retailers":
+            case "2":
+                var x = document.getElementById("exclusive");
+                x.style.display = "block";
+                var x = document.getElementById("normal");
+                x.style.display = " none";
+                document.getElementById('manageLink').href = "/retailerViewDurian";
+                document.getElementById("role").innerHTML = "(Retailers)";
                 //document.getElementById("manageLink").link.setAttribute("href", "/farmerAddDurian");
                 break;
             default:
+                var x = document.getElementById("exclusive");
+                x.style.display = "none";
+                var x = document.getElementById("normal");
+                x.style.display = "block";
+                document.getElementById("role").innerHTML = "(Clients)";
                 // document.getElementById("manageLink").link.setAttribute("href", "/farmerAddDurian");
 
                 break;
         }
 
         document.getElementById("username").innerHTML = userJson.username;
-        document.getElementById("role").innerHTML = "(" + userJson.role + ")";
-
-        if (localStorage.getItem("role") != "Clients") {
-
-            var x = document.getElementById("exclusive");
-            x.style.display = "block";
-            var x = document.getElementById("normal");
-            x.style.display = "none";
-
-        }
-        else {
-            var x = document.getElementById("exclusive");
-            x.style.display = "none";
-            var x = document.getElementById("normal");
-            x.style.display = "block";
-        }
+      
     </script>
 
 </body>

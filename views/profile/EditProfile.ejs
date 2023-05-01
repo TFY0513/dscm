@@ -146,8 +146,7 @@
 										<div class="col-12 " id="locationDIV">
 											<h4 id="" class="mb-3">Home Address</h4>
 											<textarea id="userLocation" class="form-control" name="homeAddress" rows="4"
-												maxlength="200" required="required" placeholder="Location"
-												cols="50"></textarea>
+												maxlength="200" placeholder="Location" required cols="50"></textarea>
 										</div>
 
 
@@ -196,38 +195,33 @@
 							document.getElementById("formcontactNum").value = userJson.contactNum;
 
 
-
-
-
-
 							switch (userJson.role) {
-								case "Farmers":
+								case "0":
 									document.getElementById("locationDIV").classList.add("hidden");
+									document.getElementById("userLocation").value = "";
+									break;
+								case "1":
+
+									document.getElementById("locationDIV").classList.add("hidden");
+									document.getElementById("userLocation").value = "";
 
 									break;
-								case "Clients":
-									const clientData = await window.UserContract.methods.displayClientsDetail(userJson.wallet).call();
-									document.getElementById("userLocation").value = clientData;
-
-									break;
-								case "Retailers":
+								case "2":
 									document.getElementById("locationDIV").classList.add("hidden");
-
+									document.getElementById("userLocation").value = "";
 									break;
 								default:
-									document.getElementById("locationDIV").classList.add("hidden");
-
+									const clientData = await window.UserContract.methods.displayClientsDetail(userJson.wallet).call();
+									document.getElementById("userLocation").value = clientData;
 									break;
 							}
-
-
 
 						}
 						getExtraDetail();
 
 
 						const editProfile = async () => {
-						
+
 							var username = document.getElementById("formUsername").value;
 							var firstname = document.getElementById("formfirstName").value;
 							var lastname = document.getElementById("formlastName").value;
@@ -235,24 +229,28 @@
 							var location = document.getElementById("userLocation").value;
 							console.log(location);
 							if (username != "" && firstname != "" && lastname != "" && contactNum != "") {
-								{
-									if (validate(username, firstname, lastname, contactNum)) {
 
-										const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-										account = accounts[0];
-										window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
-										window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address 
+								if (validate(username, firstname, lastname, contactNum)) {
 
+									const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+									account = accounts[0];
+									window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+									window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address 
+
+									if (userJson.role == 3 && location == "") {
+
+									}
+									else {
 										try {
-											await window.UserContract.methods.updateProfile(userJson.userID, username, firstname, lastname, contactNum, userJson.wallet, location, userJson.role).send({ from: account });
+											await window.UserContract.methods.updateProfile(username, firstname, lastname, contactNum, userJson.wallet, location).send({ from: account });
 
 
 
-											const data = await window.UserContract.methods.retrieveProfile(username).call();
+											const data = await window.UserContract.methods.retrieveProfile(account).call();
 
 											const person = {
 												userID: data[0], firstName: data[1], lastName: data[2], email: data[3], username: data[4],
-												contactNum: data[5], role: data[6], dateJoined: data[7], profile_pic: data[8], wallet: data[9]
+												contactNum: data[6], role: data[7], dateJoined: data[8], profile_pic: data[9], wallet: data[10]
 											};
 											const personJsonFormat = JSON.stringify(person);
 
@@ -270,7 +268,7 @@
 											if (error.message.includes("revert")) {
 												Swal.fire({
 													title: 'Update Profile Failed',
-													text: 'The username already exist.',
+													text: 'The wallet address is not associated with this account',
 													icon: 'error',
 													confirmButtonText: 'OK'
 												});
@@ -295,65 +293,69 @@
 											// document.getElementById("contentErr").innerHTML = "The username already exist.";
 											//  res.render('register', { error: error.message });
 										}
-
-
-										// userJson.userID
 									}
 								}
 
 
-							}
-
-							function validate(username, firstName, lastName, contactNum) {
-								var valid = true;
-
-
-
-								const regexUsername = /^[a-zA-Z0-9]+$/;
-								const regexFirstLastName = /^[a-zA-Z ]+$/;
-								const regexContact = /^(\+?6?01)[0-46-9]-*[0-9]{7,8}$/u;
-
-
-								if (!regexUsername.test(username)) {
-									document.getElementById("usernameErr").innerHTML = "Invalid username";
-									valid = false;
-								}
-								else {
-									document.getElementById("usernameErr").innerHTML = "";
-									valid = true;
-								}
-
-
-								if (!regexFirstLastName.test(firstName)) {
-									document.getElementById("firstNameErr").innerHTML = "Invalid firstname";
-									valid = false;
-								}
-								else {
-									document.getElementById("firstNameErr").innerHTML = "";
-									valid = true;
-								}
-
-								if (!regexFirstLastName.test(lastName)) {
-									document.getElementById("lastNameErr").innerHTML = "Invalid lastname";
-									valid = false;
-								}
-								else {
-									document.getElementById("lastNameErr").innerHTML = "";
-									valid = true;
-								}
-
-
-								if (!regexContact.test(contactNum)) {
-									document.getElementById("contactNumErr").innerHTML = "Invalid contact number";
-									valid = false;
-								}
-								else {
-									document.getElementById("contactNumErr").innerHTML = "";
-									valid = true;
-								}
-								return valid;
+								// userJson.userID
 							}
 						}
+
+
+						function validate(username, firstName, lastName, contactNum) {
+							var valid = true;
+
+
+
+							const regexUsername = /^[a-zA-Z0-9]+$/;
+							const regexFirstLastName = /^[a-zA-Z ]+$/;
+							const regexContact = /^(\+?6?01)[0-46-9]-*[0-9]{7,8}$/u;
+
+
+							if (!regexUsername.test(username)) {
+								document.getElementById("usernameErr").innerHTML = "Invalid username";
+								valid = false;
+								return;
+							}
+							else {
+								document.getElementById("usernameErr").innerHTML = "";
+								valid = true;
+							}
+
+
+							if (!regexFirstLastName.test(firstName)) {
+								document.getElementById("firstNameErr").innerHTML = "Invalid firstname";
+								valid = false;
+								return;
+							}
+							else {
+								document.getElementById("firstNameErr").innerHTML = "";
+								valid = true;
+							}
+
+							if (!regexFirstLastName.test(lastName)) {
+								document.getElementById("lastNameErr").innerHTML = "Invalid lastname";
+								valid = false;
+								return;
+							}
+							else {
+								document.getElementById("lastNameErr").innerHTML = "";
+								valid = true;
+							}
+
+
+							if (!regexContact.test(contactNum)) {
+								document.getElementById("contactNumErr").innerHTML = "Invalid contact number";
+								valid = false;
+								return;
+							}
+							else {
+								document.getElementById("contactNumErr").innerHTML = "";
+								valid = true;
+							}
+							return valid;
+						}
+					
 					</script>
 					<!-- <script src="../bootstrap/assets/dist/js/bootstrap.bundle.min.js"></script>
 

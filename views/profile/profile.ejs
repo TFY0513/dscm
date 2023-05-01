@@ -295,7 +295,7 @@
                     <script>
 
                         document.getElementById("profileName").innerHTML = userJson.lastName + " " + userJson.firstName;
-                        document.getElementById("profileRole").innerHTML = userJson.role;
+
                         document.getElementById("userID").innerHTML = "#" + userJson.userID;
                         document.getElementById("address").innerHTML = "" + userJson.wallet;
 
@@ -324,11 +324,9 @@
                             account = accounts[0];
                             window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
                             window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address 
-
                             switch (userJson.role) {
-                                case "Farmers":
-
-
+                                case "0":
+                                    document.getElementById("profileRole").innerHTML = "(Farmers)";
                                     const farmerData = await window.UserContract.methods.displayFarmerDetail(userJson.wallet).call();
 
                                     document.getElementById("naming").innerHTML = "Farm Name";
@@ -339,18 +337,24 @@
 
                                     document.getElementById("userLocation").innerHTML = farmerData[1];
                                     break;
-                                case "Clients":
+                                case "1":
 
-                                    const clientData = await window.UserContract.methods.displayClientsDetail(userJson.wallet).call();
+                                    document.getElementById("profileRole").innerHTML = "(Distributers)";
+                                    const distributorData = await window.UserContract.methods.displayDistributorDetail(userJson.wallet).call();
 
-                                    document.getElementById("location").innerHTML = "Home Address";
+                                    document.getElementById("naming").innerHTML = "Distributor Name";
 
-                                    document.getElementById("userLocation").innerHTML = clientData;
+                                    document.getElementById("userShopName").innerHTML = distributorData;
 
                                     document.getElementById("NameDiv").innerHTML.style.display = "none";
 
+                                    document.getElementById("locationDiv").innerHTML.style.display = "none";
+                                    //  document.getElementById("manageLink").link.setAttribute("href", "/farmerAddDurian");
+
                                     break;
-                                case "Retailers":
+                                case "2":
+
+                                    document.getElementById("profileRole").innerHTML = "(Retailers)";
                                     const retailerData = await window.UserContract.methods.displayRetailerDetail(userJson.wallet).call();
 
                                     document.getElementById("naming").innerHTML = "Retail Shop Name";
@@ -361,25 +365,23 @@
 
                                     document.getElementById("userLocation").innerHTML = retailerData[1];
 
-                                   
-
-                                    
-
+                                    //document.getElementById("manageLink").link.setAttribute("href", "/farmerAddDurian");
                                     break;
                                 default:
-                                    const distributorData = await window.UserContract.methods.displayDistributorDetail(userJson.wallet).call();
 
-                                    document.getElementById("naming").innerHTML = "Distributor Name";
+                                    document.getElementById("profileRole").innerHTML = "(Clients)";
 
-                                    document.getElementById("userShopName").innerHTML = distributorData;
+                                    const clientData = await window.UserContract.methods.displayClientsDetail(userJson.wallet).call();
+
+                                    document.getElementById("location").innerHTML = "Home Address";
+
+                                    document.getElementById("userLocation").innerHTML = clientData;
 
                                     document.getElementById("NameDiv").innerHTML.style.display = "none";
+                                    // document.getElementById("manageLink").link.setAttribute("href", "/farmerAddDurian");
 
-                                    document.getElementById("locationDiv").innerHTML.style.display = "none";
                                     break;
                             }
-
-
                         }
                         getExtraDetail();
 

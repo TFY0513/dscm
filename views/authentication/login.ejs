@@ -1,10 +1,10 @@
 <%- include('../partials/authentication_header'); %>
 
-<%- include('../authentication/guest'); %>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js"></script>
-	<!-- <link href="style.css" rel="stylesheet"> -->
+	<%- include('../authentication/guest'); %>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js"></script>
+		<!-- <link href="style.css" rel="stylesheet"> -->
 
-	<!-- 
+		<!-- 
     <div id="snackbar"></div>
     <script>
         if (localStorage.getItem("message") !== null) {
@@ -21,188 +21,196 @@
         }
     </script> -->
 
-	<body class="text-center">
+		<body class="text-center">
 
-		<main class="form-signin">
+			<main class="form-signin">
 
-			<iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-			<form target="dummyframe">
+				<iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+				<form target="dummyframe">
 
-				<img class="mb-4" src="logo-transparent.png" alt="logo" width="200">
+					<img class="mb-4" src="logo-transparent.png" alt="logo" width="200">
 
-				<h1 class="h3 mb-3 fw-normal">Login</h1>
-				<div class="alert alert-warning" id="message" role="alert" style="display: none;">
-					<ul class="list-unstyled mb-0">
+					<h1 class="h3 mb-3 fw-normal">Login</h1>
+					<div class="alert alert-warning" id="message" role="alert" style="display: none;">
+						<ul class="list-unstyled mb-0">
 
-						<li id="contentErr"></li>
+							<li id="contentErr"></li>
 
-					</ul>
-				</div>
+						</ul>
+					</div>
 
 
-				<div class="form-group form-floating mb-3">
-					<input type="text" class="form-control" id="username" name="username" value=""
-						placeholder="Username" required="required" autofocus>
-					<label for="floatingName">Username</label>
+					<div class="form-group form-floating mb-3">
+						<input type="text" class="form-control" id="username" name="username" value=""
+							placeholder="Username" required="required" autofocus>
+						<label for="floatingName">Username</label>
 
-					<span class="text-danger text-left"></span>
+						<span class="text-danger text-left"></span>
 
-				</div>
+					</div>
 
-				<div class="form-group form-floating mb-3">
-					<input type="password" class="form-control" id="password" name="password" value=""
-						placeholder="Password" required="required">
-					<label for="floatingPassword">Password</label>
+					<div class="form-group form-floating mb-3">
+						<input type="password" class="form-control" id="password" name="password" value=""
+							placeholder="Password" required="required">
+						<label for="floatingPassword">Password</label>
 
-					<span class="text-danger text-left"></span>
+						<span class="text-danger text-left"></span>
 
-				</div>
+					</div>
 
-				<div class="form-group mb-3">
-					<!-- <label for="remember">Remember me</label>
+					<div class="form-group mb-3">
+						<!-- <label for="remember">Remember me</label>
                         <input type="checkbox" name="remember" value="1"><br /> -->
-					<a style=" text-decoration: none;" href='/register'>Register</a><br />
-					<!-- <a href='{{route(' verify.showVerifyForm')}}'>Forget Password</a> -->
-				</div>
+						<a style=" text-decoration: none;" href='/register'>Register</a><br />
+						<!-- <a href='{{route(' verify.showVerifyForm')}}'>Forget Password</a> -->
+					</div>
 
-				<button class="w-100 btn btn-lg btn-primary" type="submit" onclick="login()">Login</button>
-				<br /><br />
+					<button class="w-100 btn btn-lg btn-primary" type="submit" onclick="login()">Login</button>
+					
 
-
-				<%- include('../partials/authentication_footer'); %>
-					<button class=" btn btn-primary" type="submit" onclick="deployFarmer()">Deploy Farmer</button>
-					<button class=" btn  btn-primary" type="submit" onclick="deployRetailers()">Deploy
-						Retailer</button><br /><br />
-					<button class=" btn  btn-primary" type="submit" onclick="deployDistributor()">Deploy Distributor</button>
-					<button class=" btn  btn-primary" type="submit" onclick="deployClients()">Deploy Clients</button>
-					<form>
-
-		</main>
+					<br /><br />
 
 
+					<%- include('../partials/authentication_footer'); %>
+						<button class=" btn btn-primary" type="submit" onclick="deployFarmer()">Deploy Farmer</button>
+						<button class=" btn  btn-primary" type="submit" onclick="deployRetailers()">Deploy
+							Retailer</button><br /><br />
+						<button class=" btn  btn-primary" type="submit" onclick="deployDistributor()">Deploy
+							Distributor</button>
+						<button class=" btn  btn-primary" type="submit" onclick="deployClients()">Deploy
+							Clients</button>
+						<form>
 
-	</body>
-
-	<script>
-		const ABI = JSON.parse(localStorage.getItem("UserABI"));
-		const Address = localStorage.getItem("UserAddress")
-
-
-	
-
-		const deployClients = async () => {
-
-			const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-			account = accounts[0];
-			window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
-			window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address 
-
-			try {
-				await window.UserContract.methods.deployClients(account).send({ from: account });
-
-			} catch (error) {
-				console.log("Erorr:<br/>" + error.message);
-
-			}
+			</main>
 
 
-		}
 
-		const deployFarmer = async () => {
+		</body>
 
-			const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-			account = accounts[0];
-			window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
-			window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address 
-
-			try {
-				await window.UserContract.methods.deployFarmer(account).send({ from: account });
-
-			} catch (error) {
-				console.log("Erorr:<br/>" + error.message);
-
-			}
+		<script>
+			const ABI = JSON.parse(localStorage.getItem("UserABI"));
+			const Address = localStorage.getItem("UserAddress")
 
 
-		}
-
-		const deployRetailers = async () => {
-			const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-			account = accounts[0];
-
-			window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
-			window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address 
-
-			try {
-				await window.UserContract.methods.deployRetailers(account).send({ from: account });
-
-			} catch (error) {
-				console.log("Erorr:<br/>" + error.message);
-
-			}
 
 
-		}
+			const deployClients = async () => {
 
-		const deployDistributor = async () => {
-			const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-			account = accounts[0];
+				const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+				account = accounts[0];
+				window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+				window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address 
 
-			window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
-			window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address 
+				try {
+					await window.UserContract.methods.deployClients(account).send({ from: account });
 
-			try {
-				await window.UserContract.methods.deployDistributor(account).send({ from: account });
+				} catch (error) {
+					console.log("Erorr:<br/>" + error.message);
 
-			} catch (error) {
-				console.log("Erorr:<br/>" + error.message);
-
-			}
-
-
-		}
-
-		const login = async () => {
-			var username = document.getElementById("username").value;
-			var password = document.getElementById("password").value;
-			if (username != "" && password != "") {
-				var hashObj = new jsSHA("SHA-512", "TEXT", { numRounds: 1 });
-				hashObj.update(password);
-				var hash = hashObj.getHash("HEX");
-				password = hash;
-				if (window.ethereum !== "undefined") {
-					const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-					account = accounts[0];
 				}
+
+
+			}
+
+			const deployFarmer = async () => {
+
+				const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+				account = accounts[0];
+				window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+				window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address 
+
+				try {
+					await window.UserContract.methods.deployFarmer(account).send({ from: account });
+
+				} catch (error) {
+					console.log("Erorr:<br/>" + error.message);
+
+				}
+
+
+			}
+
+			const deployRetailers = async () => {
+				const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+				account = accounts[0];
 
 				window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
-				window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
-				if (await window.UserContract.methods.login(username, password).call()) {
-					//console.log(role);
-					//  localStorage.setItem("username", username);
-					//  localStorage.setItem("role", role);
-					const data = await window.UserContract.methods.retrieveProfile(username).call();
-					const person = {
-						userID: data[0], firstName: data[1], lastName: data[2], email: data[3], username: data[4],
-						contactNum: data[5], role: data[6], dateJoined: data[7], profile_pic: data[8], wallet: data[9]
-					};
-					const personJsonFormat = JSON.stringify(person);
-					localStorage.setItem("user", personJsonFormat);
-					window.location.href = '/home';
+				window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address 
 
+				try {
+					await window.UserContract.methods.deployRetailers(account).send({ from: account });
+
+				} catch (error) {
+					console.log("Erorr:<br/>" + error.message);
+
+				}
+
+
+			}
+
+			const deployDistributor = async () => {
+				const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+				account = accounts[0];
+
+				window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+				window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address 
+
+				try {
+					await window.UserContract.methods.deployDistributor(account).send({ from: account });
+
+				} catch (error) {
+					console.log("Erorr:<br/>" + error.message);
+
+				}
+
+
+			}
+		
+			const login = async () => {
+				var username = document.getElementById("username").value;
+				var password = document.getElementById("password").value;
+				if (username != "" && password != "") {
+					var hashObj = new jsSHA("SHA-512", "TEXT", { numRounds: 1 });
+					hashObj.update(password);
+					var hash = hashObj.getHash("HEX");
+					password = hash;
+					if (window.ethereum !== "undefined") {
+						const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+						account = accounts[0];
+					}
+
+					window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+					window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
+					if (await window.UserContract.methods.login(username, password,account).call()) {
+						//console.log(role);
+						//  localStorage.setItem("username", username);
+						//  localStorage.setItem("role", role);
+						const data = await window.UserContract.methods.retrieveProfile(account).call();
+					
+					
+						const person = {
+							userID: data[0], firstName: data[1], lastName: data[2], email: data[3], username: data[4],
+							contactNum: data[6], role: data[7], dateJoined: data[8], profile_pic: data[9], wallet: data[10]
+						};
+						const personJsonFormat = JSON.stringify(person);
+						console.log(personJsonFormat);
+
+						localStorage.setItem("user", personJsonFormat);
+						window.location.href = '/home';
+
+					}
+					else {
+						console.log("error");
+						// localStorage.setItem("message", "Invalid credentials");
+						var x = document.getElementById("message");
+						x.style.display = "block";
+						document.getElementById("contentErr").innerHTML = "Invalid Credentials. Please try again";
+					}
 				}
 				else {
-					console.log("error");
-					// localStorage.setItem("message", "Invalid credentials");
-					var x = document.getElementById("message");
-					x.style.display = "block";
-					document.getElementById("contentErr").innerHTML = "Invalid Credentials. Please try again";
+					console.log("null");
 				}
 			}
-			else {
-				console.log("null");
-			}
-		}
-	</script>
+		</script>
 
-	</html>
+		</html>

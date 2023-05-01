@@ -1,0 +1,20 @@
+<script>
+
+
+
+    function distributerAuthorized() {
+        const user = localStorage.getItem("user");
+
+        const userJson = JSON.parse(user);
+
+        if (userJson.role != "1") {
+            window.location.href = '/home';
+        }
+
+
+    }
+
+    distributerAuthorized();
+
+
+</script>
