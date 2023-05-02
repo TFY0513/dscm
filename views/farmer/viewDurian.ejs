@@ -73,10 +73,9 @@
                                                 <th scope="col">Durian Weight(KG)</th>
                                                 <th scope="col">Process</th>
                                                 <th scope="col">Harvest Time</th>
-                                                <th scope="col">Edit</th>
+                                             
                                                 <th scope="col">Distribute</th>
-                                                <th scope="col">Delete</th>
-
+                                             
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -87,22 +86,14 @@
                                                 <td id="durianWeight">100.00</td>
                                                 <td id="process">Harvested</td>
                                                 <td id="harvestTime">11.11ppm</td>
-                                                <td scope="col">
-                                                    <button class=" btn btn-outline-secondary  " data-toggle="modal"
-                                                        data-target="#editDurianModal">Edit
-                                                    </button>
-
-                                                </td>
+                                               
                                                 <td scope="col">
                                                     <button class=" btn btn-outline-secondary  " data-toggle="modal"
                                                         data-target="#distributeDurianModal">Distribute
                                                     </button>
 
                                                 </td>
-                                                <td scope="col"> <button class=" btn btn-outline-secondary "
-                                                        data-toggle="modal" data-target="#deleteDurianModal">Delete
-                                                    </button>
-                                                </td>
+                                               
                                             </tr>
 
 
@@ -115,9 +106,9 @@
                                                 <th scope="col">Durian Weight(KG)</th>
                                                 <th scope="col">Process</th>
                                                 <th scope="col">Harvest Time</th>
-                                                <th scope="col">Edit</th>
+                                         
                                                 <th scope="col">Distribute</th>
-                                                <th scope="col">Delete</th>
+                                       
 
                                                 </button></th>
 
@@ -233,130 +224,7 @@
                         </div>
                     </div>
 
-                    <div class="modal fade" id="editDurianModal" tabindex="-1" role="dialog"
-                        aria-labelledby="myModalLabel">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="myModalLabel">Edit Durian Modal</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-                                    <form target="dummyframe">
-
-
-                                        <div class="row g-3">
-
-
-                                            <div style="padding-left:20px; padding-right:20px;" class="col-6">
-                                                <h4 class="mb-3">Durian Type</h4>
-                                                <select class="form-select" name="durianName" id="editDurianType">
-                                                    <option value="">D24 Durian
-                                                    </option>
-                                                    <option value="">XO Durian
-                                                    </option>
-                                                    <option value="">Red Prawn Durian
-                                                    </option>
-                                                    <option value="">Mao Shan Wang Durian
-                                                    </option>
-                                                    <option value="">Black Pearl Durian
-                                                    </option>
-                                                    <option value="">Golden Phoenix Durian
-                                                    </option>
-                                                    <option value=""> Black Thorn Durian
-                                                    </option>
-                                                    <option value="">Black Gold Durian
-                                                    </option>
-                                                    <option value=""> Hor Lor Durian
-                                                    </option>
-                                                    <option value="">D17 Durian
-                                                    </option>
-                                                    <option value=""> D1 Durian
-                                                    </option>
-                                                    <option value="">D101 Durian
-                                                    </option>
-                                                    <option value=""> MonThong Durian
-                                                    </option>
-                                                    <option value="">D13 Durian
-                                                    </option>
-                                                    <option value=""> Tekka Durian
-                                                    </option>
-                                                    <option value="">Wang Zong Wang
-                                                    </option>
-                                                </select>
-
-
-                                                <span class="text-danger text-left"></span>
-                                            </div>
-
-
-
-                                            <div style="padding-left:20px; padding-right:20px;" class="col-6">
-                                                <h4 class="mb-3">Durian Tree ID</h4>
-                                                <input type="input" class="form-control" name="editDurianTreeId"
-                                                    id="editDurianTreeId" maxlength="15" placeholder="XXXXXXXX"
-                                                    required>
-                                                <small>Note: Only numeric number and not more than 15
-                                                    length</small><br />
-                                                <span class="text-danger text-left editDurianTreeIdErr"
-                                                    id="editDurianTreeIdErr"></span>
-
-                                            </div>
-
-                                            <div style="padding-left:20px; padding-right:20px;" class="col-6">
-                                                <h4 class="mb-3">Durian Weight (kg)</h4>
-                                                <input type="input" class="form-control" name="editDurianWeight"
-                                                    id="editDurianWeight" maxlength="10" placeholder="XX.XX" required>
-
-                                                <span class="text-danger text-left editDurianWeightErr"
-                                                    id="editDurianWeightErr"></span>
-
-                                            </div>
-
-
-
-
-
-                                        </div><br />
-
-
-
-
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" id="editDurianBtn">Save
-                                        changes</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal fade" id="deleteDurianModal" tabindex="-1" role="dialog"
-                        aria-labelledby="myModalLabel">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="myModalLabel">Edit Durian Modal</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <h5>Are you sure want to deleted the durian added?</h5>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" id="deleteDurianBtn">Delete</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                  
 
                     <div class="modal fade" id="distributeDurianModal" tabindex="-1" role="dialog"
                         aria-labelledby="myModalLabel">
@@ -412,33 +280,6 @@
                             });
 
 
-                            document.getElementById('editDurianBtn').addEventListener('click', function (e) {
-                                e.preventDefault();
-                                // <td scope="col" id="durianID">13221323</td>
-                                //                 <td id="durianType">HHHH</td>
-                                //                 <td id="durianTreeID">eqqwewqweweq</td>
-                                //                 <td id="durianWeight">100.00</td>
-
-                                var durianType = document.getElementById("editDurianType").value;
-                                var durianTreeId = document.getElementById("editDurianTreeId").value;
-                                var durianWeight = document.getElementById("editDurianWeight").value;
-                                console.log(durianTreeId);
-                                console.log(durianWeight);
-                                if (validateEditDurian(durianTreeId, durianWeight)) {
-                                    editDurian();
-
-                                }
-
-
-                            });
-
-                            document.getElementById('deleteDurianBtn').addEventListener('click', function (e) {
-                                e.preventDefault();
-
-                                deleteDurian();
-
-
-                            });
 
                             document.getElementById('distributeDurianBtn').addEventListener('click', function (e) {
                                 e.preventDefault();
@@ -488,85 +329,7 @@
 
 
 
-                            const deleteDurian = async () => {
-                                const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-                                account = accounts[0];
-                                window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
-                                window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
-
-                                try {
-                                    // await window.UserContract.methods.updateProfile(username, firstname, lastname, contactNum, userJson.wallet, location).send({ from: account });
-
-                                    Swal.fire({
-                                        title: 'Durian Deleted Succesful',
-                                        text: 'You may view your durian',
-                                        icon: 'success',
-                                        confirmButtonText: 'OK'
-                                    }).then(function () {
-                                        window.location.href = '/farmerViewDurian';
-                                    });
-                                } catch (error) {
-                                    if (error.message.includes("revert")) {
-                                        Swal.fire({
-                                            title: 'Durian Deleted Failed',
-                                            text: 'The wallet address is not associated with this account',
-                                            icon: 'error',
-                                            confirmButtonText: 'OK'
-                                        });
-
-                                    }
-                                    else {
-                                        Swal.fire({
-                                            title: 'Durian Deleted Failed',
-                                            text: 'Unknown Error',
-                                            icon: 'error',
-                                            confirmButtonText: 'OK'
-                                        });
-                                    }
-
-                                }
-                            }
-
-
-                            const editDurian = async () => {
-                                const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-                                account = accounts[0];
-                                window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
-                                window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
-
-                                try {
-                                    // await window.UserContract.methods.updateProfile(username, firstname, lastname, contactNum, userJson.wallet, location).send({ from: account });
-
-                                    Swal.fire({
-                                        title: 'Durian Edited Succesful',
-                                        text: 'You may view your durian edited',
-                                        icon: 'success',
-                                        confirmButtonText: 'OK'
-                                    }).then(function () {
-                                        window.location.href = '/farmerViewDurian';
-                                    });
-                                } catch (error) {
-                                    if (error.message.includes("revert")) {
-                                        Swal.fire({
-                                            title: 'Durian Edited Failed',
-                                            text: 'The wallet address is not associated with this account',
-                                            icon: 'error',
-                                            confirmButtonText: 'OK'
-                                        });
-
-                                    }
-                                    else {
-                                        Swal.fire({
-                                            title: 'Durian Edited Failed',
-                                            text: 'Unknown Error',
-                                            icon: 'error',
-                                            confirmButtonText: 'OK'
-                                        });
-                                    }
-
-                                }
-                            }
-
+                        
 
                             const addDurian = async () => {
                                 const accounts = await ethereum.request({ method: "eth_requestAccounts" });

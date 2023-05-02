@@ -104,85 +104,6 @@
 		{
 			"inputs": [
 				{
-					"internalType": "string",
-					"name": "oldPassword",
-					"type": "string"
-				},
-				{
-					"internalType": "string",
-					"name": "newPassword",
-					"type": "string"
-				},
-				{
-					"internalType": "address",
-					"name": "userAddress",
-					"type": "address"
-				}
-			],
-			"name": "updatePassword",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "string",
-					"name": "inpuUsername",
-					"type": "string"
-				},
-				{
-					"internalType": "string",
-					"name": "inpuFirstName",
-					"type": "string"
-				},
-				{
-					"internalType": "string",
-					"name": "inpuLastName",
-					"type": "string"
-				},
-				{
-					"internalType": "string",
-					"name": "inputContactNum",
-					"type": "string"
-				},
-				{
-					"internalType": "address",
-					"name": "userAddress",
-					"type": "address"
-				},
-				{
-					"internalType": "string",
-					"name": "location",
-					"type": "string"
-				}
-			],
-			"name": "updateProfile",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "string",
-					"name": "profileName",
-					"type": "string"
-				},
-				{
-					"internalType": "address",
-					"name": "userAddress",
-					"type": "address"
-				}
-			],
-			"name": "updateProfilePicture",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
 					"internalType": "address",
 					"name": "clientsAddress",
 					"type": "address"
@@ -387,7 +308,7 @@
 	];
 	const UserABIJSON = JSON.stringify(UserABI);
 	localStorage.setItem("UserABI", UserABIJSON);
-	localStorage.setItem("UserAddress", "0x0E13C8B5599a130B32C8623E49a47B33b973e0ec");
+	localStorage.setItem("UserAddress", "0xbaac267D689DA1dAfFAb69D64D14141C967aF36A");
 
 	window.location.href = "/login";
 </script>

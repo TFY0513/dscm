@@ -141,25 +141,7 @@ contract User {
             .distributorName = "MusangKingDistributor (MSK)";
     }
 
-    modifier checkUserPassword(
-        string memory oldPassword,
-        address userWallet,
-        address userAddress
-    ) {
-        //chcek if email or usernamexistt
-        bool error = false;
-
-        if (
-            user[userWallet].wallet != userAddress ||
-            keccak256(abi.encodePacked(user[userWallet].password)) !=
-            keccak256(abi.encodePacked(oldPassword))
-        ) {
-            error = true;
-        }
-
-        require(!error, "Invalid old password.");
-        _;
-    }
+   
 
     modifier duplicateUser(address userAddress) {
         //chcek if email or usernamexistt
@@ -176,20 +158,6 @@ contract User {
         _;
     }
 
-    modifier validUser(address userWallet, address userAddress) {
-        //chcek if email or usernamexistt
-        bool error = false;
-        if (user[userWallet].wallet != userAddress) {
-            error = true;
-            // address exists in the mapping
-            // you can perform the desired action here
-        }
-        require(
-            !error,
-            "The wallet address is not associated with this account"
-        );
-        _;
-    }
 
     function register(
         uint256 userID,
@@ -217,38 +185,7 @@ contract User {
         clients[payable(msg.sender)].location = location;
     }
 
-    function updateProfile(
-        string memory inpuUsername,
-        string memory inpuFirstName,
-        string memory inpuLastName,
-        string memory inputContactNum,
-        address userAddress,
-        string memory location
-    ) public validUser(userAddress, msg.sender) {
-        user[userAddress].username = inpuUsername;
-        user[userAddress].firstName = inpuFirstName;
-        user[userAddress].lastName = inpuLastName;
-        user[userAddress].contactNum = inputContactNum;
-
-        if (user[userAddress].role == Constant.Role.CLIENT) {
-            clients[userAddress].location = location;
-        }
-    }
-
-    function updateProfilePicture(
-        string memory profileName,
-        address userAddress
-    ) public validUser(userAddress, msg.sender) {
-        user[userAddress].profile_pic = profileName;
-    }
-
-    function updatePassword(
-        string memory oldPassword,
-        string memory newPassword,
-        address userAddress
-    ) public checkUserPassword(oldPassword, userAddress, msg.sender) {
-        user[userAddress].password = newPassword;
-    }
+   
 
     function retrieveProfile(address userAddress)
         public

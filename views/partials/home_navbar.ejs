@@ -128,9 +128,9 @@
                 <li class="nav-item me-3 me-lg-0 dropdown dropdown-notifications" id="cartIcon">
                     <a href="#notifications-panel" class="dropdown-toggle text-decoration-none"
                         data-bs-toggle="dropdown" id="dropdown-notification-icon">
-                        <i data-count="" class="fa   notification-icon" data-toggle="modal" data-target="#cartModal"><img src="cart.png"
-                                width="20px;"></i>
-                     
+                        <i data-count="" class="fa   notification-icon" data-toggle="modal"
+                            data-target="#cartModal"><img src="cart.png" width="20px;"></i> 
+
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="dropdownMenuButton1"
@@ -207,10 +207,10 @@
     <script>
 
         if (localStorage.getItem("cart") == null) {
-            document.getElementById("cartIcon").style.display="none";
+            document.getElementById("cartIcon").style.display = "none";
         }
         const showCart = async () => {
-            document.getElementById("cartIcon").style.display="block";
+            document.getElementById("cartIcon").style.display = "block";
 
         }
 

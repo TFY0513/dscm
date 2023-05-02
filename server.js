@@ -90,20 +90,6 @@ app.get('/profile', (req, res, next) => {//"/hello" is route name
   res.render('profile/profile');;
 });
 
-app.get('/editProfile', (req, res, next) => {//"/hello" is route name
-
-  res.render('profile/EditProfile');;
-});
-
-app.get('/imageUpload', (req, res, next) => {//"/hello" is route name
-  res.render('profile/imageUpload');;
-});
-
-app.get('/changePassword', (req, res, next) => {//"/hello" is route name
-  res.render('profile/ChangePassword');;
-});
-
-
 
 app.get('/farmerViewDurian', (req, res, next) => {//"/hello" is route name
   res.render('farmer/viewDurian');;
@@ -126,23 +112,9 @@ app.get('/history', (req, res, next) => {//"/hello" is route name
 });
 ``
 
-app.post('/upload/:fileName', upload.single('image'), (req, res) => {
-  // console.log(req.file.filename);
-  //res.locals.filename = req.file.filename;
-  res.render('profile/profile');
-});
-
-// app.get('/test', (req, res, next) => {//"/hello" is route name
-//   res.render('authentication/test');;
-// });
-
 app.get('/signout', (req, res, next) => {//"/hello" is route name
   res.render('authentication/signout');;
 });
-
-// app.get('/hello', (req, res, next) => {//"/hello" is route name
-//     res.send('Hello Express!');
-// }); 
 
 
 const server = app.listen(5000);
