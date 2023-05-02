@@ -45,7 +45,7 @@
                 overflow-y: scroll;
             }
 
-          
+
 
             #style-3::-webkit-scrollbar-track {
                 -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
@@ -97,7 +97,7 @@
             integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn"
             crossorigin="anonymous"></script>
 
-            
+
 
         <!-- Data table -->
         <!-- <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
@@ -125,22 +125,18 @@
             <!-- Icons -->
             <!-- Notifications -->
             <ul class="navbar-nav d-flex flex-row me-1">
-                <!-- <li class="nav-item me-3 me-lg-0 dropdown dropdown-notifications">
+                <li class="nav-item me-3 me-lg-0 dropdown dropdown-notifications" id="cartIcon">
                     <a href="#notifications-panel" class="dropdown-toggle text-decoration-none"
                         data-bs-toggle="dropdown" id="dropdown-notification-icon">
-                        <i data-count="0" class="fa fa-bell notification-icon"></i>
+                        <i data-count="" class="fa   notification-icon" data-toggle="modal" data-target="#cartModal"><img src="cart.png"
+                                width="20px;"></i>
+                     
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="dropdownMenuButton1"
                         id="notification-dropdown">
                         <li>
-                            <div class="dropdown-toolbar">
-                                <div class="dropdown-toolbar-actions">
-                                    <a href="#read-notification-all" onclick="markAsRead()">Mark all as read</a>
-                                </div>
-                                <h3 class="dropdown-toolbar-title text-black">Notifications (<span
-                                        class="notif-count">0</span>)</h3>
-                            </div>
+
                         </li>
                         <li class="notification-list scrollbar-notification" id="style-3">
 
@@ -153,15 +149,72 @@
                     </ul>
 
 
-                </li> -->
-                <li style="padding-left: 20px;"><a href='signout'
-                        class="text-white text-decoration-none">Sign Out</a></li>
+                </li>
+                <li style="padding-left: 20px;"><a href='signout' class="text-white text-decoration-none">Sign Out</a>
+                </li>
             </ul>
         </div>
         <!-- Container wrapper -->
     </nav>
 
-   
+
+    <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Your Shopping Cart
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-image">
+                        <thead>
+                            <tr>
+
+                                <th scope="col">Durian ID</th>
+                                <th scope="col">Price (RM)</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+
+                                <td>Vans Sk8-Hi MTE Shoes</td>
+                                <td>178$</td>
+                                <td>
+                                    <a href="#" class="btn btn-danger btn-sm">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-end">
+                        <h5>Total: <span class="price text-success">RM 111</span></h5>
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0 d-flex justify-content-between">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success">Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        if (localStorage.getItem("cart") == null) {
+            document.getElementById("cartIcon").style.display="none";
+        }
+        const showCart = async () => {
+            document.getElementById("cartIcon").style.display="block";
+
+        }
+
+    </script>
 </body>
 
 </html>

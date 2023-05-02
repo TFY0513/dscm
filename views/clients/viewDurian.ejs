@@ -75,7 +75,7 @@
                                                     <li>
                                                         <p style="background-color: white;" data-toggle="modal"
                                                             data-target="#buyDurianModal"><img src="shopcartIcon.png"
-                                                                width="40px;" onclick="show()"></p>
+                                                                width="40px;"></p>
                                                     </li>
 
                                                 </ul>
@@ -112,30 +112,30 @@
                                         <div class="row g-3">
 
 
-                                            <div style="padding-left:20px; padding-right:20px;" class="col-12">
+                                            <div style="padding-left:20px; padding-right:20px;" class="col-6">
                                                 <h4 class="mb-3">Durian ID</h4>
 
                                                 <input type="input" class="form-control" name="editDurianType"
                                                     id="durianID" maxlength="15" placeholder="XXXXXXXX" required
-                                                    disabled>
+                                                    value="dd" disabled>
 
                                                 <span class="text-danger text-left"></span>
                                             </div>
 
 
 
-                                            <div style="padding-left:20px; padding-right:20px;" class="col-6">
+                                            <!-- <div style="padding-left:20px; padding-right:20px;" class="col-6">
                                                 <h4 class="mb-3">Quantity</h4>
                                                 <input type="number" class="form-control" name="qty" id="qty"
                                                     name="quantity" min="1" max="20" required>
 
 
-                                            </div>
+                                            </div> -->
 
                                             <div style="padding-left:20px; padding-right:20px;" class="col-6">
-                                                <h4 class="mb-3">Total Price</h4>
+                                                <h4 class="mb-3">Price (RM)</h4>
                                                 <input type="input" class="form-control" name="totalPrice"
-                                                    id="totalPrice" placeholder="?" disabled>
+                                                    id="totalPrice" placeholder="?" value="333dd" disabled>
 
 
                                             </div>
@@ -158,24 +158,67 @@
                         <script>
                             const ABI = JSON.parse(localStorage.getItem("UserABI"));
                             const Address = localStorage.getItem("UserAddress")
+                            console.log(JSON.parse(localStorage.getItem("cart")));
 
-                            $("#qty").on('input', function () {
-                                let fullString = document.getElementById("prod1").innerHTML;
-                                let separateString = fullString.split("RM ");
 
-                                const totalprice = separateString[1] * document.getElementById("qty").value;
-                                document.getElementById("totalPrice").value = "RM " + totalprice.toFixed(2);;
 
-                            });
+                            // let cartItems = JSON.parse(localStorage.getItem('cart'));
+                            // cartItems.forEach(function (item) {
+                            //     // Create a div to hold the details of the item
+                            //     console.log("Item name:" + item.durianID);
+
+                            // });
+
+                            // $("#qty").on('input', function () {
+                            //     let fullString = document.getElementById("prod1").innerHTML;
+                            //     let separateString = fullString.split("RM ");
+
+                            //     const totalprice = separateString[1] * document.getElementById("qty").value;
+                            //     document.getElementById("totalPrice").value = "RM " + totalprice.toFixed(2);;
+
+                            // });
 
 
                             document.getElementById('addToCartBtn').addEventListener('click', function (e) {
                                 e.preventDefault();
-                                var durianID = document.getElementById("durianID").value;
-                                var qty = document.getElementById("qty").value;
-                                var totalPrice = document.getElementById("totalPrice").value;
-                                
-                                localStorage.setItem("cart");
+                                // var durianID = document.getElementById("durianID").value;
+                                // var totalPrice = document.getElementById("totalPrice").value;
+                                var durianID = "222";
+                                var totalPrice = "3333";
+                                // let item = [durianID, totalPrice];
+
+                                // convert the array to a JSON string
+                                // let array = JSON.stringify(cart);
+                                // Get the current cart data from Local Storage
+                                let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+                                // Define the product you want to add to the cart
+                                let durian = {
+                                    durianID: durianID,
+                                    totalPrice: totalPrice
+                                };
+
+                                // Check if the product already exists in the cart
+                                let existingProduct = cart.find(item => item.durianID === durian.durianID);
+
+                                if (!existingProduct) {
+                                    cart.push(durian);
+                                }
+
+                                // Store the updated cart data back into Local Storage
+                                localStorage.setItem("cart", JSON.stringify(cart));
+
+
+                                Swal.fire({
+                                    title: 'Add To Cart Succesful',
+                                    text: 'You may view the shopping cart',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                }).then(function () {
+                                    window.location.href = '/clientViewDurian';
+                                });
+                               
+                                console.log(JSON.parse(localStorage.getItem("cart")));
                             });
 
                             // const showDetail = async () => {
