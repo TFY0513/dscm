@@ -9,8 +9,6 @@ contract User {
         string firstName;
         string lastName;
         string email;
-        string username;
-        string password;
         string contactNum;
         Constant.Role role;
         uint256 dateJoined;
@@ -65,9 +63,6 @@ contract User {
         user[farmerAddress].firstName = "choon pin";
         user[farmerAddress].lastName = "Wee";
         user[farmerAddress].email = "shink34@gmail.com";
-        user[farmerAddress].username = "wcp";
-        user[farmerAddress]
-            .password = "3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2";
         user[farmerAddress].contactNum = "012-1234567";
         user[farmerAddress].role = Constant.Role.FARMER;
         user[farmerAddress].dateJoined = block.timestamp;
@@ -86,9 +81,6 @@ contract User {
         user[clientsAddress].firstName = "chong min";
         user[clientsAddress].lastName = "yeap";
         user[clientsAddress].email = "ycm@gmail.com";
-        user[clientsAddress].username = "ycm";
-        user[clientsAddress]
-            .password = "3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2";
         user[clientsAddress].contactNum = "019-81234213";
         user[clientsAddress].role = Constant.Role.CLIENT;
         user[clientsAddress].dateJoined = block.timestamp;
@@ -106,9 +98,6 @@ contract User {
         user[retailerAddress].firstName = "fang yee";
         user[retailerAddress].lastName = "Tee";
         user[retailerAddress].email = "shink828@gmail.com";
-        user[retailerAddress].username = "tfy";
-        user[retailerAddress]
-            .password = "3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2";
         user[retailerAddress].contactNum = "011-1234213";
         user[retailerAddress].role = Constant.Role.RETAILER;
         user[retailerAddress].dateJoined = block.timestamp;
@@ -127,9 +116,6 @@ contract User {
         user[distributorAddress].firstName = "Zongg Hao";
         user[distributorAddress].lastName = "Ng";
         user[distributorAddress].email = "shink@gmail.com";
-        user[distributorAddress].username = "nzh";
-        user[distributorAddress]
-            .password = "3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2";
         user[distributorAddress].contactNum = "016-8572213";
         user[distributorAddress].role = Constant.Role.DISTRIBUTER;
         user[distributorAddress].dateJoined = block.timestamp;
@@ -140,8 +126,6 @@ contract User {
         distributors[distributorAddress]
             .distributorName = "MusangKingDistributor (MSK)";
     }
-
-   
 
     modifier duplicateUser(address userAddress) {
         //chcek if email or usernamexistt
@@ -158,14 +142,11 @@ contract User {
         _;
     }
 
-
     function register(
         uint256 userID,
         string memory firstName,
         string memory lastName,
         string memory email,
-        string memory username,
-        string memory password,
         string memory contactNum,
         string memory location
     ) public duplicateUser(msg.sender) {
@@ -173,8 +154,6 @@ contract User {
         user[msg.sender].firstName = firstName;
         user[msg.sender].lastName = lastName;
         user[msg.sender].email = email;
-        user[msg.sender].username = username;
-        user[msg.sender].password = password;
         user[msg.sender].contactNum = contactNum;
         user[msg.sender].role = Constant.Role.CLIENT;
         user[msg.sender].dateJoined = block.timestamp;
@@ -184,8 +163,6 @@ contract User {
         totalUser++;
         clients[payable(msg.sender)].location = location;
     }
-
-   
 
     function retrieveProfile(address userAddress)
         public
@@ -207,18 +184,10 @@ contract User {
         // );
     }
 
-    function login(
-        string memory inputUsername,
-        string memory inputPassword,
-        address userAddress
-    ) public view returns (bool) {
+    function login(address userAddress) public view returns (bool) {
         bool exist = false;
-        if (
-            keccak256(abi.encodePacked(user[userAddress].username)) ==
-            keccak256(abi.encodePacked(inputUsername)) &&
-            keccak256(abi.encodePacked(user[userAddress].password)) ==
-            keccak256(abi.encodePacked(inputPassword))
-        ) {
+
+        if (user[userAddress].userID != 0) {
             exist = true;
         }
 
