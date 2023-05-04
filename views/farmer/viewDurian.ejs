@@ -73,28 +73,21 @@
                                                 <th scope="col">Durian Weight(KG)</th>
                                                 <th scope="col">Process</th>
                                                 <th scope="col">Harvest Time</th>
-                                             
-                                                <th scope="col">Distribute</th>
-                                             
+
+
+
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr id="">
-                                                <td scope="col" id="durianID">13221323</td>
-                                                <td id="durianType">HHHH</td>
-                                                <td id="durianTreeID">eqqwewqweweq</td>
-                                                <td id="durianWeight">100.00</td>
-                                                <td id="process">Harvested</td>
-                                                <td id="harvestTime">11.11ppm</td>
-                                               
-                                                <td scope="col">
+                                        <tbody id="bodyData">
+
+
+                                            <!-- <td scope="col">
                                                     <button class=" btn btn-outline-secondary  " data-toggle="modal"
                                                         data-target="#distributeDurianModal">Distribute
                                                     </button>
 
-                                                </td>
-                                               
-                                            </tr>
+                                                </td> -->
+
 
 
                                         </tbody>
@@ -106,9 +99,8 @@
                                                 <th scope="col">Durian Weight(KG)</th>
                                                 <th scope="col">Process</th>
                                                 <th scope="col">Harvest Time</th>
-                                         
-                                                <th scope="col">Distribute</th>
-                                       
+
+
 
                                                 </button></th>
 
@@ -143,37 +135,37 @@
                                             <div style="padding-left:20px; padding-right:20px;" class="col-6">
                                                 <h4 class="mb-3">Durian Type</h4>
                                                 <select class="form-select" name="durianName" id="addDurianType">
-                                                    <option value="">D24 Durian
+                                                    <option value="D24 Durian">D24 Durian
                                                     </option>
-                                                    <option value="">XO Durian
+                                                    <option value="XO Durian">XO Durian
                                                     </option>
-                                                    <option value="">Red Prawn Durian
+                                                    <option value="Red Prawn Durian">Red Prawn Durian
                                                     </option>
-                                                    <option value="">Mao Shan Wang Durian
+                                                    <option value="Mao Shan Wang Durian">Mao Shan Wang Durian
                                                     </option>
-                                                    <option value="">Black Pearl Durian
+                                                    <option value="Black Pearl Durian">Black Pearl Durian
                                                     </option>
-                                                    <option value="">Golden Phoenix Durian
+                                                    <option value="Golden Phoenix Durian">Golden Phoenix Durian
                                                     </option>
-                                                    <option value=""> Black Thorn Durian
+                                                    <option value="Black Thorn Durian"> Black Thorn Durian
                                                     </option>
-                                                    <option value="">Black Gold Durian
+                                                    <option value="Black Gold Durian">
                                                     </option>
-                                                    <option value=""> Hor Lor Durian
+                                                    <option value="Hor Lor Durian"> Hor Lor Durian
                                                     </option>
-                                                    <option value="">D17 Durian
+                                                    <option value="D17 Durian">D17 Durian
                                                     </option>
-                                                    <option value=""> D1 Durian
+                                                    <option value="D1 Durian"> D1 Durian
                                                     </option>
-                                                    <option value="">D101 Durian
+                                                    <option value="D101 Durian">D101 Durian
                                                     </option>
-                                                    <option value=""> MonThong Durian
+                                                    <option value="MonThong Durian"> MonThong Durian
                                                     </option>
-                                                    <option value="">D13 Durian
+                                                    <option value="D13 Durian">D13 Durian
                                                     </option>
-                                                    <option value=""> Tekka Durian
+                                                    <option value="Tekka Durian"> Tekka Durian
                                                     </option>
-                                                    <option value="">Wang Zong Wang
+                                                    <option value="Wang Zong Wang">Wang Zong Wang
                                                     </option>
                                                 </select>
 
@@ -224,9 +216,9 @@
                         </div>
                     </div>
 
-                  
 
-                    <div class="modal fade" id="distributeDurianModal" tabindex="-1" role="dialog"
+
+                    <!-- <div class="modal fade" id="distributeDurianModal" tabindex="-1" role="dialog"
                         aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -246,7 +238,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
 
 
@@ -256,8 +248,70 @@
                         <script>
                             const ABI = JSON.parse(localStorage.getItem("UserABI"));
                             const Address = localStorage.getItem("UserAddress")
+                            const DurianABI = JSON.parse(localStorage.getItem("DurianABI"));
+                            const DurianAddress = localStorage.getItem("DurianAddress")
+
+                            const showDurian = async () => {
+                                const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+                                account = accounts[0];
+                                window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+                                window.UserContract = await new window.web3.eth.Contract(DurianABI, DurianAddress); //how you create an instance of that contract by using the abi and address  
+
+                                var index = await window.UserContract.methods.displayIndex().call();
+                                console.log(index);
+                                if (index != 0) {
+                                    for(var i = 0; i < index; i++){
+                                        const durian = await window.UserContract.methods.getBlock(i).call();
+                                        if(Object.keys(durian).length !== 0 ){
+                                            
+                                        }
+                                      
+                                    }
+                                
+
+                                    // // --index;
+                                    // const durian = await window.UserContract.methods.getBlock(0).call();
+                                    // const statusDurian = await window.UserContract.methods.getBlock(index).call();
+                                    // console.log(durian[6]);
+                                    // const date = new Date(durian[3] * 1000); // Multiply by 1000 to convert from seconds to milliseconds
+                                    // const humanReadableTime = date.toLocaleString(); // Convert to local time string
+                                    // var process = "";
+                                    // switch (statusDurian[4]) {
+                                    //     case "0":
+                                    //         process = "HARVEST";
+                                    //         break;
+                                    //     case "1":
+                                    //         process = "DISTRIBUTION";
+                                    //         break;
+                                    //     case "2":
+                                    //         process = "DELIVERED";
+                                    //         break;
+                                    //     case "3":
+                                    //         process = "PREPARED";
+                                    //         break;
+                                    //     case "4":
+                                    //         process = "PURCHASE";
+                                    //         break;
+                                    //     case "5":
+                                    //         process = "RATING";
+                                    //         break;
+                                    //     default:
+                                    //         process = "COMPLETED";
+                                    //         break;
+                                    // }
+
+                                    $(document).ready(function () {
+                                        var t = $('#table').DataTable();
 
 
+                                        t.row.add([durian[6][0], durian[6][2], durian[6][1], parseInt(durian[6][3]).toFixed(2), process, humanReadableTime]).draw(false);
+
+                                    });
+
+                                }
+
+                            }
+                            showDurian();
 
 
                             document.getElementById('addDurianBtn').addEventListener('click', function (e) {
@@ -267,11 +321,18 @@
                                 var durianType = document.getElementById("addDurianType").value;
                                 var durianTreeId = document.getElementById("addDurianTreeId").value;
                                 var durianWeight = document.getElementById("addDurianWeight").value;
-                                console.log(durianTreeId);
-                                console.log(durianWeight);
+
                                 if (validateAddDurian(durianTreeId, durianWeight)) {
-                                    addDurian();
+                                    let durianID = Math.floor((Math.random() * 10000000) + 1);
+
+                                    addDurian(durianID, durianType, durianTreeId, durianWeight);
+
+                                    // [1,ee,eee,2]
+
+
                                 }
+
+
 
 
 
@@ -281,78 +342,45 @@
 
 
 
-                            document.getElementById('distributeDurianBtn').addEventListener('click', function (e) {
-                                e.preventDefault();
-
-                                distributeDurian();
 
 
-                            });
-                            const distributeDurian = async () => {
+                            const addDurian = async (durianID, durianType, durianTreeId, durianWeight) => {
                                 const accounts = await ethereum.request({ method: "eth_requestAccounts" });
                                 account = accounts[0];
                                 window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
-                                window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
-
+                                window.UserContract = await new window.web3.eth.Contract(DurianABI, DurianAddress); //how you create an instance of that contract by using the abi and address  
+                                // console.log(durianID);//0
+                                // console.log(durianType);//2
+                                // console.log(durianTreeId);//1
+                                // console.log(durianWeight);//3
+                                var data = [durianID.toString(), durianTreeId, durianType, durianWeight];
+                                console.log(data);
+                                // [1,ee,eee,2]
                                 try {
-                                    // await window.UserContract.methods.updateProfile(username, firstname, lastname, contactNum, userJson.wallet, location).send({ from: account });
-
-                                    Swal.fire({
-                                        title: 'Durian Distributed Succesful',
-                                        text: 'You may view your durian',
-                                        icon: 'success',
-                                        confirmButtonText: 'OK'
-                                    }).then(function () {
-                                        window.location.href = '/farmerViewDurian';
-                                    });
-                                } catch (error) {
-                                    if (error.message.includes("revert")) {
-                                        Swal.fire({
-                                            title: 'Durian Distributed Failed',
-                                            text: 'The wallet address is not associated with this account',
-                                            icon: 'error',
-                                            confirmButtonText: 'OK'
-                                        });
-
-                                    }
-                                    else {
-                                        Swal.fire({
-                                            title: 'Durian Distributed Failed',
-                                            text: 'Unknown Error',
-                                            icon: 'error',
-                                            confirmButtonText: 'OK'
-                                        });
-                                    }
-
-                                }
-                            }
+                                    //await window.UserContract.methods.createDurianRecord().send({ from: account });
+                                    var index = await window.UserContract.methods.displayIndex().call();
+                                    --index;
+                                    console.log(index);
+                                    await window.UserContract.methods.appendDurianBlock(index, data).send({ from: account });
 
 
 
-                        
 
-                            const addDurian = async () => {
-                                const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-                                account = accounts[0];
-                                window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
-                                window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
 
-                                try {
-                                    // await window.UserContract.methods.updateProfile(username, firstname, lastname, contactNum, userJson.wallet, location).send({ from: account });
 
-                                    Swal.fire({
-                                        title: 'Durian Added Succesful',
-                                        text: 'You may view your durian added',
-                                        icon: 'success',
-                                        confirmButtonText: 'OK'
-                                    }).then(function () {
-                                        window.location.href = '/farmerViewDurian';
-                                    });
+                                    // Swal.fire({
+                                    //     title: 'Durian Added Succesful',
+                                    //     text: 'You may view your durian added',
+                                    //     icon: 'success',
+                                    //     confirmButtonText: 'OK'
+                                    // }).then(function () {
+                                    //     window.location.href = '/farmerViewDurian';
+                                    // });
                                 } catch (error) {
                                     if (error.message.includes("revert")) {
                                         Swal.fire({
                                             title: 'Durian Added Failed',
-                                            text: 'The wallet address is not associated with this account',
+                                            text: 'The process is already in other phrase',
                                             icon: 'error',
                                             confirmButtonText: 'OK'
                                         });
@@ -396,39 +424,6 @@
                                 }
                                 else {
                                     document.querySelector(".durianWeightErr").innerHTML = "";
-                                    valid = true;
-                                }
-
-                                return valid;
-                            }
-
-                            function validateEditDurian(durianTreeId, durianWeight) {
-                                var valid = true;
-
-                                const regexTreeID = /^\d{1,15}$/u;
-                                const regexDurianWeight = /^[0-9]+(\.[0-9]{1,4})?$/u;
-
-
-                                if (!regexTreeID.test(durianTreeId)) {
-                                    //  document.getElementById("durianTreeIdErr").innerHTML = "Invalid Durian Tree ID";
-                                    document.querySelector('.editDurianTreeIdErr').innerHTML = "Invalid Durian Tree ID";
-                                    valid = false;
-                                    return;
-                                }
-                                else {
-                                    document.querySelector(".editDurianTreeIdErr").innerHTML = "";
-                                    valid = true;
-                                }
-
-
-                                if (!regexDurianWeight.test(durianWeight)) {
-                                    // document.getElementById("durianWeightErr").innerHTML = "Invalid Durian Weight";
-                                    document.querySelector('.editDurianWeightErr').innerHTML = "Invalid Durian Weight";
-                                    valid = false;
-                                    return;
-                                }
-                                else {
-                                    document.querySelector(".editDurianWeightErr").innerHTML = "";
                                     valid = true;
                                 }
 

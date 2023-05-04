@@ -62,6 +62,11 @@
 				},
 				{
 					"internalType": "string",
+					"name": "username",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
 					"name": "firstName",
 					"type": "string"
 				},
@@ -228,6 +233,11 @@
 						},
 						{
 							"internalType": "string",
+							"name": "username",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
 							"name": "firstName",
 							"type": "string"
 						},
@@ -278,7 +288,126 @@
 	];
 	const UserABIJSON = JSON.stringify(UserABI);
 	localStorage.setItem("UserABI", UserABIJSON);
-	localStorage.setItem("UserAddress", "0xE4613d3ECB29041B7f096469974A961E2AFB2e24");
+	localStorage.setItem("UserAddress", "0x375DBFb1A66050e1d43FD07F0889c577d01fA210");
+
+	const DurianABI = [
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "index",
+					"type": "uint256"
+				},
+				{
+					"internalType": "string[]",
+					"name": "_data",
+					"type": "string[]"
+				}
+			],
+			"name": "appendDurianBlock",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "createDurianRecord",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"stateMutability": "nonpayable",
+			"type": "constructor"
+		},
+		{
+			"inputs": [],
+			"name": "currentIndex",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "displayIndex",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "index",
+					"type": "uint256"
+				}
+			],
+			"name": "getBlock",
+			"outputs": [
+				{
+					"components": [
+						{
+							"internalType": "uint256",
+							"name": "_index",
+							"type": "uint256"
+						},
+						{
+							"internalType": "bytes32",
+							"name": "_previousHash",
+							"type": "bytes32"
+						},
+						{
+							"internalType": "bytes32",
+							"name": "_blockHash",
+							"type": "bytes32"
+						},
+						{
+							"internalType": "uint256",
+							"name": "_timestamp",
+							"type": "uint256"
+						},
+						{
+							"internalType": "enum Constant.Process",
+							"name": "_process",
+							"type": "uint8"
+						},
+						{
+							"internalType": "address",
+							"name": "_uaddress",
+							"type": "address"
+						},
+						{
+							"internalType": "string[4]",
+							"name": "_data",
+							"type": "string[4]"
+						}
+					],
+					"internalType": "struct DurianTracker.BlockData[]",
+					"name": "",
+					"type": "tuple[]"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		}
+	];
+	const DurianABIJSON = JSON.stringify(DurianABI);
+	localStorage.setItem("DurianABI", DurianABIJSON);
+	localStorage.setItem("DurianAddress", "0x718AF894a3AEb423C4e1FBa80B94EdA7Ce8a93F7");
+
 
 	window.location.href = "/login";
 </script>

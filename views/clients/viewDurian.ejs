@@ -66,27 +66,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row" id="durianList">
                                     <!-- Single Product -->
-                                    <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div id="product-1" class="single-product">
-                                            <div class="part-1">
-                                                <ul>
-                                                    <li>
-                                                        <p style="background-color: white;" data-toggle="modal"
-                                                            data-target="#buyDurianModal"><img src="shopcartIcon.png"
-                                                                width="40px;"></p>
-                                                    </li>
 
-                                                </ul>
-                                            </div>
-                                            <div class="part-2">
-                                                <h3 class="product-title">Durian</h3>
-                                                <h4 class="product-title">31928319239</h4>
-                                                <h4 class="product-price" id="prod1">RM 11.11</h4>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <!-- Single Product -->
 
                                 </div>
@@ -99,53 +81,18 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="myModalLabel">Edit Durian Modal</h5>
+                                    <h5 class="modal-title" id="myModalLabel">Purchase Conformation</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-                                    <form target="dummyframe">
-
-
-                                        <div class="row g-3">
-
-
-                                            <div style="padding-left:20px; padding-right:20px;" class="col-6">
-                                                <h4 class="mb-3">Durian ID</h4>
-
-                                                <input type="input" class="form-control" name="editDurianType"
-                                                    id="durianID" maxlength="15" placeholder="XXXXXXXX" required
-                                                    value="dd" disabled>
-
-                                                <span class="text-danger text-left"></span>
-                                            </div>
-
-
-
-                                            <!-- <div style="padding-left:20px; padding-right:20px;" class="col-6">
-                                                <h4 class="mb-3">Quantity</h4>
-                                                <input type="number" class="form-control" name="qty" id="qty"
-                                                    name="quantity" min="1" max="20" required>
-
-
-                                            </div> -->
-
-                                            <div style="padding-left:20px; padding-right:20px;" class="col-6">
-                                                <h4 class="mb-3">Price (RM)</h4>
-                                                <input type="input" class="form-control" name="totalPrice"
-                                                    id="totalPrice" placeholder="?" value="333dd" disabled>
-
-
-                                            </div>
-                                        </div><br />
-                                    </form>
+                                    <h5>Are you sure want to purchase this durian?</h5>
                                 </div>
-                                <div class="modal-footer">
+                                <div class="modal-footer" id="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" id="addToCartBtn">Add to Cart
-                                    </button>
+                                    <button type="button" class="btn btn-primary"
+                                    id="buyBtn" onclick="buyDurian()">Purchase</button>
                                 </div>
                             </div>
                         </div>
@@ -158,77 +105,184 @@
                         <script>
                             const ABI = JSON.parse(localStorage.getItem("UserABI"));
                             const Address = localStorage.getItem("UserAddress")
-                            console.log(JSON.parse(localStorage.getItem("cart")));
+                            const DurianABI = JSON.parse(localStorage.getItem("DurianABI"));
+                            const DurianAddress = localStorage.getItem("DurianAddress")
+
+                            // // Get the modal and the placeholders for the data
+                            // const modal = document.getElementById('buyDurianModal');
+                            // const priceDisplay = modal.querySelector('#price');
+                            // const idDisplay = modal.querySelector('#durainIDSelected');
+
+                            // // Listen for the modal to be shown
+                            // modal.addEventListener('show.bs.modal', function (event) {
+                            //     // Get the button that triggered the modal
+                            //     const button = event.relatedTarget;
+
+                            //     // Retrieve the data from the button's data attributes
+                            //     const price = button.getAttribute('data-price');
+                            //     const name = button.getAttribute('data-id');
 
 
-
-                            // let cartItems = JSON.parse(localStorage.getItem('cart'));
-                            // cartItems.forEach(function (item) {
-                            //     // Create a div to hold the details of the item
-                            //     console.log("Item name:" + item.durianID);
-
+                            //     // console.log(button);
+                            //     // Update the modal content with the retrieved data
+                            //     priceDisplay.textContent = price;
+                            //     idDisplay.textContent = name;
                             // });
 
-                            // $("#qty").on('input', function () {
-                            //     let fullString = document.getElementById("prod1").innerHTML;
-                            //     let separateString = fullString.split("RM ");
-
-                            //     const totalprice = separateString[1] * document.getElementById("qty").value;
-                            //     document.getElementById("totalPrice").value = "RM " + totalprice.toFixed(2);;
-
-                            // });
 
 
-                            document.getElementById('addToCartBtn').addEventListener('click', function (e) {
-                                e.preventDefault();
-                                // var durianID = document.getElementById("durianID").value;
-                                // var totalPrice = document.getElementById("totalPrice").value;
-                                var durianID = "222";
-                                var totalPrice = "3333";
-                                // let item = [durianID, totalPrice];
+                            const showDurian = async () => {
+                                const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+                                account = accounts[0];
+                                window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+                                window.UserContract = await new window.web3.eth.Contract(DurianABI, DurianAddress); //how you create an instance of that contract by using the abi and address  
+                                let price;
+                                var index = await window.UserContract.methods.returnIndex().call();
+                                //  console.log(index);
+                                if (index != 0) {
+                                    --index;
+                                    const durian = await window.UserContract.methods.getBlock(0).call();
 
-                                // convert the array to a JSON string
-                                // let array = JSON.stringify(cart);
-                                // Get the current cart data from Local Storage
-                                let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-                                // Define the product you want to add to the cart
-                                let durian = {
-                                    durianID: durianID,
-                                    totalPrice: totalPrice
-                                };
 
-                                // Check if the product already exists in the cart
-                                let existingProduct = cart.find(item => item.durianID === durian.durianID);
+                                    const currentDurian = await window.UserContract.methods.getBlock(index).call();
 
-                                if (!existingProduct) {
-                                    cart.push(durian);
+                                    var process = "";
+                                    switch (currentDurian[4]) {
+                                        case "0":
+                                            process = "HARVEST";
+                                            break;
+                                        case "1":
+                                            process = "DISTRIBUTION";
+                                            break;
+                                        case "2":
+                                            process = "DELIVERED";
+                                            break;
+                                        case "3":
+                                            process = "PREPARED";
+                                            break;
+                                        case "4":
+                                            process = "PURCHASE";
+                                            break;
+                                        case "5":
+                                            process = "RATING";
+                                            break;
+                                        default:
+                                            process = "COMPLETED";
+                                            break;
+                                    }
+                                    if (currentDurian[4] == "3") {
+                                        console.log(currentDurian);
+                                        //     <div class="col-md-6 col-lg-4 col-xl-3" >
+                                        //     <div id="product-1" class="single-product">
+                                        //         <div class="part-1">
+                                        //             <ul>
+                                        //                 <li>
+                                        //                     <p style="background-color: white;" data-toggle="modal"
+                                        //                         data-target="#buyDurianModal"><img src="shopcartIcon.png"
+                                        //                             width="40px;"></p>
+                                        //                 </li>
+
+                                        //             </ul>
+                                        //         </div>
+                                        //         <div class="part-2">
+                                        //             <h3 class="product-title">Durian</h3>
+                                        //             <h4 class="product-title">31928319239</h4>
+                                        //             <h4 class="product-price" id="prod1">RM 11.11</h4>
+                                        //         </div>
+                                        //     </div>
+                                        // </div>
+                                        var parentDiv = document.createElement("div");
+                                        parentDiv.classList.add("col-md-6", "col-lg-4", "col-xl-3");
+
+                                        var newDiv = document.createElement("div");
+                                        newDiv.id = 'product-1';
+                                        newDiv.classList.add("single-product");
+
+                                        var newDiv2 = document.createElement("div");
+                                        newDiv2.classList.add("part-1");
+
+                                        var newUL = document.createElement("ul");
+                                        var newLi = document.createElement("li");
+
+                                        var newP = document.createElement("p");
+
+                                        newP.setAttribute('data-toggle', 'modal');
+                                        newP.setAttribute('data-target', '#buyDurianModal');
+                                        newP.setAttribute('data-price', currentDurian[6][0]);
+                                        newP.setAttribute('data-id', durian[6][0]);
+                                        var imgElement = document.createElement('img');
+                                        imgElement.src = 'shopcartIcon.png';
+                                        imgElement.width = '40';
+
+                                        newP.appendChild(imgElement);
+
+                                        // Append the p element to the li element
+                                        newLi.appendChild(newP);
+
+                                        // Append the li element to the ul element
+                                        newUL.appendChild(newLi);
+
+                                        newDiv2.appendChild(newUL);
+
+
+                                        var newDiv3 = document.createElement("div");
+                                        newDiv3.classList.add("part-2");
+
+                                        var header3 = document.createElement("h3");
+                                        header3.classList.add("product-title");
+                                        header3.innerHTML = durian[6][2] + " (ID: " + durian[6][0] + ")";
+                                        var header4 = document.createElement("h4");
+                                        header4.classList.add("product-title");
+                                        header4.innerHTML = "Weight: " + durian[6][3] + " kg";
+                                        var header6 = document.createElement("h3");
+                                        header6.classList.add("product-price");
+                                        header6.setAttribute('id', durian[6][0]);
+                                        header6.innerHTML = parseInt(currentDurian[6][0]).toFixed(2) + "<img src='Ether.png' width='50'>";
+
+                                        newDiv3.appendChild(header3);
+                                        newDiv3.appendChild(header4);
+                                        newDiv3.appendChild(header6);
+
+                                        newDiv.appendChild(newDiv2);
+                                        newDiv.appendChild(newDiv3);
+
+                                        parentDiv.appendChild(newDiv);
+
+                                        var myDiv = document.getElementById("durianList");
+                                        myDiv.appendChild(parentDiv);
+
+                                    
+
+                                       var button = document.createElement("buyBtn");
+                                            
+                                        // // Set the button text
+                                        // button.innerHTML = "Purchase";
+
+                                        // // Set the button attributes
+                                        // button.classList.add("btn", "btn-primary");
+                                        // button.setAttribute("id", "buyBtn");
+                                        // button.onclick = buyDurian(parseInt(currentDurian[6][0]).toFixed(2));
+
+                                        // var modelDiv = document.getElementById("modal-footer");
+                                        // modelDiv.appendChild(button);
+
+                                       
+                                    }
+                                    else {
+
+                                    }
+
+
                                 }
 
-                                // Store the updated cart data back into Local Storage
-                                localStorage.setItem("cart", JSON.stringify(cart));
+                            }
+                            showDurian();
 
 
-                                Swal.fire({
-                                    title: 'Add To Cart Succesful',
-                                    text: 'You may view the shopping cart',
-                                    icon: 'success',
-                                    confirmButtonText: 'OK'
-                                }).then(function () {
-                                    window.location.href = '/clientViewDurian';
-                                });
-                               
-                                console.log(JSON.parse(localStorage.getItem("cart")));
-                            });
+                            const buyDurian = async (price) => {
+                             console.log(price);
 
-                            // const showDetail = async () => {
-                            //     const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-                            //     account = accounts[0];
-                            //     window.web3 = await new Web3(window.ethereum); //how to access to smart contract
-                            //     window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address
-
-                            // }
-
-
+                            }
 
                         </script>

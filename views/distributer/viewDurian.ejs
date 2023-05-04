@@ -61,7 +61,7 @@
                             <div class="card" style="width:100%; ">
                                 <div class="card-body">
 
-                                  
+
                                     <table id="table" class="table ">
                                         <thead>
                                             <tr>
@@ -71,12 +71,12 @@
                                                 <th scope="col">Durian Weight(KG)</th>
                                                 <th scope="col">Process</th>
                                                 <th scope="col">Distribution</th>
-                                        
+
 
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr id="">
+                                            <!-- <tr id="">
                                                 <td scope="col" id="durianID">13221323</td>
                                                 <td id="durianType">HHHH</td>
                                                 <td id="durianTreeID">eqqwewqweweq</td>
@@ -87,7 +87,7 @@
                                                         data-toggle="modal" data-target="#deliveredDurianModal">Delivered
                                                     </button>
                                                 </td>
-                                            </tr>
+                                            </tr> -->
 
 
                                         </tbody>
@@ -122,7 +122,8 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <h5>Are you sure want to complete the durian distribution? The process cannot be undo</h5>
+                                    <h5>Are you sure want to complete the durian distribution? The process cannot be
+                                        undo</h5>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -141,15 +142,87 @@
                         <script>
                             const ABI = JSON.parse(localStorage.getItem("UserABI"));
                             const Address = localStorage.getItem("UserAddress")
+                            const DurianABI = JSON.parse(localStorage.getItem("DurianABI"));
+                            const DurianAddress = localStorage.getItem("DurianAddress")
+
+                            const showDurian = async () => {
+                                const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+                                account = accounts[0];
+                                window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+                                window.UserContract = await new window.web3.eth.Contract(DurianABI, DurianAddress); //how you create an instance of that contract by using the abi and address  
+
+                                var index = await window.UserContract.methods.returnIndex().call();
+                                console.log(index);
+                                if (index != 0) {
+                                    --index;
+                                    const durian = await window.UserContract.methods.getBlock(0).call();
+                                    const statusDurian = await window.UserContract.methods.getBlock(index).call();
+
+                                    //console.log(durian[6]);
+                                    const date = new Date(durian[3] * 1000); // Multiply by 1000 to convert from seconds to milliseconds
+                                    const humanReadableTime = date.toLocaleString(); // Convert to local time string
+                                    var process = "";
+                                    switch (statusDurian[4]) {
+                                        case "0":
+                                            process = "HARVEST";
+                                            break;
+                                        case "1":
+                                            process = "DISTRIBUTION";
+                                            break;
+                                        case "2":
+                                            process = "DELIVERED";
+                                            break;
+                                        case "3":
+                                            process = "PREPARED";
+                                            break;
+                                        case "4":
+                                            process = "PURCHASE";
+                                            break;
+                                        case "5":
+                                            process = "RATING";
+                                            break;
+                                        default:
+                                            process = "COMPLETED";
+                                            break;
+                                    }
 
 
+
+                                    $(document).ready(function () {
+                                        var t = $('#table').DataTable();
+
+                                        if (statusDurian[4] != "0") {
+                                            t.row.add([durian[6][0], durian[6][2], durian[6][1], parseInt(durian[6][3]).toFixed(2), process,
+                                            ""]).draw(false);
+
+                                        }
+                                        else {
+                                            t.row.add([durian[6][0], durian[6][2], durian[6][1], parseInt(durian[6][3]).toFixed(2), process,
+                                            "<button class=' btn btn-outline-secondary' data-toggle='modal' data-target='#deliveredDurianModal'>Delivered </button>"]).draw(false);
+
+                                        }
+                                       
+
+
+                                    });
+
+                                }
+
+                            }
+                            showDurian();
+                            // <th scope="col">Durian ID</th>
+                            //                     <th scope="col">Durian Type</th>
+                            //                     <th scope="col">Durian Tree ID</th>
+                            //                     <th scope="col">Durian Weight(KG)</th>
+                            //                     <th scope="col">Process</th>
+                            //                     <th scope="col">Distribution</th>
 
 
                             document.getElementById('distributeDurianBtn').addEventListener('click', function (e) {
                                 e.preventDefault();
 
-                           
-                                    deliveredDurian();
+
+                                deliveredDurian();
 
                             });
 
@@ -158,11 +231,13 @@
                                 const accounts = await ethereum.request({ method: "eth_requestAccounts" });
                                 account = accounts[0];
                                 window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
-                                window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
-
+                                window.UserContract = await new window.web3.eth.Contract(DurianABI, DurianAddress);  //how you create an instance of that contract by using the abi and address  
+                                // var data = [globaldata[6][0], globaldata[6][2], globaldata[6][1], globaldata[6][3]];
+                                // console.log(data);
+                                var data = ["1", "2", "3", "4"];
                                 try {
                                     // await window.UserContract.methods.updateProfile(username, firstname, lastname, contactNum, userJson.wallet, location).send({ from: account });
-
+                                    await window.UserContract.methods.addBlock(data).send({ from: account });
                                     Swal.fire({
                                         title: 'Durian Delivered Succesful',
                                         text: 'You may view the durian',
@@ -175,7 +250,7 @@
                                     if (error.message.includes("revert")) {
                                         Swal.fire({
                                             title: 'Durian Delivered Failed',
-                                            text: 'The wallet address is not associated with this account',
+                                            text: 'The process is already in other phrase',
                                             icon: 'error',
                                             confirmButtonText: 'OK'
                                         });
@@ -183,7 +258,7 @@
                                     }
                                     else {
                                         Swal.fire({
-                                            title: 'Durian Added Failed',
+                                            title: 'Durian Delivered Failed',
                                             text: 'Unknown Error',
                                             icon: 'error',
                                             confirmButtonText: 'OK'

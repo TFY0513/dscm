@@ -6,6 +6,7 @@ import "./Constant.sol";
 contract User {
     struct Users {
         uint256 userID;
+        string username;
         string firstName;
         string lastName;
         string email;
@@ -60,6 +61,7 @@ contract User {
         // address payable ;
 
         user[farmerAddress].userID = 7592712;
+        user[farmerAddress].username = "wcp";
         user[farmerAddress].firstName = "choon pin";
         user[farmerAddress].lastName = "Wee";
         user[farmerAddress].email = "shink34@gmail.com";
@@ -78,6 +80,7 @@ contract User {
 
     function deployClients(address clientsAddress) public {
         user[clientsAddress].userID = 8192713;
+        user[clientsAddress].username = "wcp";
         user[clientsAddress].firstName = "chong min";
         user[clientsAddress].lastName = "yeap";
         user[clientsAddress].email = "ycm@gmail.com";
@@ -95,6 +98,7 @@ contract User {
 
     function deployRetailers(address retailerAddress) public {
         user[retailerAddress].userID = 1234567;
+        user[retailerAddress].username = "tfy";
         user[retailerAddress].firstName = "fang yee";
         user[retailerAddress].lastName = "Tee";
         user[retailerAddress].email = "shink828@gmail.com";
@@ -113,6 +117,7 @@ contract User {
 
     function deployDistributor(address distributorAddress) public {
         user[distributorAddress].userID = 5981723;
+        user[distributorAddress].username = "nzh";
         user[distributorAddress].firstName = "Zongg Hao";
         user[distributorAddress].lastName = "Ng";
         user[distributorAddress].email = "shink@gmail.com";
@@ -144,6 +149,7 @@ contract User {
 
     function register(
         uint256 userID,
+        string memory username,
         string memory firstName,
         string memory lastName,
         string memory email,
@@ -151,6 +157,7 @@ contract User {
         string memory location
     ) public duplicateUser(msg.sender) {
         user[msg.sender].userID = userID;
+        user[msg.sender].username = username;
         user[msg.sender].firstName = firstName;
         user[msg.sender].lastName = lastName;
         user[msg.sender].email = email;

@@ -125,7 +125,7 @@
             <!-- Icons -->
             <!-- Notifications -->
             <ul class="navbar-nav d-flex flex-row me-1">
-                <li class="nav-item me-3 me-lg-0 dropdown dropdown-notifications" id="cartIcon">
+                <!-- <li class="nav-item me-3 me-lg-0 dropdown dropdown-notifications" id="cartIcon">
                     <a href="#notifications-panel" class="dropdown-toggle text-decoration-none"
                         data-bs-toggle="dropdown" id="dropdown-notification-icon">
                         <i data-count="" class="fa   notification-icon" data-toggle="modal"
@@ -149,7 +149,7 @@
                     </ul>
 
 
-                </li>
+                </li> -->
                 <li style="padding-left: 20px;"><a href='signout' class="text-white text-decoration-none">Sign Out</a>
                 </li>
             </ul>
@@ -206,14 +206,7 @@
     </div>
     <script>
 
-        if (localStorage.getItem("cart") == null) {
-            document.getElementById("cartIcon").style.display = "none";
-        }
-        const showCart = async () => {
-            document.getElementById("cartIcon").style.display = "block";
-
-        }
-
+      
     </script>
 </body>
 

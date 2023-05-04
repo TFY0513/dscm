@@ -70,12 +70,14 @@
                                                 <th scope="col">Durian Weight(KG)</th>
                                                 <th scope="col">Process</th>
                                                 <th scope="col">Harvest Time</th>
+                                                <th scope="col">Arrive Time</th>
+                                                <th scope="col">Price(Ether)</th>
                                                 <th scope="col">Setting</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr id="">
-                                                <td scope="col" id="durianID">13221323</td>
+
+                                            <!-- <td scope="col" id="durianID">13221323</td>
                                                 <td id="durianType">HHHH</td>
                                                 <td id="durianTreeID">eqqwewqweweq</td>
                                                 <td id="durianWeight">100.00</td>
@@ -86,9 +88,9 @@
                                                         data-target="#settingDurianModal">Setting
                                                     </button>
 
-                                                </td>
+                                                </td> -->
 
-                                            </tr>
+
 
 
                                         </tbody>
@@ -100,6 +102,8 @@
                                                 <th scope="col">Durian Weight(KG)</th>
                                                 <th scope="col">Process</th>
                                                 <th scope="col">Harvest Time</th>
+                                                <th scope="col">Arrive Time</th>
+                                                <th scope="col">Price(Ether)</th>
                                                 <th scope="col">Setting</th>
 
                                                 </button></th>
@@ -119,7 +123,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="myModalLabel">Add Durian Modal</h5>
+                                    <h5 class="modal-title" id="myModalLabel">Set Price Modal</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -132,63 +136,30 @@
                                         <div class="row g-3">
 
 
-                                            <div style="padding-left:20px; padding-right:20px;" class="col-6">
-                                                <h4 class="mb-3">Durian Type</h4>
-                                                <select class="form-select" name="durianName" id="addDurianType"
-                                                    disabled>
-                                                    <option value="">D24 Durian
-                                                    </option>
-                                                    <option value="">XO Durian
-                                                    </option>
-                                                    <option value="">Red Prawn Durian
-                                                    </option>
-                                                    <option value="">Mao Shan Wang Durian
-                                                    </option>
-                                                    <option value="">Black Pearl Durian
-                                                    </option>
-                                                    <option value="">Golden Phoenix Durian
-                                                    </option>
-                                                    <option value=""> Black Thorn Durian
-                                                    </option>
-                                                    <option value="">Black Gold Durian
-                                                    </option>
-                                                    <option value=""> Hor Lor Durian
-                                                    </option>
-                                                    <option value="">D17 Durian
-                                                    </option>
-                                                    <option value=""> D1 Durian
-                                                    </option>
-                                                    <option value="">D101 Durian
-                                                    </option>
-                                                    <option value=""> MonThong Durian
-                                                    </option>
-                                                    <option value="">D13 Durian
-                                                    </option>
-                                                    <option value=""> Tekka Durian
-                                                    </option>
-                                                    <option value="">Wang Zong Wang
-                                                    </option>
-                                                </select>
-                                            </div>
+                                            <!-- <div style="padding-left:20px; padding-right:20px;" class="col-6">
+                                                <h4 class="mb-3">Durian ID</h4>
+                                                <input type="input" class="form-control" id="durianID" maxlength="15"
+                                                    placeholder="XX.XX" disabled>
+                                            </div> -->
 
 
 
-                                            <div style="padding-left:20px; padding-right:20px;" class="col-6">
-                                                <h4 class="mb-3">Price (RM)</h4>
+                                            <div style="padding-left:20px; padding-right:20px;" class="col-12">
+                                                <h4 class="mb-3">Price (<img src="Ether.png" width="40">)</h4>
                                                 <input type="input" class="form-control" id="price" maxlength="15"
-                                                    placeholder="XX.XX" required>
+                                                    placeholder="XX" required>
                                                 <span class="text-danger text-left priceErr" id="priceErr"></span>
                                                 <p style="text-decoration: underline; color: blue;" onclick="info()"> ?
-                                                </p >
+                                                </p>
                                             </div>
 
-                                          
+
                                         </div><br />
                                     </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    
+
                                     <button type="button" class="btn btn-success" id="sellDurianBtn">Retail</button>
                                 </div>
                             </div>
@@ -206,37 +177,128 @@
                             const ABI = JSON.parse(localStorage.getItem("UserABI"));
                             const Address = localStorage.getItem("UserAddress")
 
+                            const DurianABI = JSON.parse(localStorage.getItem("DurianABI"));
+                            const DurianAddress = localStorage.getItem("DurianAddress")
+
+                            const showDurian = async () => {
+                                const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+                                account = accounts[0];
+                                window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+                                window.UserContract = await new window.web3.eth.Contract(DurianABI, DurianAddress); //how you create an instance of that contract by using the abi and address  
+                                let price;
+                                var index = await window.UserContract.methods.returnIndex().call();
+                                //  console.log(index);
+                                if (index != 0) {
+                                    --index;
+                                    const durian = await window.UserContract.methods.getBlock(0).call();
+
+
+
+                                    const currentDurian = await window.UserContract.methods.getBlock(index).call();
+
+
+                                    console.log(durian[6]);
+                                    const harvestDate = new Date(durian[3] * 1000); // Multiply by 1000 to convert from seconds to milliseconds
+                                    const humanReadableTimeharvestDate = harvestDate.toLocaleString(); // Convert to local time string
+
+                                    const arriveDate = new Date(currentDurian[3] * 1000); // Multiply by 1000 to convert from seconds to milliseconds
+                                    const humanReadableTimearriveDate = arriveDate.toLocaleString(); // Convert to local time string
+
+                                    if (currentDurian[6][0]) {
+                                        price = parseInt(currentDurian[6][0]).toFixed(2);
+                                    }
+                                    else {
+                                        price = "-";
+                                    }
+
+                                    var process = "";
+                                    switch (currentDurian[4]) {
+                                        case "0":
+                                            process = "HARVEST";
+                                            break;
+                                        case "1":
+                                            process = "DISTRIBUTION";
+                                            break;
+                                        case "2":
+                                            process = "DELIVERED";
+                                            break;
+                                        case "3":
+                                            process = "PREPARED";
+                                            break;
+                                        case "4":
+                                            process = "PURCHASE";
+                                            break;
+                                        case "5":
+                                            process = "RATING";
+                                            break;
+                                        default:
+                                            process = "COMPLETED";
+                                            break;
+                                    }
+
+
+
+                                    $(document).ready(function () {
+                                        var t = $('#table').DataTable();
+                                        // <td scope="col" id="durianID">13221323</td>
+                                        //                     <td id="durianType">HHHH</td>
+                                        //                     <td id="durianTreeID">eqqwewqweweq</td>
+                                        //                     <td id="durianWeight">100.00</td>
+                                        //                     <td id="process">Harvested</td>
+                                        //                     <td id="harvestTime">11.11ppm</td>
+                                        //                     <td scope="col">
+                                        // <button class=" btn btn-outline-secondary  " data-toggle="modal"
+                                        //     data-target="#settingDurianModal">Setting
+                                        // </button>
+
+                                        //                     </td> 
+                                        if (currentDurian[4] != "0") {
+                                            if (currentDurian[4] != "2") {
+                                                t.row.add([durian[6][0], durian[6][2], durian[6][1], parseInt(durian[6][3]).toFixed(2), process,
+                                                    humanReadableTimeharvestDate, humanReadableTimearriveDate, price, " "]).draw(false);
+
+                                            }
+                                            else {
+                                                t.row.add([durian[6][0], durian[6][2], durian[6][1], parseInt(durian[6][3]).toFixed(2), process,
+                                                    humanReadableTimeharvestDate, humanReadableTimearriveDate, price, " <button class=' btn btn-outline-secondary' data-toggle='modal'data-target='#settingDurianModal'>Setting</button>"]).draw(false);
+
+                                            }
+
+                                        }
+
+
+
+                                    });
+
+                                }
+
+                            }
+                            showDurian();
+
+
+
 
                             function info() {
                                 Swal.fire({
                                     title: 'Pricing Format',
-                                    text: 'The pricing format must follow Malaysian Currency Format with 2 decimal places',
+                                    text: 'The pricing format must follow Ether Format without decimal places',
                                     icon: 'info',
                                     confirmButtonText: 'OK'
                                 });
                             }
-                            document.getElementById('stopDurianBtn').addEventListener('click', function (e) {
-                                e.preventDefault();
-                                stopDurian();
-                                // var durianType = document.getElementById("addDurianType").value;
-                                // var durianTreeId = document.getElementById("addDurianTreeId").value;
-                                // var durianWeight = document.getElementById("addDurianWeight").value;
-                                // console.log(durianTreeId);
-                                // console.log(durianWeight);
-                                // if (validateAddDurian(durianTreeId, durianWeight)) {
-                                //     addDurian();
-                                // }
 
-                            });
 
 
                             document.getElementById('sellDurianBtn').addEventListener('click', function (e) {
                                 e.preventDefault();
 
+
+
+
                                 var price = document.getElementById("price").value;
-                                var qty = document.getElementById("qty").value;
-                                if (validateSetting(price, qty)) {
-                                    sellDurian();
+
+                                if (validateSetting(price)) {
+                                    sellDurian(price);
                                 }
 
                                 // var durianType = document.getElementById("addDurianType").value;
@@ -250,18 +312,23 @@
 
                             });
 
-                            const sellDurian = async () => {
+                            const sellDurian = async (price) => {
                                 const accounts = await ethereum.request({ method: "eth_requestAccounts" });
                                 account = accounts[0];
                                 window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
-                                window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
+                                window.UserContract = await new window.web3.eth.Contract(DurianABI, DurianAddress); //how you create an instance of that contract by using the abi and address  
+                                console.log(price)
+
+
+                                var data = [price];
+                                //   console.log(data)
 
                                 try {
-                                    // await window.UserContract.methods.updateProfile(username, firstname, lastname, contactNum, userJson.wallet, location).send({ from: account });
 
+                                    await window.UserContract.methods.addBlock(data).send({ from: account });
                                     Swal.fire({
-                                        title: 'Durian Retail Enabled',
-                                        text: 'The durian will be visible to clients',
+                                        title: 'Durian Delivered Succesful',
+                                        text: 'You may view the durian',
                                         icon: 'success',
                                         confirmButtonText: 'OK'
                                     }).then(function () {
@@ -270,8 +337,8 @@
                                 } catch (error) {
                                     if (error.message.includes("revert")) {
                                         Swal.fire({
-                                            title: 'Durian Retail Failed',
-                                            text: 'The wallet address is not associated with this account',
+                                            title: 'Durian Delivered Failed',
+                                            text: 'The process is already in other phrase',
                                             icon: 'error',
                                             confirmButtonText: 'OK'
                                         });
@@ -279,7 +346,7 @@
                                     }
                                     else {
                                         Swal.fire({
-                                            title: 'Durian Retail Failed',
+                                            title: 'Durian Delivered Failed',
                                             text: 'Unknown Error',
                                             icon: 'error',
                                             confirmButtonText: 'OK'
@@ -290,50 +357,14 @@
                             }
 
 
-                            const stopDurian = async () => {
-                                const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-                                account = accounts[0];
-                                window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
-                                window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
 
-                                try {
-                                    // await window.UserContract.methods.updateProfile(username, firstname, lastname, contactNum, userJson.wallet, location).send({ from: account });
 
-                                    Swal.fire({
-                                        title: 'Durian Stopped Retail',
-                                        text: 'The durian will not be visible to clients',
-                                        icon: 'warning',
-                                        confirmButtonText: 'OK'
-                                    }).then(function () {
-                                        window.location.href = '/retailerViewDurian';
-                                    });
-                                } catch (error) {
-                                    if (error.message.includes("revert")) {
-                                        Swal.fire({
-                                            title: 'Durian Stopped Failed',
-                                            text: 'The wallet address is not associated with this account',
-                                            icon: 'error',
-                                            confirmButtonText: 'OK'
-                                        });
-
-                                    }
-                                    else {
-                                        Swal.fire({
-                                            title: 'Durian Stopped Failed',
-                                            text: 'Unknown Error',
-                                            icon: 'error',
-                                            confirmButtonText: 'OK'
-                                        });
-                                    }
-
-                                }
-                            }
-
-                            function validateSetting(price, qty) {
+                            function validateSetting(price) {
                                 var valid = true;
 
-                                const regexPrice = /^\d{1,13}(\.\d{1,2})?$/g;
-                                const regexQty = /^[0-9]{1,10}$/g;
+                                //    const regexPrice = /^\d{1,13}(\.\d{1,2})?$/g;
+                                const regexPrice = /^\d+$/;
+
 
 
                                 if (!regexPrice.test(price)) {
@@ -348,15 +379,6 @@
                                 }
 
 
-                                if (!regexQty.test(qty)) {
-                                    document.querySelector('.qtyErr').innerHTML = "Invalid Quantity Formats";
-                                    valid = false;
-                                    return;
-                                }
-                                else {
-                                    document.querySelector(".qtyErr").innerHTML = "";
-                                    valid = true;
-                                }
 
                                 return valid;
                             }

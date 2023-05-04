@@ -1,9 +1,9 @@
 <%- include('../partials/authentication_header'); %>
 
 	<%- include('../authentication/guest'); %>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js"></script>
-		<!-- <link href="style.css" rel="stylesheet"> -->
 
+		<!-- <link href="style.css" rel="stylesheet"> -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		<!-- 
     <div id="snackbar"></div>
     <script>
@@ -39,7 +39,7 @@
 						</ul>
 					</div>
 
-<!-- 
+					<!-- 
 					<div class="form-group form-floating mb-3">
 						<input type="text" class="form-control" id="username" name="username" value=""
 							placeholder="Username" required="required" autofocus>
@@ -66,7 +66,7 @@
 					</div>
 
 					<button class="w-100 btn btn-lg btn-primary" type="submit" onclick="login()">Login</button>
-					
+
 
 					<br /><br />
 
@@ -165,51 +165,50 @@
 
 
 			}
-		
+
 			const login = async () => {
-				var username = document.getElementById("username").value;
-				var password = document.getElementById("password").value;
-				if (username != "" && password != "") {
-					var hashObj = new jsSHA("SHA-512", "TEXT", { numRounds: 1 });
-					hashObj.update(password);
-					var hash = hashObj.getHash("HEX");
-					password = hash;
-					if (window.ethereum !== "undefined") {
-						const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-						account = accounts[0];
-					}
 
-					window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
-					window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
-					if (await window.UserContract.methods.login(username, password,account).call()) {
-						//console.log(role);
-						//  localStorage.setItem("username", username);
-						//  localStorage.setItem("role", role);
-						const data = await window.UserContract.methods.retrieveProfile(account).call();
-					
-					
-						const person = {
-							userID: data[0], firstName: data[1], lastName: data[2], email: data[3], username: data[4],
-							contactNum: data[6], role: data[7], dateJoined: data[8], profile_pic: data[9], wallet: data[10]
-						};
-						const personJsonFormat = JSON.stringify(person);
-						console.log(personJsonFormat);
 
-						localStorage.setItem("user", personJsonFormat);
-						window.location.href = '/home';
+				const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+				account = accounts[0];
+				window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+				window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
+				if (await window.UserContract.methods.login(account).call()) {
+					//console.log(role);
+					//  localStorage.setItem("username", username);
+					//  localStorage.setItem("role", role);
+					const data = await window.UserContract.methods.retrieveProfile(account).call();
 
-					}
-					else {
-						console.log("error");
-						// localStorage.setItem("message", "Invalid credentials");
-						var x = document.getElementById("message");
-						x.style.display = "block";
-						document.getElementById("contentErr").innerHTML = "Invalid Credentials. Please try again";
-					}
+
+					const person = {
+						userID: data[0], username: data[1], firstName: data[2], lastName: data[3], email: data[4],
+						contactNum: data[5], role: data[6], dateJoined: data[7], profile_pic: data[8], wallet: data[9]
+					};
+					const personJsonFormat = JSON.stringify(person);
+					console.log(personJsonFormat);
+
+					localStorage.setItem("user", personJsonFormat);
+					window.location.href = '/home';
+
 				}
 				else {
-					console.log("null");
+					Swal.fire({
+						title: 'Login Failed',
+						text: 'You havent create an account with this wallet, please go to register an account first',
+						icon: 'error',
+						confirmButtonText: 'OK'
+					}).then(function () {
+						window.location.href = '/register';
+					});
+
+
+					// console.log("error");
+					// // localStorage.setItem("message", "Invalid credentials");
+					// var x = document.getElementById("message");
+					// x.style.display = "block";
+					// document.getElementById("contentErr").innerHTML = "Invalid Credentials. Please try again";
 				}
+
 			}
 		</script>
 
