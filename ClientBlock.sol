@@ -31,7 +31,6 @@ contract ClientBlock is Block {
         rate = _rate;
     }
 
-   
     function getData()
         public
         view
@@ -53,7 +52,9 @@ contract ClientBlock is Block {
             timestamp,
             process,
             uaddress,
-            [Strings.toString(rate), "", "", ""]
+            [
+                Strings.toString(rate),"","",""
+            ]
         );
     }
 }

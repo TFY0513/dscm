@@ -37,6 +37,9 @@ contract Constant {
         status[Process.PURCHASE] = "Sold";
         status[Process.RATING] = "Rated";
 
-      
+        // role[Role.FARMER] = "Farmer";
+        // role[Role.DISTRIBUTER] = "Distributer";
+        // role[Role.RETAILER] = "Retailer";
+        // role[Role.CLIENT] = "Client";
     }
 }

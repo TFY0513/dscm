@@ -288,9 +288,14 @@
 	];
 	const UserABIJSON = JSON.stringify(UserABI);
 	localStorage.setItem("UserABI", UserABIJSON);
-	localStorage.setItem("UserAddress", "0x375DBFb1A66050e1d43FD07F0889c577d01fA210");
+	localStorage.setItem("UserAddress", "0x5d7Ca306776d9675880D7A0eC512df097F22AEda");
 
 	const DurianABI = [
+		{
+			"inputs": [],
+			"stateMutability": "nonpayable",
+			"type": "constructor"
+		},
 		{
 			"inputs": [
 				{
@@ -312,18 +317,6 @@
 		{
 			"inputs": [],
 			"name": "createDurianRecord",
-			"outputs": [],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [],
-			"stateMutability": "nonpayable",
-			"type": "constructor"
-		},
-		{
-			"inputs": [],
-			"name": "currentIndex",
 			"outputs": [
 				{
 					"internalType": "uint256",
@@ -331,12 +324,12 @@
 					"type": "uint256"
 				}
 			],
-			"stateMutability": "view",
+			"stateMutability": "nonpayable",
 			"type": "function"
 		},
 		{
 			"inputs": [],
-			"name": "displayIndex",
+			"name": "currentIndex",
 			"outputs": [
 				{
 					"internalType": "uint256",
@@ -403,10 +396,9 @@
 			"stateMutability": "view",
 			"type": "function"
 		}
-	];
-	const DurianABIJSON = JSON.stringify(DurianABI);
+	]; const DurianABIJSON = JSON.stringify(DurianABI);
 	localStorage.setItem("DurianABI", DurianABIJSON);
-	localStorage.setItem("DurianAddress", "0x718AF894a3AEb423C4e1FBa80B94EdA7Ce8a93F7");
+	localStorage.setItem("DurianAddress", "0xcc702a83449694757e3499b9Ed814E103ca68d27");
 
 
 	window.location.href = "/login";

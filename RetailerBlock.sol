@@ -10,8 +10,6 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 contract RetailerBlock is Block {
     uint256 public price;
 
-
-
     constructor(
         uint256 _index,
         bytes32 _previousHash,

@@ -1,13 +1,13 @@
-//SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.0;
 
-contract Utils{
+library Utils{
     /**
      *   Utility function to concatenate request array to be hashed
      */
     function concatenateStrings(string[] memory arr)
-        public 
+        internal 
         pure
         returns (string memory)
     {
@@ -29,7 +29,7 @@ contract Utils{
         return string(result);
     }
 
-    function stringToUint(string memory s) public pure returns (uint256) {
+    function stringToUint(string memory s) internal pure returns (uint256) {
         bytes memory b = bytes(s);
         uint256 result = 0;
         for (uint256 i = 0; i < b.length; i++) {

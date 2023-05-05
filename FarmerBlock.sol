@@ -11,10 +11,8 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 contract FarmerBlock is Block {
     uint256 public durianId;
     string public durianTree;
-    string public durianType;   
+    string public durianType;
     uint256 public weight;
-
-
 
     constructor(
         uint256 _index,

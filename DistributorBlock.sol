@@ -7,8 +7,6 @@ import "./Block.sol";
 
 //mined for distributor, for two block involving 2 processes, delivering and delivered
 contract DistributorBlock is Block {
-
-
     constructor(
         uint256 _index,
         bytes32 _previousHash,
@@ -25,9 +23,7 @@ contract DistributorBlock is Block {
             _process,
             _uaddress
         )
-    {
-      
-    }
+    {}
 
     function getData()
         public
@@ -51,8 +47,7 @@ contract DistributorBlock is Block {
             process,
             uaddress,
             [
-               
-                 "", "", "", ""
+                "","","",""
             ]
         );
     }
