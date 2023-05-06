@@ -146,7 +146,7 @@
 
                                             <div style="padding-left:20px; padding-right:20px;" class="col-12">
                                                 <h4 class="mb-3">Price (<img src="Ether.png" width="40">)</h4>
-                                                <input type="input" class="form-control" id="price" maxlength="15"
+                                                <input type="input" class="form-control" id="price" maxlength="5"
                                                     placeholder="XX" required>
                                                 <span class="text-danger text-left priceErr" id="priceErr"></span>
                                                 <p style="text-decoration: underline; color: blue;" onclick="info()"> ?
@@ -158,7 +158,8 @@
                                     </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                        onclick="closePopUp()">Close</button>
 
                                     <button type="button" class="btn btn-success" id="sellDurianBtn">Retail</button>
                                 </div>
@@ -179,104 +180,129 @@
 
                             const DurianABI = JSON.parse(localStorage.getItem("DurianABI"));
                             const DurianAddress = localStorage.getItem("DurianAddress")
+                            let globalID;
 
                             const showDurian = async () => {
                                 const accounts = await ethereum.request({ method: "eth_requestAccounts" });
                                 account = accounts[0];
                                 window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
                                 window.UserContract = await new window.web3.eth.Contract(DurianABI, DurianAddress); //how you create an instance of that contract by using the abi and address  
-                                let price;
-                                var index = await window.UserContract.methods.returnIndex().call();
+                                let durianID, durianTreeID, durianType, weight, process, harvestTime, arriveTime, price;
+                                var currentProcess;
+
+                                var index = await window.UserContract.methods.displayIndex().call();
                                 //  console.log(index);
                                 if (index != 0) {
-                                    --index;
-                                    const durian = await window.UserContract.methods.getBlock(0).call();
+                                    for (var i = 0; i < index; i++) {//each durian
+                                        var durian = await window.UserContract.methods.getBlock(i).call();
+                                        //  console.log(durian[1][4]);
 
-
-
-                                    const currentDurian = await window.UserContract.methods.getBlock(index).call();
-
-
-                                    console.log(durian[6]);
-                                    const harvestDate = new Date(durian[3] * 1000); // Multiply by 1000 to convert from seconds to milliseconds
-                                    const humanReadableTimeharvestDate = harvestDate.toLocaleString(); // Convert to local time string
-
-                                    const arriveDate = new Date(currentDurian[3] * 1000); // Multiply by 1000 to convert from seconds to milliseconds
-                                    const humanReadableTimearriveDate = arriveDate.toLocaleString(); // Convert to local time string
-
-                                    if (currentDurian[6][0]) {
-                                        price = parseInt(currentDurian[6][0]).toFixed(2);
-                                    }
-                                    else {
+                                        console.log("current blocck lenght: " + durian.length);
                                         price = "-";
-                                    }
+                                        // console.log(durian[1][4]);
 
-                                    var process = "";
-                                    switch (currentDurian[4]) {
-                                        case "0":
-                                            process = "HARVEST";
-                                            break;
-                                        case "1":
-                                            process = "DISTRIBUTION";
-                                            break;
-                                        case "2":
-                                            process = "DELIVERED";
-                                            break;
-                                        case "3":
-                                            process = "PREPARED";
-                                            break;
-                                        case "4":
-                                            process = "PURCHASE";
-                                            break;
-                                        case "5":
-                                            process = "RATING";
-                                            break;
-                                        default:
-                                            process = "COMPLETED";
-                                            break;
-                                    }
-
-
-
-                                    $(document).ready(function () {
-                                        var t = $('#table').DataTable();
-                                        // <td scope="col" id="durianID">13221323</td>
-                                        //                     <td id="durianType">HHHH</td>
-                                        //                     <td id="durianTreeID">eqqwewqweweq</td>
-                                        //                     <td id="durianWeight">100.00</td>
-                                        //                     <td id="process">Harvested</td>
-                                        //                     <td id="harvestTime">11.11ppm</td>
-                                        //                     <td scope="col">
-                                        // <button class=" btn btn-outline-secondary  " data-toggle="modal"
-                                        //     data-target="#settingDurianModal">Setting
-                                        // </button>
-
-                                        //                     </td> 
-                                        if (currentDurian[4] != "0") {
-                                            if (currentDurian[4] != "2") {
-                                                t.row.add([durian[6][0], durian[6][2], durian[6][1], parseInt(durian[6][3]).toFixed(2), process,
-                                                    humanReadableTimeharvestDate, humanReadableTimearriveDate, price, " "]).draw(false);
-
+                                        if (durian.length > 1) {
+                                            if (durian.length > 2) {
+                                                price = durian[2][6][0];
                                             }
-                                            else {
-                                                t.row.add([durian[6][0], durian[6][2], durian[6][1], parseInt(durian[6][3]).toFixed(2), process,
-                                                    humanReadableTimeharvestDate, humanReadableTimearriveDate, price, " <button class=' btn btn-outline-secondary' data-toggle='modal'data-target='#settingDurianModal'>Setting</button>"]).draw(false);
 
-                                            }
+                                            var currDurindex = durian.length - 1;
+
+                                            // console.log("come in "  + currDurindex);
+                                            // console.log(durian);
+                                            currentProcess = durian[currDurindex][4];
+
+                                            const date = new Date(durian[1][3] * 1000); // Multiply by 1000 to convert from seconds to milliseconds
+                                            arriveTime = date.toLocaleString(); // Convert to local time string
+
+
+                                        }
+                                        else {
+                                            console.log("reejected");
+                                            currentProcess = durian[0][4];
+                                            arriveTime = "-";
+
 
                                         }
 
 
+                                        durianID = durian[0][6][0];
+                                        durianTreeID = durian[0][6][1];
+                                        durianType = durian[0][6][2];
+                                        weight = durian[0][6][3];
+                                        const date = new Date(durian[0][3] * 1000); // Multiply by 1000 to convert from seconds to milliseconds
+                                        harvestTime = date.toLocaleString(); // Convert to local time string
 
-                                    });
+
+                                        switch (currentProcess) {
+                                            case "0":
+                                                process = "HARVEST";
+                                                break;
+                                            case "1":
+                                                process = "DELIVERED";
+                                                break;
+                                            case "2":
+                                                process = "PREPARED";
+
+                                                break;
+                                            case "3":
+                                                process = "PURCHASE";
+                                                break;
+                                            case "4":
+                                                process = "RATING";
+                                                break;
+                                            default:
+                                                process = "COMPLETED";
+                                                break;
+                                        }
+
+                                        if (process != "DELIVERED") {
+                                            // console.log("procecss" + parseInt(currentProcess));
+                                            if (!(parseInt(currentProcess) < 1)) {
+                                                $(document).ready(function () {
+                                                    var t = $('#table').DataTable();
+
+
+                                                    t.row.add([durianID, durianTreeID, durianType, weight, process, harvestTime, arriveTime, price, ""]).draw(false);
+
+                                                });
+
+                                            }
+
+                                        }
+                                        else {
+
+                                            $(document).ready(function () {
+                                                var t = $('#table').DataTable();
+
+                                                t.row.add([durianID, durianTreeID, durianType,weight, process, harvestTime, arriveTime, price,
+                                                    "<button class=' btn btn-outline-secondary' data-toggle='modal'  onclick='showPopUp(" + i + ")' >Retail </button>"]).draw(false);
+                                            });
+
+
+                                        }
+
+                                        console.log("succeess")
+
+                                    }
 
                                 }
+
 
                             }
                             showDurian();
 
+                            function closePopUp() {
+                                $('#settingDurianModal').modal('hide');
+
+                            }
 
 
+                            function showPopUp(data) {
+                                $('#settingDurianModal').modal('show');
+                                console.log(data);
+                                globalID = data;
+                            }
 
                             function info() {
                                 Swal.fire({
@@ -292,27 +318,18 @@
                             document.getElementById('sellDurianBtn').addEventListener('click', function (e) {
                                 e.preventDefault();
 
-
-
-
                                 var price = document.getElementById("price").value;
 
                                 if (validateSetting(price)) {
                                     sellDurian(price);
                                 }
 
-                                // var durianType = document.getElementById("addDurianType").value;
-                                // var durianTreeId = document.getElementById("addDurianTreeId").value;
-                                // var durianWeight = document.getElementById("addDurianWeight").value;
-                                // console.log(durianTreeId);
-                                // console.log(durianWeight);
-                                // if (validateAddDurian(durianTreeId, durianWeight)) {
-                                //     addDurian();
-                                // }
-
                             });
 
                             const sellDurian = async (price) => {
+
+                                --globalID;
+                                console.log(globalID);
                                 const accounts = await ethereum.request({ method: "eth_requestAccounts" });
                                 account = accounts[0];
                                 window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
@@ -321,11 +338,11 @@
 
 
                                 var data = [price];
-                                //   console.log(data)
+                                console.log(data)
 
                                 try {
 
-                                    await window.UserContract.methods.addBlock(data).send({ from: account });
+                                    await window.UserContract.methods.appendDurianBlock(globalID, data,account).send({ from: account });
                                     Swal.fire({
                                         title: 'Durian Delivered Succesful',
                                         text: 'You may view the durian',
@@ -362,8 +379,8 @@
                             function validateSetting(price) {
                                 var valid = true;
 
-                                //    const regexPrice = /^\d{1,13}(\.\d{1,2})?$/g;
-                                const regexPrice = /^\d+$/;
+                                 const regexPrice = /^\d{1,13}(\.\d{1,2})?$/g;
+                               // const regexPrice = /^\d+$/;
 
 
 

@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.0;
 
-import "./Block.sol";
+// import "./Block.sol";
 import "./SingleDurianTrack.sol";
 
 contract DurianTracker {
@@ -17,30 +17,40 @@ contract DurianTracker {
         uint256 _timestamp;
         Constant.Process _process;
         address _uaddress;
-        string[4] _data;
+        string[] _data;
     }
 
     constructor() {}
 
-    modifier checkExistance(uint index){
-        require(
-            index <= currentIndex,
-            "The block not existance"
-        );
+    modifier checkExistance(uint256 index) {
+        require(index <= currentIndex, "The block not existance");
         _;
     }
 
-    function createDurianRecord() public returns (uint256) {
+    function createDurianRecord(string[] memory _data, address userAddress) public {
         duriansProcess[currentIndex] = new SingleDurianTrack();
-        return currentIndex++;
+        duriansProcess[currentIndex].addBlock(userAddress,_data);
+        currentIndex++;
     }
 
-    function appendDurianBlock(uint256 index, string[] memory _data) public checkExistance(index) {
+    function displayIndex() public view returns (uint256) {
+        return currentIndex;
+    }
+
+    function appendDurianBlock(uint256 index, string[] memory _data, address userAddress)
+        public
+        checkExistance(index)
+    {
         SingleDurianTrack sdt = duriansProcess[index];
-        sdt.addBlock(_data);
+        sdt.addBlock(userAddress,_data);
     }
 
-    function getBlock(uint256 index) public view checkExistance(index) returns (BlockData[] memory) {
+    function getBlock(uint256 index)
+        public
+        view
+        checkExistance(index)
+        returns (BlockData[] memory)
+    {
         SingleDurianTrack sdt = duriansProcess[index];
 
         uint256 j = sdt.currentIndex();
@@ -54,9 +64,17 @@ contract DurianTracker {
                 uint256 _timestamp,
                 Constant.Process _process,
                 address _uaddress,
-                string[4] memory _data
-            ) = sdt.getBlock(index);
-            blocksdata[i] = BlockData(_index, _previousHash, _blockHash, _timestamp, _process, _uaddress, _data);
+                string[] memory _data
+            ) = sdt.getBlock(i);
+            blocksdata[i] = BlockData(
+                _index,
+                _previousHash,
+                _blockHash,
+                _timestamp,
+                _process,
+                _uaddress,
+                _data
+            );
         }
 
         return (blocksdata);

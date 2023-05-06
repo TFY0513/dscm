@@ -56,6 +56,19 @@
 		{
 			"inputs": [
 				{
+					"internalType": "address",
+					"name": "sellerAddress",
+					"type": "address"
+				}
+			],
+			"name": "purchase",
+			"outputs": [],
+			"stateMutability": "payable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
 					"internalType": "uint256",
 					"name": "userID",
 					"type": "uint256"
@@ -288,14 +301,9 @@
 	];
 	const UserABIJSON = JSON.stringify(UserABI);
 	localStorage.setItem("UserABI", UserABIJSON);
-	localStorage.setItem("UserAddress", "0x5d7Ca306776d9675880D7A0eC512df097F22AEda");
+	localStorage.setItem("UserAddress", "0x25746f0CF9cb1e7Dba5534916C766e722E7Fc2d8");
 
 	const DurianABI = [
-		{
-			"inputs": [],
-			"stateMutability": "nonpayable",
-			"type": "constructor"
-		},
 		{
 			"inputs": [
 				{
@@ -307,6 +315,11 @@
 					"internalType": "string[]",
 					"name": "_data",
 					"type": "string[]"
+				},
+				{
+					"internalType": "address",
+					"name": "userAddress",
+					"type": "address"
 				}
 			],
 			"name": "appendDurianBlock",
@@ -315,8 +328,31 @@
 			"type": "function"
 		},
 		{
-			"inputs": [],
+			"inputs": [
+				{
+					"internalType": "string[]",
+					"name": "_data",
+					"type": "string[]"
+				},
+				{
+					"internalType": "address",
+					"name": "userAddress",
+					"type": "address"
+				}
+			],
 			"name": "createDurianRecord",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"stateMutability": "nonpayable",
+			"type": "constructor"
+		},
+		{
+			"inputs": [],
+			"name": "currentIndex",
 			"outputs": [
 				{
 					"internalType": "uint256",
@@ -324,12 +360,12 @@
 					"type": "uint256"
 				}
 			],
-			"stateMutability": "nonpayable",
+			"stateMutability": "view",
 			"type": "function"
 		},
 		{
 			"inputs": [],
-			"name": "currentIndex",
+			"name": "displayIndex",
 			"outputs": [
 				{
 					"internalType": "uint256",
@@ -383,9 +419,9 @@
 							"type": "address"
 						},
 						{
-							"internalType": "string[4]",
+							"internalType": "string[]",
 							"name": "_data",
-							"type": "string[4]"
+							"type": "string[]"
 						}
 					],
 					"internalType": "struct DurianTracker.BlockData[]",
@@ -396,9 +432,10 @@
 			"stateMutability": "view",
 			"type": "function"
 		}
-	]; const DurianABIJSON = JSON.stringify(DurianABI);
+	];
+	const DurianABIJSON = JSON.stringify(DurianABI);
 	localStorage.setItem("DurianABI", DurianABIJSON);
-	localStorage.setItem("DurianAddress", "0xcc702a83449694757e3499b9Ed814E103ca68d27");
+	localStorage.setItem("DurianAddress", "0x82B264Eed39273b8eBeA78410E25dC3a16A179C4");
 
 
 	window.location.href = "/login";

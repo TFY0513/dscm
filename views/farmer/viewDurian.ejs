@@ -189,7 +189,7 @@
                                             <div style="padding-left:20px; padding-right:20px;" class="col-6">
                                                 <h4 class="mb-3">Durian Weight (kg)</h4>
                                                 <input type="input" class="form-control" id="addDurianWeight"
-                                                    maxlength="10" placeholder="XX.XX" required>
+                                                    maxlength="5" placeholder="XX" required>
 
                                                 <span class="text-danger text-left durianWeightErr"
                                                     id="durianWeightErr"></span>
@@ -256,59 +256,105 @@
                                 account = accounts[0];
                                 window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
                                 window.UserContract = await new window.web3.eth.Contract(DurianABI, DurianAddress); //how you create an instance of that contract by using the abi and address  
+                                let durianID, durianTreeID, durianType, weight, process, harvestTime;
+                                let currentProcess;
 
                                 var index = await window.UserContract.methods.displayIndex().call();
-                                console.log(index);
+                                //  console.log(index);
                                 if (index != 0) {
-                                    for(var i = 0; i < index; i++){
+                                    for (var i = 0; i < index; i++) {//each durian
                                         const durian = await window.UserContract.methods.getBlock(i).call();
-                                        if(Object.keys(durian).length !== 0 ){
-                                            
+                                        console.log(durian);
+
+                                        if (durian.length > 1) {//not harvest state
+                                            var currDurindex = durian.length - 1;
+
+                                            // console.log("come in "  + currDurindex);
+                                            // console.log(durian);
+                                            currentProcess = durian[currDurindex][4];
                                         }
-                                      
+                                        else {//harvest state
+                                            console.log("reejected");
+                                            currentProcess = durian[0][4];
+                                        }
+
+                                        //if (Object.keys(durian).length !== 0) {
+
+                                        durianID = durian[0][6][0];
+                                        durianTreeID = durian[0][6][1];
+                                        durianType = durian[0][6][2];
+                                        weight = durian[0][6][3];
+                                        const date = new Date(durian[0][3] * 1000); // Multiply by 1000 to convert from seconds to milliseconds
+                                        harvestTime = date.toLocaleString(); // Convert to local time string
+
+
+                                        switch (currentProcess) {
+                                            case "0":
+                                                process = "HARVEST";
+                                                break;
+                                            case "1":
+                                                process = "DELIVERED";
+                                                break;
+                                            case "2":
+                                                process = "PREPARED";
+                                                break;
+                                            case "3":
+                                                process = "PURCHASE";
+                                                break;
+                                            case "4":
+                                                process = "RATING";
+                                                break;
+                                            default:
+                                                process = "COMPLETED";
+                                                break;
+                                        }
+                                        $(document).ready(function () {
+                                            var t = $('#table').DataTable();
+
+
+                                            t.row.add([durianID, durianTreeID, durianType, weight, process, harvestTime]).draw(false);
+
+                                        });
+
                                     }
-                                
-
-                                    // // --index;
-                                    // const durian = await window.UserContract.methods.getBlock(0).call();
-                                    // const statusDurian = await window.UserContract.methods.getBlock(index).call();
-                                    // console.log(durian[6]);
-                                    // const date = new Date(durian[3] * 1000); // Multiply by 1000 to convert from seconds to milliseconds
-                                    // const humanReadableTime = date.toLocaleString(); // Convert to local time string
-                                    // var process = "";
-                                    // switch (statusDurian[4]) {
-                                    //     case "0":
-                                    //         process = "HARVEST";
-                                    //         break;
-                                    //     case "1":
-                                    //         process = "DISTRIBUTION";
-                                    //         break;
-                                    //     case "2":
-                                    //         process = "DELIVERED";
-                                    //         break;
-                                    //     case "3":
-                                    //         process = "PREPARED";
-                                    //         break;
-                                    //     case "4":
-                                    //         process = "PURCHASE";
-                                    //         break;
-                                    //     case "5":
-                                    //         process = "RATING";
-                                    //         break;
-                                    //     default:
-                                    //         process = "COMPLETED";
-                                    //         break;
-                                    // }
-
-                                    $(document).ready(function () {
-                                        var t = $('#table').DataTable();
-
-
-                                        t.row.add([durian[6][0], durian[6][2], durian[6][1], parseInt(durian[6][3]).toFixed(2), process, humanReadableTime]).draw(false);
-
-                                    });
 
                                 }
+
+
+                                // // --index;
+                                // const durian = await window.UserContract.methods.getBlock(0).call();
+                                // const statusDurian = await window.UserContract.methods.getBlock(index).call();
+                                // console.log(durian[6]);
+                                // const date = new Date(durian[3] * 1000); // Multiply by 1000 to convert from seconds to milliseconds
+                                // const humanReadableTime = date.toLocaleString(); // Convert to local time string
+                                // var process = "";
+                                // switch (statusDurian[4]) {
+                                //     case "0":
+                                //         process = "HARVEST";
+                                //         break;
+                                //     case "1":
+                                //         process = "DISTRIBUTION";
+                                //         break;
+                                //     case "2":
+                                //         process = "DELIVERED";
+                                //         break;
+                                //     case "3":
+                                //         process = "PREPARED";
+                                //         break;
+                                //     case "4":
+                                //         process = "PURCHASE";
+                                //         break;
+                                //     case "5":
+                                //         process = "RATING";
+                                //         break;
+                                //     default:
+                                //         process = "COMPLETED";
+                                //         break;
+                                // }
+
+
+
+
 
                             }
                             showDurian();
@@ -347,6 +393,7 @@
                             const addDurian = async (durianID, durianType, durianTreeId, durianWeight) => {
                                 const accounts = await ethereum.request({ method: "eth_requestAccounts" });
                                 account = accounts[0];
+                                
                                 window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
                                 window.UserContract = await new window.web3.eth.Contract(DurianABI, DurianAddress); //how you create an instance of that contract by using the abi and address  
                                 // console.log(durianID);//0
@@ -354,28 +401,23 @@
                                 // console.log(durianTreeId);//1
                                 // console.log(durianWeight);//3
                                 var data = [durianID.toString(), durianTreeId, durianType, durianWeight];
-                                console.log(data);
+                                console.log(account);
                                 // [1,ee,eee,2]
                                 try {
-                                    //await window.UserContract.methods.createDurianRecord().send({ from: account });
-                                    var index = await window.UserContract.methods.displayIndex().call();
-                                    --index;
-                                    console.log(index);
-                                    await window.UserContract.methods.appendDurianBlock(index, data).send({ from: account });
+                                    await window.UserContract.methods.createDurianRecord(data,account).send({ from: account });
+                                    // var index = await window.UserContract.methods.displayIndex().call();
+                                    // --index;
+                                    // console.log(index);
+                                    // await window.UserContract.methods.appendDurianBlock(index, data).send({ from: account });
 
-
-
-
-
-
-                                    // Swal.fire({
-                                    //     title: 'Durian Added Succesful',
-                                    //     text: 'You may view your durian added',
-                                    //     icon: 'success',
-                                    //     confirmButtonText: 'OK'
-                                    // }).then(function () {
-                                    //     window.location.href = '/farmerViewDurian';
-                                    // });
+                                    Swal.fire({
+                                        title: 'Durian Added Succesful',
+                                        text: 'You may view your durian added',
+                                        icon: 'success',
+                                        confirmButtonText: 'OK'
+                                    }).then(function () {
+                                        window.location.href = '/farmerViewDurian';
+                                    });
                                 } catch (error) {
                                     if (error.message.includes("revert")) {
                                         Swal.fire({
