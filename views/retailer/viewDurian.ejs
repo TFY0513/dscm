@@ -12,7 +12,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
 
-
+    <link href="rating.css" rel="stylesheet">
+    <link href="rateShow.css" rel="stylesheet">
 
     <link href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" rel="stylesheet">
 
@@ -72,6 +73,7 @@
                                                 <th scope="col">Harvest Time</th>
                                                 <th scope="col">Arrive Time</th>
                                                 <th scope="col">Price(Ether)</th>
+                                                <th scope="col">Rating</th>
                                                 <th scope="col">Setting</th>
                                             </tr>
                                         </thead>
@@ -104,6 +106,7 @@
                                                 <th scope="col">Harvest Time</th>
                                                 <th scope="col">Arrive Time</th>
                                                 <th scope="col">Price(Ether)</th>
+                                                <th scope="col">Rating</th>
                                                 <th scope="col">Setting</th>
 
                                                 </button></th>
@@ -168,7 +171,66 @@
                     </div>
 
 
+                    <div class="modal fade" id="ratingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document" style="  max-width: 1000px;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="myModalLabel">Rating</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
 
+                                    <div style="margin-left:20px; margin-right:20px; " class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Rating & Comment</h4>
+                                            <h6 class="card-subtitle" id="userDetail"></h6>
+                                        </div>
+
+                                        <div class="comment-widgets m-b-20">
+
+                                            <div class="d-flex flex-row comment-row">
+
+                                                <div class="comment-text w-100">
+                                                    <div class="rating">
+                                                        <input type="radio" name="getRating" id="rate5" value="5"><label
+                                                            for="5">☆</label>
+                                                        <input type="radio" name="getRating" id="rate4" value="4"><label
+                                                            for="4">☆</label>
+                                                        <input type="radio" name="getRating" id="rate3" value="3"><label
+                                                            for="3">☆</label>
+                                                        <input type="radio" name="getRating" id="rate2" value="2"><label
+                                                            for="2">☆</label>
+                                                        <input type="radio" name="getRating" id="rate1" value="1"><label
+                                                            for="1">☆</label>
+                                                    </div>
+                                                    <textarea id="getComment" class="form-control" name="homeAddress"
+                                                        rows="4" maxlength="200" required="required" disabled
+                                                        placeholder="Comment" cols="50"></textarea>
+                                                    <!-- <div class="comment-footer">
+                                                        <span class="date">2222</span>
+                                                        <span class="label label-info">Project Task :
+                                                           22 </span>
+                                                        <span style="margin-left:10px;" class="label label-success">222</span>
+                                                    </div>
+                                                    <p class="m-b-5 m-t-10">222</p> -->
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" onclick="closeReview()" class="btn btn-secondary"
+                                        data-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
                     <%- include('../partials/scroll_button'); %>
@@ -187,7 +249,7 @@
                                 account = accounts[0];
                                 window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
                                 window.UserContract = await new window.web3.eth.Contract(DurianABI, DurianAddress); //how you create an instance of that contract by using the abi and address  
-                                let durianID, durianTreeID, durianType, weight, process, harvestTime, arriveTime, price;
+                                let durianID, durianTreeID, durianType, weight, process, harvestTime, arriveTime, price, rate, comment;
                                 var currentProcess;
 
                                 var index = await window.UserContract.methods.displayIndex().call();
@@ -195,16 +257,24 @@
                                 if (index != 0) {
                                     for (var i = 0; i < index; i++) {//each durian
                                         var durian = await window.UserContract.methods.getBlock(i).call();
-                                        //  console.log(durian[1][4]);
+                                        rate = "";
+                                        comment = "";
 
                                         console.log("current blocck lenght: " + durian.length);
                                         price = "-";
                                         // console.log(durian[1][4]);
 
                                         if (durian.length > 1) {
+
                                             if (durian.length > 2) {
                                                 price = durian[2][6][0];
                                             }
+
+
+
+                                            // if (durian.length > 3) {
+
+                                            // }
 
                                             var currDurindex = durian.length - 1;
 
@@ -214,8 +284,65 @@
 
                                             const date = new Date(durian[1][3] * 1000); // Multiply by 1000 to convert from seconds to milliseconds
                                             arriveTime = date.toLocaleString(); // Convert to local time string
+                                            durianID = durian[0][6][0];
+                                            durianTreeID = durian[0][6][1];
+                                            durianType = durian[0][6][2];
+                                            weight = durian[0][6][3];
+                                            const date2 = new Date(durian[0][3] * 1000); // Multiply by 1000 to convert from seconds to milliseconds
+                                            harvestTime = date2.toLocaleString(); // Convert to local time string
+                                            switch (currentProcess) {
+                                                case "0":
+                                                    process = "HARVEST";
+                                                    break;
+                                                case "1":
+                                                    process = "DELIVERED";
+                                                    break;
+                                                case "2":
+                                                    process = "PREPARED";
+
+                                                    break;
+                                                case "3":
+                                                    process = "PURCHASE";
+                                                    break;
+                                                case "4":
+                                                    process = "RATING";
+                                                    break;
+                                                default:
+                                                    process = "COMPLETED";
+                                                    break;
+                                            }
+
+                                            if (parseInt(currentProcess) == 1) {
+                                                $(document).ready(function () {
+                                                    var t = $('#table').DataTable();
+
+                                                    t.row.add([durianID, durianTreeID, durianType, weight, process, harvestTime, arriveTime, price, " -",
+
+                                                        "<button class=' btn btn-outline-secondary' data-toggle='modal'  onclick='showPopUp(" + i + ")' >Retail </button>"]).draw(false);
+                                                });
+
+                                            }
+                                            else if (parseInt(currentProcess) > 3) {//got rate
+                                                rate = durian[4][6][0];
+                                                comment = durian[4][6][1];
+                                                $(document).ready(function () {
+                                                    var t = $('#table').DataTable();
 
 
+                                                    t.row.add([durianID, durianTreeID, durianType, weight, process, harvestTime, arriveTime, price, "-",
+                                                        "<button class=' btn btn-outline-secondary' data-toggle='modal'  onclick='displayReview(" + i + ")' >View </button>"]).draw(false);
+
+                                                });
+                                            }
+                                            else {//no rate
+                                                $(document).ready(function () {
+                                                    var t = $('#table').DataTable();
+
+
+                                                    t.row.add([durianID, durianTreeID, durianType, weight, process, harvestTime, arriveTime, price, "-", ""]).draw(false);
+
+                                                });
+                                            }
                                         }
                                         else {
                                             console.log("reejected");
@@ -226,61 +353,6 @@
                                         }
 
 
-                                        durianID = durian[0][6][0];
-                                        durianTreeID = durian[0][6][1];
-                                        durianType = durian[0][6][2];
-                                        weight = durian[0][6][3];
-                                        const date = new Date(durian[0][3] * 1000); // Multiply by 1000 to convert from seconds to milliseconds
-                                        harvestTime = date.toLocaleString(); // Convert to local time string
-
-
-                                        switch (currentProcess) {
-                                            case "0":
-                                                process = "HARVEST";
-                                                break;
-                                            case "1":
-                                                process = "DELIVERED";
-                                                break;
-                                            case "2":
-                                                process = "PREPARED";
-
-                                                break;
-                                            case "3":
-                                                process = "PURCHASE";
-                                                break;
-                                            case "4":
-                                                process = "RATING";
-                                                break;
-                                            default:
-                                                process = "COMPLETED";
-                                                break;
-                                        }
-
-                                        if (process != "DELIVERED") {
-                                            // console.log("procecss" + parseInt(currentProcess));
-                                            if (!(parseInt(currentProcess) < 1)) {
-                                                $(document).ready(function () {
-                                                    var t = $('#table').DataTable();
-
-
-                                                    t.row.add([durianID, durianTreeID, durianType, weight, process, harvestTime, arriveTime, price, ""]).draw(false);
-
-                                                });
-
-                                            }
-
-                                        }
-                                        else {
-
-                                            $(document).ready(function () {
-                                                var t = $('#table').DataTable();
-
-                                                t.row.add([durianID, durianTreeID, durianType,weight, process, harvestTime, arriveTime, price,
-                                                    "<button class=' btn btn-outline-secondary' data-toggle='modal'  onclick='showPopUp(" + i + ")' >Retail </button>"]).draw(false);
-                                            });
-
-
-                                        }
 
                                         console.log("succeess")
 
@@ -302,6 +374,43 @@
                                 $('#settingDurianModal').modal('show');
                                 console.log(data);
                                 globalID = data;
+                            }
+
+                            function closeReview() {
+                                $('#ratingModal').modal('hide');
+
+                            }
+
+                            const displayReview = async (index) => {
+                                var durian = await window.UserContract.methods.getBlock(--index).call();
+
+
+                                $('#ratingModal').modal('show');
+
+
+                                let ratingValue = parseInt(durian[4][6][0]); // default rating value
+                                var name = "rate" + ratingValue;
+                                console.log(name);
+                                document.getElementById(name).checked = true;
+                                document.getElementById("rate1").disabled = true;
+                                document.getElementById("rate2").disabled = true;
+                                document.getElementById("rate3").disabled = true;
+                                document.getElementById("rate4").disabled = true;
+                                document.getElementById("rate5").disabled = true;
+
+                                document.getElementById("getComment").value = durian[4][6][1];
+
+                                console.log(durian[4][5]);
+
+                                window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
+                                var user = await window.UserContract.methods.retrieveProfile(durian[4][5]).call();
+
+                                const date = new Date(durian[4][3] * 1000); // Multiply by 1000 to convert from seconds to milliseconds
+                                const ratingDate = date.toLocaleString(); // Convert to local time string
+
+                                document.getElementById("userDetail").innerHTML = "User: " + user[1] + "<br/> Rating Date Made: "+ratingDate;
+
+                                console.log(user[1]);
                             }
 
                             function info() {
@@ -342,7 +451,7 @@
 
                                 try {
 
-                                    await window.UserContract.methods.appendDurianBlock(globalID, data,account).send({ from: account });
+                                    await window.UserContract.methods.appendDurianBlock(globalID, data, account).send({ from: account });
                                     Swal.fire({
                                         title: 'Durian Delivered Succesful',
                                         text: 'You may view the durian',
@@ -379,8 +488,8 @@
                             function validateSetting(price) {
                                 var valid = true;
 
-                                 const regexPrice = /^\d{1,13}(\.\d{1,2})?$/g;
-                               // const regexPrice = /^\d+$/;
+                                const regexPrice = /^\d{1,13}(\.\d{1,2})?$/g;
+                                // const regexPrice = /^\d+$/;
 
 
 

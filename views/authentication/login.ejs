@@ -2,24 +2,9 @@
 
 	<%- include('../authentication/guest'); %>
 
-		<!-- <link href="style.css" rel="stylesheet"> -->
+
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-		<!-- 
-    <div id="snackbar"></div>
-    <script>
-        if (localStorage.getItem("message") !== null) {
-            function myFunction() {
-                var x = document.getElementById("snackbar");
-                x.className = "show";
-                setTimeout(function () {
-                    x.className = x.className.replace("show", "");
-                }, 2500);
-            }
-            document.getElementById("snackbar").innerHTML = localStorage.getItem("message");
-            myFunction();
-            localStorage.removeItem("message");
-        }
-    </script> -->
+
 
 		<body class="text-center">
 
@@ -39,30 +24,12 @@
 						</ul>
 					</div>
 
-					<!-- 
-					<div class="form-group form-floating mb-3">
-						<input type="text" class="form-control" id="username" name="username" value=""
-							placeholder="Username" required="required" autofocus>
-						<label for="floatingName">Username</label>
 
-						<span class="text-danger text-left"></span>
-
-					</div>
-
-					<div class="form-group form-floating mb-3">
-						<input type="password" class="form-control" id="password" name="password" value=""
-							placeholder="Password" required="required">
-						<label for="floatingPassword">Password</label>
-
-						<span class="text-danger text-left"></span>
-
-					</div> -->
 
 					<div class="form-group mb-3">
-						<!-- <label for="remember">Remember me</label>
-                        <input type="checkbox" name="remember" value="1"><br /> -->
+
 						<a style=" text-decoration: none;" href='/register'>Register</a><br />
-						<!-- <a href='{{route(' verify.showVerifyForm')}}'>Forget Password</a> -->
+
 					</div>
 
 					<button class="w-100 btn btn-lg btn-primary" type="submit" onclick="login()">Login</button>
@@ -108,7 +75,7 @@
 					console.log("Erorr:<br/>" + error.message);
 
 				}
-			
+
 
 
 
@@ -128,7 +95,6 @@
 					console.log("Erorr:<br/>" + error.message);
 
 				}
-				localStorage.setItem("farmerAddress", account);
 
 			}
 
@@ -146,7 +112,6 @@
 					console.log("Erorr:<br/>" + error.message);
 
 				}
-				localStorage.setItem("retailerAddress", account);
 
 
 
@@ -166,7 +131,7 @@
 					console.log("Erorr:<br/>" + error.message);
 
 				}
-				localStorage.setItem("distributerAddress", account);
+
 
 			}
 
@@ -178,9 +143,7 @@
 				window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
 				window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
 				if (await window.UserContract.methods.login(account).call()) {
-					//console.log(role);
-					//  localStorage.setItem("username", username);
-					//  localStorage.setItem("role", role);
+					
 					const data = await window.UserContract.methods.retrieveProfile(account).call();
 
 
@@ -206,11 +169,6 @@
 					});
 
 
-					// console.log("error");
-					// // localStorage.setItem("message", "Invalid credentials");
-					// var x = document.getElementById("message");
-					// x.style.display = "block";
-					// document.getElementById("contentErr").innerHTML = "Invalid Credentials. Please try again";
 				}
 
 			}

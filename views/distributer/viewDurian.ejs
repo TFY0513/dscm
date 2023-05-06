@@ -155,14 +155,14 @@
                                         // console.log(durian[1][4]);
 
                                         if (durian.length > 1) {// not harvesstated
-                                            
+
 
                                             var currDurindex = durian.length - 1;
 
                                             // console.log("come in "  + currDurindex);
                                             // console.log(durian);
-                                            currentProcess = durian[1][4];
-                                         
+                                            currentProcess = durian[currDurindex][4];
+
                                             const date = new Date(durian[1][3] * 1000); // Multiply by 1000 to convert from seconds to milliseconds
                                             arriveTime = date.toLocaleString(); // Convert to local time string
 
@@ -203,7 +203,11 @@
                                                 break;
                                         }
 
-                                        if (process != "HARVEST") {
+                                        if (parseInt(currentProcess) > 0) {
+                                            // if (parseInt(currentProcess)) {
+
+
+                                            // }
                                             $(document).ready(function () {
                                                 var t = $('#table').DataTable();
 
@@ -212,7 +216,7 @@
 
                                             });
                                         }
-                                        else {
+                                        else  {
                                             $(document).ready(function () {
                                                 var t = $('#table').DataTable();
 
@@ -263,7 +267,7 @@
                                 var data = [""];
                                 try {
                                     // await window.UserContract.methods.updateProfile(username, firstname, lastname, contactNum, userJson.wallet, location).send({ from: account });
-                                    await window.UserContract.methods.appendDurianBlock(globalID, data,account).send({ from: account });
+                                    await window.UserContract.methods.appendDurianBlock(globalID, data, account).send({ from: account });
                                     Swal.fire({
                                         title: 'Durian Delivered Succesful',
                                         text: 'You may view the durian',

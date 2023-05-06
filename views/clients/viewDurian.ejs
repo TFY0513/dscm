@@ -107,28 +107,7 @@
                             const Address = localStorage.getItem("UserAddress")
                             const DurianABI = JSON.parse(localStorage.getItem("DurianABI"));
                             const DurianAddress = localStorage.getItem("DurianAddress")
-                            let globalID, globalPrice;
-                            // // Get the modal and the placeholders for the data
-                            // const modal = document.getElementById('buyDurianModal');
-                            // const priceDisplay = modal.querySelector('#price');
-                            // const idDisplay = modal.querySelector('#durainIDSelected');
-
-                            // // Listen for the modal to be shown
-                            // modal.addEventListener('show.bs.modal', function (event) {
-                            //     // Get the button that triggered the modal
-                            //     const button = event.relatedTarget;
-
-                            //     // Retrieve the data from the button's data attributes
-                            //     const price = button.getAttribute('data-price');
-                            //     const name = button.getAttribute('data-id');
-
-
-                            //     // console.log(button);
-                            //     // Update the modal content with the retrieved data
-                            //     priceDisplay.textContent = price;
-                            //     idDisplay.textContent = name;
-                            // });
-
+                            let globalID;
 
                             const showDurian = async () => {
                                 const accounts = await ethereum.request({ method: "eth_requestAccounts" });
@@ -145,11 +124,11 @@
                                     for (var i = 0; i < index; i++) {//each durian
 
                                         var durian = await window.UserContract.methods.getBlock(i).call();
-                                        console.log(durian.length);
+                                        // console.log(durian[2][5]);
 
                                         console.log("current blocck lenght: " + durian.length);
                                         price = "-";
-                                        // console.log(durian[1][4]);
+                                        console.log(durian);
 
                                         if (durian.length > 1) {
                                             if (durian.length > 2) {
@@ -168,13 +147,13 @@
 
                                         }
                                         else {
-                                            console.log("reejected");
+
                                             currentProcess = durian[0][4];
                                             arriveTime = "-";
 
 
                                         }
-
+                                        console.log(currentProcess);
 
                                         durianID = durian[0][6][0];
                                         durianTreeID = durian[0][6][1];
@@ -210,95 +189,83 @@
                                         if (parseInt(currentProcess) >= 2) {//the durian is prepared 
 
 
-                                            if (parseInt(currentProcess) >= 3) {//sold alr
 
-                                            }
-                                            else {
-                                                console.log("Durianb:" + i);
-                                                var parentDiv = document.createElement("div");
-                                                parentDiv.classList.add("col-md-6", "col-lg-4", "col-xl-3");
+                                            sellerAdddress = durian[2][5];
+                                            console.log("Durianb:" + i);
+                                            var parentDiv = document.createElement("div");
+                                            parentDiv.classList.add("col-md-6", "col-lg-4", "col-xl-3");
 
-                                                var newDiv = document.createElement("div");
-                                                newDiv.id = 'product-1';
-                                                newDiv.classList.add("single-product");
+                                            var newDiv = document.createElement("div");
+                                            newDiv.id = 'product-1';
+                                            newDiv.classList.add("single-product");
 
-                                                var newDiv2 = document.createElement("div");
-                                                newDiv2.classList.add("part-1");
+                                            var newDiv2 = document.createElement("div");
+                                            newDiv2.classList.add("part-1");
 
-                                                var newUL = document.createElement("ul");
-                                                var newLi = document.createElement("li");
+                                            var newUL = document.createElement("ul");
+                                            var newLi = document.createElement("li");
 
-                                                //     var newP = document.createElement("h6");
 
-                                                //     newP.setAttribute('data-toggle', 'modal');
-                                                //    // newP.setAttribute('data-target', '#buyDurianModal');
-                                                //     newP.setAttribute('price', price);
-                                                //     newP.setAttribute('id', i);
-                                                //     newP.addEventListener("click", showPopUp(i, price));
-
+                                            if (parseInt(currentProcess) == 2) {//havent sold
                                                 var button = document.createElement("button");
 
                                                 button.setAttribute('data-toggle', 'modal');
                                                 button.classList.add("btn", "btn-outline-primary");
                                                 button.innerHTML = "Buy";
                                                 button.setAttribute("onclick", "showPopUp(" + i + ", " + price + ")");
-                                                // console.log("price "+price);
-                                                // button.addEventListener("click", function () {
-                                                //     showPopUp(i);
-                                                // });
 
-                                                // // newP.setAttribute('data-target', '#buyDurianModal');
-                                                // newP.setAttribute('price', price);
-                                                // newP.setAttribute('id', i);
-                                                // newP.addEventListener("click", showPopUp(i, price));
-
-
-
-                                                // var imgElement = document.createElement('img');
-                                                // imgElement.src = 'shopcartIcon.png';
-                                                // imgElement.width = '40';
-
-                                                // newP.appendChild(imgElement);
-
-                                                // Append the p element to the li element
                                                 newLi.appendChild(button);
-
-                                                // Append the li element to the ul element
-                                                newUL.appendChild(newLi);
-
-                                                newDiv2.appendChild(newUL);
-
-
-                                                var newDiv3 = document.createElement("div");
-                                                newDiv3.classList.add("part-2");
-
-                                                var header3 = document.createElement("h3");
-                                                header3.classList.add("product-title");
-                                                header3.innerHTML = durianType + " (ID: " + durianID + ")";
-                                                var header4 = document.createElement("h4");
-                                                header4.classList.add("product-title");
-                                                header4.innerHTML = "Weight: " + parseInt(weight).toFixed(2) + " kg";
-                                                var header6 = document.createElement("h3");
-                                                header6.classList.add("product-price");
-                                                header6.setAttribute('id', durianID);
-                                                header6.innerHTML = price + "<img src='Ether.png' width='50'>";
-
-                                                newDiv3.appendChild(header3);
-                                                newDiv3.appendChild(header4);
-                                                newDiv3.appendChild(header6);
-
-                                                newDiv.appendChild(newDiv2);
-                                                newDiv.appendChild(newDiv3);
-
-                                                parentDiv.appendChild(newDiv);
-
-                                                var myDiv = document.getElementById("durianList");
-                                                myDiv.appendChild(parentDiv);
-
-
-
-
                                             }
+                                            else {
+                                                var header3 = document.createElement("h3");
+                                             
+
+
+                                                var span = document.createElement("span");
+                                                span.classList.add("badge","bg-secondary");
+                                                span.textContent = 'Sold Out'; 
+                                                
+                                                header3.appendChild(span);
+
+                                                newLi.appendChild(header3);
+                                            }
+
+
+                                            newUL.appendChild(newLi);
+
+                                            newDiv2.appendChild(newUL);
+
+
+                                            var newDiv3 = document.createElement("div");
+                                            newDiv3.classList.add("part-2");
+
+                                            var header3 = document.createElement("h3");
+                                            header3.classList.add("product-title");
+                                            header3.innerHTML = durianType + " (ID: " + durianID + ")";
+                                            var header4 = document.createElement("h4");
+                                            header4.classList.add("product-title");
+                                            header4.innerHTML = "Weight: " + weight + " kg";
+                                            var header6 = document.createElement("h3");
+                                            header6.classList.add("product-price");
+                                            header6.setAttribute('id', durianID);
+                                            header6.innerHTML = price + "<img src='Ether.png' width='50'>";
+
+                                            newDiv3.appendChild(header3);
+                                            newDiv3.appendChild(header4);
+                                            newDiv3.appendChild(header6);
+
+                                            newDiv.appendChild(newDiv2);
+                                            newDiv.appendChild(newDiv3);
+
+                                            parentDiv.appendChild(newDiv);
+
+                                            var myDiv = document.getElementById("durianList");
+                                            myDiv.appendChild(parentDiv);
+
+
+
+
+
 
                                         }
 
@@ -342,18 +309,76 @@
                                 window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
                                 window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
                                 console.log(clientAccount);
-                                const sellerAddress = localStorage.getItem("retailerAddress");
+                                const sellerAddress = sellerAdddress;
                                 console.log(sellerAddress);
+                                //  console.log(price.toString());
+                                var data = [];
+                                console.log(globalID, data, account);
+                                try {
 
-                                await window.UserContract.methods.purchase(sellerAddress).send({
-                                    from: clientAccount,
-                                    value: web3.utils.toWei('20', 'ether'),
-                                    to: sellerAddress
-                                });
+                                    await window.UserContract.methods.purchase(sellerAddress).send({
+                                        from: clientAccount,
+                                        value: web3.utils.toWei(price.toString(), 'ether')
 
-                              
+                                    });
 
-                           
+                                    window.UserContract = await new window.web3.eth.Contract(DurianABI, DurianAddress); //how you create an instance of that contract by using the abi and address  
+                                    await window.UserContract.methods.appendDurianBlock(globalID, data, account).send({ from: account });
+
+                                    let timerInterval;
+                                    Swal.fire({
+                                        title: 'Payment Processing!',
+                                        //  html: 'It will close in <b></b> milliseconds.',
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen: () => {
+                                            Swal.showLoading()
+                                            // const b = Swal.getHtmlContainer().querySelector('b')
+                                            // timerInterval = setInterval(() => {
+                                            //     b.textContent = Swal.getTimerLeft()
+                                            // }, 100)
+                                        },
+                                        willClose: () => {
+                                            clearInterval(timerInterval)
+                                        }
+                                    }).then((result) => {
+                                        /* Read more about handling dismissals below */
+                                        if (result.dismiss === Swal.DismissReason.timer) {
+
+
+                                            Swal.fire({
+                                                title: 'Durian Purchase Succesful',
+                                                text: 'You may view your durian purchase in the history',
+                                                icon: 'success',
+                                                confirmButtonText: 'OK'
+                                            }).then(function () {
+                                                window.location.href = '/clientViewDurian';
+                                            });
+                                        }
+                                    })
+
+                                } catch (error) {
+                                    if (error.message.includes("revert")) {
+                                        Swal.fire({
+                                            title: 'Durian Purchase Failed',
+                                            text: 'The process is already in other phrase',
+                                            icon: 'error',
+                                            confirmButtonText: 'OK'
+                                        });
+
+                                    }
+                                    else {
+                                        Swal.fire({
+                                            title: 'Durian Purchase Failed',
+                                            text: 'Unknown Error',
+                                            icon: 'error',
+                                            confirmButtonText: 'OK'
+                                        });
+                                    }
+
+                                }
+
+
 
 
                             }

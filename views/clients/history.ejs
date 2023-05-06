@@ -7,12 +7,13 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.84.0">
-    <title>View Durian</title>
+    <title>Purchase History</title>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/dashboard/">
 
     <link href="rating.css" rel="stylesheet">
+    <link href="rateShow.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" rel="stylesheet">
 
     <!-- CSS -->
@@ -53,7 +54,7 @@
                     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                         <div
                             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                            <h1 class="h2">Order History</h1>
+                            <h1 class="h2">Purchase History</h1>
                         </div>
                         <h4 class="h4">Durian Purchase Transaction Overview</h4>
                         <div class="col d-flex justify-content-center">
@@ -64,19 +65,20 @@
                                     <table id="table" class="table ">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Order ID</th>
                                                 <th scope="col">Durian ID</th>
-                                                <th scope="col">Grand Total Price (RM)</th>
+                                                <th scope="col">Durian Type</th>
+                                                <th scope="col">Durian Tree ID</th>
+                                                <th scope="col">Durian Weight(KG)</th>
+                                                <th scope="col">Price (Ether)</th>
                                                 <th scope="col">Purchased Date</th>
-                                                <th scope="col">View</th>
                                                 <th scope="col">Rate</th>
 
 
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td scope="col" id="durianID">13221323</td>
+                                            <!-- <tr>
+                                              
                                                 <td id="durianType">HHHH</td>
                                                 <td id="durianTreeID">eqqwewqweweq</td>
                                                 <td id="durianWeight">100.00</td>
@@ -90,16 +92,18 @@
                                                         data-toggle="modal" data-target="#rateDurianModal">Rate
                                                     </button>
                                                 </td>
-                                            </tr>
+                                            </tr> -->
 
 
                                         </tbody>
                                         <tfoot>
-                                            <th scope="col">Order ID</th>
+
                                             <th scope="col">Durian ID</th>
+                                            <th scope="col">Durian Type</th>
+                                            <th scope="col">Durian Tree ID</th>
+                                            <th scope="col">Durian Weight(KG)</th>
                                             <th scope="col">Grand Total Price (RM)</th>
                                             <th scope="col">Purchased Date</th>
-                                            <th scope="col">View</th>
                                             <th scope="col">Rate</th>
                                         </tfoot>
                                     </table>
@@ -108,70 +112,69 @@
                         </div>
                     </main>
 
-                    <div class="modal fade" id="viewOrderModal" tabindex="-1" role="dialog"
-                        aria-labelledby="myModalLabel">
+
+                    <div class="modal fade" id="ratingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document" style="  max-width: 1000px;">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="myModalLabel">View Order Detail</h5>
+                                    <h5 class="modal-title" id="myModalLabel">Rating</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
-                                    <form target="dummyframe">
 
+                                    <div style="margin-left:20px; margin-right:20px; " class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Rating & Comment</h4>
+                                            <h6 class="card-subtitle" id="userDetail"></h6>
+                                        </div>
 
-                                        <div class="row g-3" id="newOrderData">
+                                        <div class="comment-widgets m-b-20">
 
+                                            <div class="d-flex flex-row comment-row">
+                                                <div class="p-2"><span class="round"><img id="commentPic" src=""
+                                                            alt="user" width="50"></span></div>
+                                                <div class="comment-text w-100">
+                                                    <div class="rating">
+                                                        <input type="radio" name="getRating" id="rate5" value="5"><label
+                                                            for="5">☆</label>
+                                                        <input type="radio" name="getRating" id="rate4" value="4"><label
+                                                            for="4">☆</label>
+                                                        <input type="radio" name="getRating" id="rate3" value="3"><label
+                                                            for="3">☆</label>
+                                                        <input type="radio" name="getRating" id="rate2" value="2"><label
+                                                            for="2">☆</label>
+                                                        <input type="radio" name="getRating" id="rate1" value="1"><label
+                                                            for="1">☆</label>
+                                                    </div>
+                                                    <textarea id="getComment" class="form-control" name="homeAddress"
+                                                        rows="4" maxlength="200" required="required" disabled
+                                                        placeholder="Comment" cols="50"></textarea>
+                                                    <!-- <div class="comment-footer">
+                                                        <span class="date">2222</span>
+                                                        <span class="label label-info">Project Task :
+                                                           22 </span>
+                                                        <span style="margin-left:10px;" class="label label-success">222</span>
+                                                    </div>
+                                                    <p class="m-b-5 m-t-10">222</p> -->
 
-                                            <div style="padding-left:20px; padding-right:20px;" class="col-3">
-                                                <h4 class="mb-3">Durian ID</h4>
-                                                <input type="input" class="form-control" id="durianType" maxlength="15"
-                                                    placeholder="XXXXXXXX" disabled>
-
+                                                </div>
                                             </div>
-                                            <div style="padding-left:20px; padding-right:20px;" class="col-3">
-                                                <h4 class="mb-3">Durian Type</h4>
-                                                <input type="input" class="form-control" id="durianType" maxlength="15"
-                                                    placeholder="XXXXXXXX" disabled>
+                                        </div>
 
-                                            </div>
+                                    </div>
 
-                                            <div style="padding-left:20px; padding-right:20px;" class="col-3">
-                                                <h4 class="mb-3">Qty </h4>
-                                                <input type="input" class="form-control" id="qty" maxlength="15"
-                                                    placeholder="XXXXXXXX" disabled>
-
-                                            </div>
-
-                                            <div style="padding-left:20px; padding-right:20px;" class="col-3">
-                                                <h4 class="mb-3">Total Price</h4>
-                                                <input type="input" class="form-control" id="price" maxlength="10"
-                                                    placeholder="XX.XX" disabled>
-
-
-                                            </div>
-
-
-
-
-
-                                        </div><br />
-
-
-
-
-                                    </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" onclick="closeReview()" class="btn btn-secondary"
+                                        data-dismiss="modal">Close</button>
 
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="modal fade" id="rateDurianModal" tabindex="-1" role="dialog"
                         aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document" style="  max-width: 1000px;">
@@ -185,7 +188,7 @@
                                 <div class="modal-body">
 
 
-                                    <div class="row">
+                                    <div class="">
 
                                         <div class="col-2">
 
@@ -212,16 +215,13 @@
                                                         for="2">☆</label>
                                                     <input type="radio" name="rating" value="1" id="1"><label
                                                         for="1">☆</label>
-                                                </div><br />
+                                                </div>
+                                                <span id="rateErr" class="text-danger text-left"></span>
+                                                <br />
                                                 <div class="" id="">
-                                                    <select class="form-select" name="ratingType" id="ratingType">
-                                                        <option value="Flavor">Flavor
-                                                        </option>
-                                                        <option value="Appearance">Appearance
-                                                        </option>
-                                                        <option value="Fragrance">Fragrance
-                                                        </option>
-                                                    </select>
+                                                    <textarea id="comment" class="form-control" name="homeAddress"
+                                                        rows="4" maxlength="200" placeholder="Comment"
+                                                        cols="50"></textarea>
                                                 </div>
                                                 <br />
                                             </div>
@@ -233,7 +233,8 @@
 
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" onclick="closePopUp()" class="btn btn-secondary"
+                                        data-dismiss="modal">Close</button>
                                     <button type="button" class="btn btn-primary" id="rateBtn">Rate</button>
                                 </div>
                             </div>
@@ -246,9 +247,11 @@
                         <script>
                             const ABI = JSON.parse(localStorage.getItem("UserABI"));
                             const Address = localStorage.getItem("UserAddress")
+                            const DurianABI = JSON.parse(localStorage.getItem("DurianABI"));
+                            const DurianAddress = localStorage.getItem("DurianAddress")
                             const image = document.getElementById("userPro");
                             image.src = userJson.profile_pic;
-
+                            let globalID;
                             // var newInput = document.createElement("input");
 
                             // // Set the type attribute of the new input element
@@ -266,58 +269,216 @@
 
                                 // get all the radio buttons with the name "rating"
                                 const ratingInputs = document.getElementsByName("rating");
-                                var rating =  0;
+                                var rating = 0;
                                 // loop through the radio buttons to find the checked one
                                 for (let i = 0; i < ratingInputs.length; i++) {
                                     if (ratingInputs[i].checked) {
-                                         rating = ratingInputs[i].value;
-                                        console.log(`Selected rating: ${rating}`);
+                                        rating = ratingInputs[i].value;
+
                                         break;
                                     }
                                 }
-                                const rateType = document.getElementById("ratingType").value;
-                                rateDurian();
+
+                                const comment = document.getElementById("comment").value;
+                                console.log(`Selected rating: ${rating}`);
+                                console.log(comment);
+                                rateDurian(rating, comment);
 
                             });
 
-
-                            const rateDurian = async () => {
+                            const showDurian = async () => {
                                 const accounts = await ethereum.request({ method: "eth_requestAccounts" });
                                 account = accounts[0];
                                 window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
-                                window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
+                                window.UserContract = await new window.web3.eth.Contract(DurianABI, DurianAddress); //how you create an instance of that contract by using the abi and address  
+                                let durianID, durianTreeID, durianType, weight, purchaseTime, price;
+                                var rate, comment;
+                                var currentProcess;
 
-                                try {
-                                    // await window.UserContract.methods.updateProfile(username, firstname, lastname, contactNum, userJson.wallet, location).send({ from: account });
+                                var index = await window.UserContract.methods.displayIndex().call();
+                                //  console.log(index);
+                                if (index != 0) {
+                                    for (var i = 0; i < index; i++) {//each durian
+                                        var durian = await window.UserContract.methods.getBlock(i).call();
+                                        rate = "";
+                                        comment = "";
 
-                                    Swal.fire({
-                                        title: 'Durian Rating Succesful',
-                                        text: 'You may view the rating',
-                                        icon: 'success',
-                                        confirmButtonText: 'OK'
-                                    }).then(function () {
-                                        window.location.href = '/history';
-                                    });
-                                } catch (error) {
-                                    if (error.message.includes("revert")) {
-                                        Swal.fire({
-                                            title: 'Durian Rating Failed',
-                                            text: 'The wallet address is not associated with this account',
-                                            icon: 'error',
-                                            confirmButtonText: 'OK'
-                                        });
+                                        console.log("current blocck lenght: " + durian.length);
 
-                                    }
-                                    else {
-                                        Swal.fire({
-                                            title: 'Durian Rating Failed',
-                                            text: 'Unknown Error',
-                                            icon: 'error',
-                                            confirmButtonText: 'OK'
-                                        });
+                                        console.log(durian.length);
+
+                                        if (durian.length > 3) {
+                                            if (userJson.wallet == durian[3][5]) {
+                                                price = durian[2][6][0];
+
+
+                                                var currDurindex = durian.length - 1;
+
+                                                currentProcess = durian[currDurindex][4];
+
+                                                const date = new Date(durian[3][3] * 1000); // Multiply by 1000 to convert from seconds to milliseconds
+                                                purchaseTime = date.toLocaleString(); // Convert to local time string
+
+                                                durianID = durian[0][6][0];
+                                                durianTreeID = durian[0][6][1];
+                                                durianType = durian[0][6][2];
+                                                weight = durian[0][6][3];
+
+                                                if (parseInt(currentProcess) > 3) {//got ccomment
+                                                    // rate = durian[4][6][0];
+                                                    // comment = durian[4][6][1];
+                                                    // var data = rate + "|" + comment;
+                                                    // console.log(durian[4][6]);
+                                                    // console.log(comment);
+                                                    console.log("first");
+                                                    $(document).ready(function () {
+                                                        var t = $('#table').DataTable();
+                                                        t.row.add([durianID, durianTreeID, durianType, weight, price, purchaseTime,
+                                                            "<button class=' btn btn-outline-secondary' data-toggle='modal'  onclick='displayReview(" + i + ")' >View </button>"]).draw(false);
+                                                    });
+
+                                                }
+                                                else {
+                                                    console.log("sec");
+                                                    $(document).ready(function () {
+                                                        var t = $('#table').DataTable();
+                                                        t.row.add([durianID, durianTreeID, durianType, weight, price, purchaseTime,
+                                                            "<button class=' btn btn-outline-secondary' data-toggle='modal'  onclick='showReviewForm(" + i + ")' >Rate </button>"]).draw(false);
+                                                    });
+                                                }
+
+
+                                            }
+
+
+
+
+                                        }
+
+
+
+
+
+
+
+
+
+                                        console.log("succeess")
+
                                     }
 
                                 }
+
+
+                            }
+                            showDurian();
+
+
+
+                            function closeReview() {
+                                $('#ratingModal').modal('hide');
+
+                            }
+
+                            const displayReview = async (index) => {
+                                var durian = await window.UserContract.methods.getBlock(--index).call();
+
+                                // function displayReview(index) {
+                                $('#ratingModal').modal('show');
+
+                                //    console.log(durian[4][6][1]);
+                                // const ratingInputs = document.querySelectorAll('input[name="getRating"]');
+
+                                let ratingValue = parseInt(durian[4][6][0]); // default rating value
+                                var name = "rate" + ratingValue;
+                                console.log(name);
+                                document.getElementById(name).checked = true;
+                                document.getElementById("rate1").disabled = true;
+                                document.getElementById("rate2").disabled = true;
+                                document.getElementById("rate3").disabled = true;
+                                document.getElementById("rate4").disabled = true;
+                                document.getElementById("rate5").disabled = true;
+                                // console.log(typeof ratingValue);
+                                // ratingInputs.forEach((input) => {
+                                //     input.addEventListener("click", (event) => {
+                                //         ratingValue = parseInt(event.target.value);
+                                //       //  console.log("Selected rating: ", ratingValue);
+                                //     });
+                                // });
+
+
+                                document.getElementById("commentPic").src = userJson.profile_pic;
+                                document.getElementById("getComment").value = durian[4][6][1];
+                                const date = new Date(durian[4][3] * 1000); // Multiply by 1000 to convert from seconds to milliseconds
+                                const ratingDate = date.toLocaleString(); // Convert to local time string
+
+                                document.getElementById("userDetail").innerHTML = "Rating Date Made: "+ratingDate;
+
+                            }
+
+
+                            function closePopUp() {
+                                $('#rateDurianModal').modal('hide');
+
+                            }
+
+
+                            function showReviewForm(data) {
+                                $('#rateDurianModal').modal('show');
+                                console.log(data);
+                                globalID = data;
+                            }
+
+
+
+                            const rateDurian = async (rating, comment) => {
+                                console.log(globalID);
+                                --globalID;
+
+                                const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+                                account = accounts[0];
+                                window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+                                window.UserContract = await new window.web3.eth.Contract(DurianABI, DurianAddress); //how you create an instance of that contract by using the abi and address  
+                                if (rating == 0) {
+                                    document.getElementById("rateErr").innerHTML = "The Rate cannot be empty";
+                                }
+                                else {
+                                    var data = [rating, comment];
+                                    console.log(data);
+                                    try {
+                                        // await window.UserContract.methods.updateProfile(username, firstname, lastname, contactNum, userJson.wallet, location).send({ from: account });
+                                        await window.UserContract.methods.appendDurianBlock(globalID, data, account).send({ from: account });
+
+                                        Swal.fire({
+                                            title: 'Durian Rating Succesful',
+                                            text: 'You may view the rating',
+                                            icon: 'success',
+                                            confirmButtonText: 'OK'
+                                        }).then(function () {
+                                            window.location.href = '/history';
+                                        });
+                                    } catch (error) {
+                                        if (error.message.includes("revert")) {
+                                            Swal.fire({
+                                                title: 'Durian Rating Failed',
+                                                text: 'The wallet address is not associated with this account',
+                                                icon: 'error',
+                                                confirmButtonText: 'OK'
+                                            });
+
+                                        }
+                                        else {
+                                            Swal.fire({
+                                                title: 'Durian Rating Failed',
+                                                text: 'Unknown Error',
+                                                icon: 'error',
+                                                confirmButtonText: 'OK'
+                                            });
+                                        }
+
+                                    }
+                                }
+
                             }
 
 

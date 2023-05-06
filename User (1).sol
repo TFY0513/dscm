@@ -47,18 +47,7 @@ contract User {
 
     mapping(address => Distributors) distributors;
 
-    function deployFarmer(address farmerAddress) public {
-        //    uint256 userID;
-        // string firstName;
-        // string lastName;
-        // string ;
-        // string ;
-        // string ;
-        // string contactNum;
-        // Constant.Role role;
-        // uint256 ;
-        // string profile_pic;
-        // address payable ;
+    function deployFarmer(address farmerAddress) public duplicateUser(msg.sender){
 
         user[farmerAddress].userID = 7592712;
         user[farmerAddress].username = "wcp";
@@ -78,7 +67,7 @@ contract User {
             .location = "Durian Farm (Appontment), Lebuhraya Kuala Lumpur - Gua Musang, 27600 Raub District, Pahang";
     }
 
-    function deployClients(address clientsAddress) public {
+    function deployClients(address clientsAddress) public duplicateUser(msg.sender){
         user[clientsAddress].userID = 8192713;
         user[clientsAddress].username = "wcp";
         user[clientsAddress].firstName = "chong min";
@@ -96,7 +85,7 @@ contract User {
             .location = "Jalan Sekilau, Taman Ikhsan, 56000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur";
     }
 
-    function deployRetailers(address retailerAddress) public {
+    function deployRetailers(address retailerAddress) public duplicateUser(msg.sender){
         user[retailerAddress].userID = 1234567;
         user[retailerAddress].username = "tfy";
         user[retailerAddress].firstName = "fang yee";
@@ -115,7 +104,7 @@ contract User {
             .location = "Jalan Sekilau, Taman Ikhsan, 56000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur";
     }
 
-    function deployDistributor(address distributorAddress) public {
+    function deployDistributor(address distributorAddress) public duplicateUser(msg.sender){
         user[distributorAddress].userID = 5981723;
         user[distributorAddress].username = "nzh";
         user[distributorAddress].firstName = "Zongg Hao";
@@ -137,8 +126,7 @@ contract User {
         bool exists = false;
         if (user[userAddress].userID != 0) {
             exists = true;
-            // address exists in the mapping
-            // you can perform the desired action here
+            
         }
         require(
             !exists,
@@ -177,18 +165,7 @@ contract User {
         returns (Users memory)
     {
         return user[userAddress];
-        // return (
-        //     user[userAddress].userID,
-        //     user[userAddress].firstName,
-        //     user[userAddress].lastName,
-        //     user[userAddress].email,
-        //     user[userAddress].username,
-        //     user[userAddress].contactNum,
-        //     user[userAddress].role,
-        //     user[userAddress].dateJoined,
-        //     user[userAddress].profile_pic,
-        //     user[userAddress].wallet
-        // );
+       
     }
 
     function login(address userAddress) public view returns (bool) {
@@ -244,11 +221,7 @@ contract User {
     }
 
     function purchase(address sellerAddress) public payable {
-        address payable seller = user[sellerAddress].wallet;
-        //    // address payable buyer =  payable(msg.sender);
-        //     // seller = _toReceiver;
-
-        //     seller.transfer(msg.value); // money from buyer to seller
-        seller.transfer(msg.value);
+        payable(user[sellerAddress].wallet).transfer(msg.value);
+    
     }
 }
