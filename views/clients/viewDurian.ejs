@@ -14,7 +14,8 @@
 
     <link href="product.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" rel="stylesheet">
-
+    <link href="rating.css" rel="stylesheet">
+    <link href="rateShow.css" rel="stylesheet">
     <!-- CSS -->
 
 
@@ -97,6 +98,68 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="modal fade" id="ratingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document" style="  max-width: 1000px;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="myModalLabel">Rating</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div style="margin-left:20px; margin-right:20px; " class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Rating & Comment</h4>
+                                            <h6 class="card-subtitle" id="userDetail"></h6>
+                                        </div>
+
+                                        <div class="comment-widgets m-b-20">
+
+                                            <div class="d-flex flex-row comment-row">
+
+                                                <div class="comment-text w-100">
+                                                    <div class="rating">
+                                                        <input type="radio" name="getRating" id="rate5" value="5"><label
+                                                            for="5">☆</label>
+                                                        <input type="radio" name="getRating" id="rate4" value="4"><label
+                                                            for="4">☆</label>
+                                                        <input type="radio" name="getRating" id="rate3" value="3"><label
+                                                            for="3">☆</label>
+                                                        <input type="radio" name="getRating" id="rate2" value="2"><label
+                                                            for="2">☆</label>
+                                                        <input type="radio" name="getRating" id="rate1" value="1"><label
+                                                            for="1">☆</label>
+                                                    </div>
+                                                    <textarea id="getComment" class="form-control" name="homeAddress"
+                                                        rows="4" maxlength="200" required="required" disabled
+                                                        placeholder="Comment" cols="50"></textarea>
+                                                    <!-- <div class="comment-footer">
+                                                        <span class="date">2222</span>
+                                                        <span class="label label-info">Project Task :
+                                                           22 </span>
+                                                        <span style="margin-left:10px;" class="label label-success">222</span>
+                                                    </div>
+                                                    <p class="m-b-5 m-t-10">222</p> -->
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" onclick="closeReview()" class="btn btn-secondary"
+                                        data-dismiss="modal">Close</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
 
                     <%- include('../partials/scroll_button'); %>
@@ -218,16 +281,29 @@
                                             }
                                             else {
                                                 var header3 = document.createElement("h3");
-                                             
+
 
 
                                                 var span = document.createElement("span");
-                                                span.classList.add("badge","bg-secondary");
-                                                span.textContent = 'Sold Out'; 
-                                                
+                                                span.classList.add("badge", "bg-secondary");
+                                                span.textContent = 'Sold Out';
+
                                                 header3.appendChild(span);
 
                                                 newLi.appendChild(header3);
+
+                                                if (parseInt(currentProcess) > 3) {
+                                                    var button = document.createElement("button");
+
+                                                    button.setAttribute('data-toggle', 'modal');
+                                                    button.classList.add("btn", "btn-outline-primary");
+                                                    button.innerHTML = "View Review";
+                                                    button.setAttribute("onclick", "showReview(" + i + ")");
+
+                                                    newLi.appendChild(button);
+                                                }
+
+
                                             }
 
 
@@ -280,6 +356,49 @@
 
                             }
                             showDurian();
+
+
+                            function closeReview() {
+                                $('#ratingModal').modal('hide');
+
+                            }
+
+                            const showReview = async (index) => {
+                                var durian = await window.UserContract.methods.getBlock(index).call();
+
+                                console.log(durian);
+
+
+                                $('#ratingModal').modal('show');
+
+
+                                let ratingValue = parseInt(durian[4][6][0]); // default rating value
+                                var name = "rate" + ratingValue;
+                                console.log(name);
+                                document.getElementById(name).checked = true;
+                                document.getElementById("rate1").disabled = true;
+                                document.getElementById("rate2").disabled = true;
+                                document.getElementById("rate3").disabled = true;
+                                document.getElementById("rate4").disabled = true;
+                                document.getElementById("rate5").disabled = true;
+
+                                document.getElementById("getComment").value = durian[4][6][1];
+
+                                console.log(durian[4][5]);
+
+                                window.UserContract = await new window.web3.eth.Contract(ABI, Address); //how you create an instance of that contract by using the abi and address  
+                                var user = await window.UserContract.methods.retrieveProfile(durian[4][5]).call();
+
+                                const date = new Date(durian[4][3] * 1000); // Multiply by 1000 to convert from seconds to milliseconds
+                                const ratingDate = date.toLocaleString(); // Convert to local time string
+
+                                document.getElementById("userDetail").innerHTML = "User: " + user[1] + "<br/> Rating Date Made: " + ratingDate;
+
+                                console.log(user[1]);
+
+                            }
+
+
 
                             function closePopUp() {
                                 $('#buyDurianModal').modal('hide');

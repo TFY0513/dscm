@@ -382,6 +382,8 @@
                             }
 
                             const displayReview = async (index) => {
+                                window.web3 = await new Web3(window.ethereum); //how to access to smart contract 
+                                window.UserContract = await new window.web3.eth.Contract(DurianABI, DurianAddress); //how you create an instance of that contract by using the abi and address  
                                 var durian = await window.UserContract.methods.getBlock(--index).call();
 
 
