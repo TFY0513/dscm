@@ -333,7 +333,7 @@
                                                     console.log("first");
                                                     $(document).ready(function () {
                                                         var t = $('#table').DataTable();
-                                                        t.row.add([durianID, durianTreeID, durianType, weight, price, purchaseTime,
+                                                        t.row.add([durianID,  durianType, durianTreeID,  weight, price, purchaseTime,
                                                             "<button class=' btn btn-outline-secondary' data-toggle='modal'  onclick='displayReview(" + i + ")' >View </button>"]).draw(false);
                                                     });
 
@@ -342,7 +342,7 @@
                                                     console.log("sec");
                                                     $(document).ready(function () {
                                                         var t = $('#table').DataTable();
-                                                        t.row.add([durianID, durianTreeID, durianType, weight, price, purchaseTime,
+                                                        t.row.add([durianID,  durianType, durianTreeID,  weight, price, purchaseTime,
                                                             "<button class=' btn btn-outline-secondary' data-toggle='modal'  onclick='showReviewForm(" + i + ")' >Rate </button>"]).draw(false);
                                                     });
                                                 }
