@@ -455,7 +455,7 @@
 
                                     await window.UserContract.methods.appendDurianBlock(globalID, data, account).send({ from: account });
                                     Swal.fire({
-                                        title: 'Durian Delivered Succesful',
+                                        title: 'Durian Retail Succesful',
                                         text: 'You may view the durian',
                                         icon: 'success',
                                         confirmButtonText: 'OK'
@@ -465,7 +465,7 @@
                                 } catch (error) {
                                     if (error.message.includes("revert")) {
                                         Swal.fire({
-                                            title: 'Durian Delivered Failed',
+                                            title: 'Durian Retail Failed',
                                             text: 'The process is already in other phrase',
                                             icon: 'error',
                                             confirmButtonText: 'OK'
@@ -474,7 +474,7 @@
                                     }
                                     else {
                                         Swal.fire({
-                                            title: 'Durian Delivered Failed',
+                                            title: 'Durian Retail Failed',
                                             text: 'Unknown Error',
                                             icon: 'error',
                                             confirmButtonText: 'OK'
