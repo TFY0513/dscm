@@ -316,7 +316,7 @@
                                                 $(document).ready(function () {
                                                     var t = $('#table').DataTable();
 
-                                                    t.row.add([durianID, durianTreeID, durianType, weight, process, harvestTime, arriveTime, price, " -",
+                                                    t.row.add([durianID, durianType, durianTreeID, weight, process, harvestTime, arriveTime, price, " -",
 
                                                         "<button class=' btn btn-outline-secondary' data-toggle='modal'  onclick='showPopUp(" + i + ")' >Retail </button>"]).draw(false);
                                                 });
@@ -329,7 +329,7 @@
                                                     var t = $('#table').DataTable();
 
 
-                                                    t.row.add([durianID, durianTreeID, durianType, weight, process, harvestTime, arriveTime, price, "-",
+                                                    t.row.add([durianID, durianType, durianTreeID, weight, process, harvestTime, arriveTime, price, "-",
                                                         "<button class=' btn btn-outline-secondary' data-toggle='modal'  onclick='displayReview(" + i + ")' >View </button>"]).draw(false);
 
                                                 });
@@ -339,7 +339,7 @@
                                                     var t = $('#table').DataTable();
 
 
-                                                    t.row.add([durianID, durianTreeID, durianType, weight, process, harvestTime, arriveTime, price, "-", ""]).draw(false);
+                                                    t.row.add([durianID, durianType, durianTreeID, weight, process, harvestTime, arriveTime, price, "-", ""]).draw(false);
 
                                                 });
                                             }
@@ -410,7 +410,7 @@
                                 const date = new Date(durian[4][3] * 1000); // Multiply by 1000 to convert from seconds to milliseconds
                                 const ratingDate = date.toLocaleString(); // Convert to local time string
 
-                                document.getElementById("userDetail").innerHTML = "User: " + user[1] + "<br/> Rating Date Made: "+ratingDate;
+                                document.getElementById("userDetail").innerHTML = "User: " + user[1] + "<br/> Rating Date Made: " + ratingDate;
 
                                 console.log(user[1]);
                             }

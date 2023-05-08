@@ -212,7 +212,7 @@
                                                 var t = $('#table').DataTable();
 
 
-                                                t.row.add([durianID, durianTreeID, durianType, weight, process, harvestTime, arriveTime, ""]).draw(false);
+                                                t.row.add([durianID, durianType, durianTreeID,  weight, process, harvestTime, arriveTime, ""]).draw(false);
 
                                             });
                                         }
@@ -220,7 +220,7 @@
                                             $(document).ready(function () {
                                                 var t = $('#table').DataTable();
 
-                                                t.row.add([durianID, durianTreeID, durianType, weight, process, harvestTime, arriveTime,
+                                                t.row.add([durianID, durianType, durianTreeID,  weight, process, harvestTime, arriveTime,
                                                     "<button class=' btn btn-outline-secondary' data-toggle='modal'  onclick='showPopUp(" + i + ")' >Delivered </button>"]).draw(false);
                                             });
                                         }
